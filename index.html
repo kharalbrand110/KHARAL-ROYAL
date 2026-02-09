@@ -3,692 +3,1012 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥</title>
+    <title>𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 - 𝐇𝐨𝐫𝐢𝐳𝐨𝐧𝐭𝐚𝐥 𝐓𝐨𝐨𝐥</title>
     <style>
-        :root {
-            --primary: #00feba;
-            --secondary: #ff00ff;
-            --dark: #000000;
-            --light: #ffffff;
-            --neon-green: #00ff00;
-            --neon-pink: #ff00ff;
-            --neon-blue: #00ffff;
-        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
+        
         body {
             background: #ffffff;
-            color: var(--dark);
+            color: #000000;
             min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(0, 254, 186, 0.1), rgba(255, 0, 255, 0.1));
-            border-radius: 20px;
-            border: 3px solid var(--dark);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .logo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 5px solid var(--dark);
-            object-fit: cover;
-            margin: 0 auto 25px;
-            display: block;
-            box-shadow: 0 0 30px rgba(0, 254, 186, 0.5);
-            background: white;
-            padding: 10px;
-        }
-        .company-name {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--dark);
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 0 var(--neon-green),
-                        -3px -3px 0 var(--neon-pink);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-        .tagline {
-            font-size: 1.6rem;
-            color: var(--dark);
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-shadow: 1px 1px 0 var(--neon-blue);
-        }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 15px;
-            border: 2px solid var(--dark);
-        }
-        .stat-item {
-            text-align: center;
-            padding: 20px;
-            min-width: 150px;
-            background: white;
-            border-radius: 15px;
-            border: 2px solid var(--dark);
-            box-shadow: 5px 5px 0 var(--dark);
-            transition: all 0.3s;
-        }
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 8px 8px 0 var(--neon-green);
-        }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--dark);
-            text-shadow: 2px 2px 0 var(--neon-pink);
-        }
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--dark);
-            font-weight: 600;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            overflow-x: hidden;
         }
         
-        /* Navigation Tabs */
-        .nav-tabs {
+        /* Main Container with Sidebar and Content */
+        .main-container {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+            height: 100vh;
         }
-        .tab-btn {
-            padding: 15px 30px;
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 300px;
+            background: #000000;
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #00ff00;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #00ff00;
+            object-fit: cover;
+            margin: 0 auto 15px;
             background: white;
-            border: 3px solid var(--dark);
-            border-radius: 50px;
-            color: var(--dark);
-            font-weight: 800;
-            font-size: 1.1rem;
+            padding: 5px;
+        }
+        
+        .site-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ff00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        
+        .site-subtitle {
+            font-size: 0.9rem;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            flex-grow: 1;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .nav-item.active {
+            background: #00ff00;
+            color: #000000;
+            border-color: #000000;
+            transform: translateX(10px);
+            box-shadow: 5px 5px 0 #000000;
+        }
+        
+        .nav-item:hover:not(.active) {
+            background: rgba(0, 255, 0, 0.2);
+            border-color: #00ff00;
+            transform: translateX(5px);
+        }
+        
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .nav-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* Stats in Sidebar */
+        .sidebar-stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 15px;
+            border: 2px solid #00ff00;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-label {
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+        
+        .stat-value {
+            color: #00ff00;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        /* Right Content Area */
+        .content-area {
+            flex: 1;
+            margin-left: 300px;
+            padding: 0;
+            background: #ffffff;
+            overflow-y: auto;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background: #000000;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 5px solid #00ff00;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00ff00;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 5px 5px 0 var(--dark);
-        }
-        .tab-btn.active {
-            background: var(--dark);
-            color: white;
-            box-shadow: 5px 5px 0 var(--neon-green);
-            border-color: var(--dark);
-        }
-        .tab-btn:hover:not(.active) {
-            transform: translateY(-3px);
-            box-shadow: 8px 8px 0 var(--neon-pink);
         }
         
-        /* Content Sections */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        .content-section.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Search Box */
-        .search-box {
-            margin-bottom: 30px;
+        .search-container {
+            width: 400px;
             position: relative;
         }
-        .search-box input {
+        
+        .search-input {
             width: 100%;
-            padding: 18px 60px 18px 60px;
-            border: 3px solid var(--dark);
-            border-radius: 15px;
-            background: white;
-            color: var(--dark);
-            font-size: 1.2rem;
+            padding: 15px 50px 15px 20px;
+            background: #ffffff;
+            border: 3px solid #000000;
+            border-radius: 30px;
+            color: #000000;
+            font-size: 1rem;
             font-weight: 600;
-            box-shadow: 5px 5px 0 var(--dark);
-            transition: all 0.3s;
+            box-shadow: 5px 5px 0 #00ff00;
         }
-        .search-box input:focus {
-            outline: none;
-            box-shadow: 8px 8px 0 var(--neon-blue);
-            border-color: var(--neon-blue);
-        }
-        .search-icon {
+        
+        .search-btn {
             position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--dark);
-            font-size: 1.5rem;
-        }
-        .clear-search {
-            position: absolute;
-            right: 25px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #ff0000;
+            color: #000000;
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 1.8rem;
-            font-weight: bold;
-            display: none;
         }
         
-        /* Grid Layout */
-        .apps-grid, .methods-grid {
+        /* Horizontal Cards Container */
+        .cards-container {
+            padding: 30px 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
         }
         
-        /* Cards */
-        .app-card, .method-card {
-            background: white;
+        /* Card Styles */
+        .method-card {
+            background: #ffffff;
             border-radius: 20px;
             padding: 25px;
-            text-align: center;
-            transition: all 0.4s;
-            border: 4px solid var(--dark);
+            border: 4px solid #000000;
             position: relative;
-            overflow: hidden;
-            box-shadow: 8px 8px 0 var(--dark);
-        }
-        .app-card:hover, .method-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 15px 15px 0 var(--neon-green);
-        }
-        .app-card::before, .method-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
+            transition: all 0.3s;
+            box-shadow: 8px 8px 0 #000000;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
         }
         
-        /* Icons - EXTRA LARGE SIZE */
-        .app-icon, .method-icon {
-            width: 150px;  /* Increased size */
-            height: 150px; /* Increased size */
-            border-radius: 25px;
-            object-fit: contain;
-            margin: 0 auto 20px;
-            border: 4px solid var(--dark);
-            background: white;
-            padding: 15px;
-            box-shadow: 0 0 20px rgba(0, 254, 186, 0.3);
-        }
-        .method-icon-large {
-            font-size: 80px;  /* Very large icon */
-            margin: 20px 0;
-            text-shadow: 3px 3px 0 var(--dark);
+        .method-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 15px 15px 0 #00ff00;
+            border-color: #00ff00;
         }
         
-        /* Text Styles */
-        .app-name, .method-name {
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: var(--dark);
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #000000;
+        }
+        
+        .method-number {
+            background: #000000;
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-right: 15px;
+            border: 2px solid #00ff00;
+        }
+        
+        .method-name {
             font-size: 1.4rem;
+            font-weight: 800;
+            color: #000000;
+            flex-grow: 1;
+            line-height: 1.3;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 1px 1px 0 var(--neon-pink);
-        }
-        .app-type, .method-type {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--dark);
-            color: white;
-            border-radius: 30px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            border: 2px solid var(--dark);
         }
         
-        /* Buttons */
-        .btn {
-            width: 100%;
-            padding: 18px;
-            border: 3px solid var(--dark);
-            border-radius: 12px;
-            background: white;
-            color: var(--dark);
-            font-weight: 800;
-            font-size: 1.2rem;
+        .method-type {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #000000;
+            color: #ffffff;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            align-self: flex-start;
+            border: 2px solid #00ff00;
+        }
+        
+        .method-description {
+            flex-grow: 1;
+            color: #333333;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .method-icon {
+            font-size: 2.5rem;
+            color: #000000;
+        }
+        
+        .download-btn {
+            padding: 12px 30px;
+            background: #00ff00;
+            color: #000000;
+            border: 3px solid #000000;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 900;
             cursor: pointer;
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 5px 5px 0 var(--dark);
-            margin-top: 10px;
+            letter-spacing: 1px;
+            box-shadow: 5px 5px 0 #000000;
         }
-        .btn:hover {
+        
+        .download-btn:hover {
+            background: #000000;
+            color: #00ff00;
             transform: translateY(-3px);
-            box-shadow: 8px 8px 0 var(--neon-green);
-            background: var(--dark);
-            color: white;
-        }
-        .btn-download {
-            background: var(--neon-green);
-            color: var(--dark);
-        }
-        .btn-method {
-            background: var(--neon-pink);
-            color: var(--dark);
+            box-shadow: 8px 8px 0 #00ff00;
         }
         
-        /* Counter */
-        .counter {
+        /* Apps Card Style */
+        .app-card {
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+        }
+        
+        .app-card .method-number {
+            background: #ff00ff;
+        }
+        
+        .app-card .download-btn {
+            background: #ff00ff;
+        }
+        
+        /* Footer */
+        .footer {
             text-align: center;
-            margin: 30px 0;
-            color: var(--dark);
-            font-size: 1.4rem;
-            font-weight: 800;
-            text-shadow: 2px 2px 0 var(--neon-blue);
-            padding: 15px;
-            background: white;
-            border-radius: 15px;
-            border: 3px solid var(--dark);
-            box-shadow: 5px 5px 0 var(--dark);
-        }
-        
-        /* Badges */
-        .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--dark);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 1rem;
-            font-weight: 900;
-            border: 2px solid white;
-            box-shadow: 3px 3px 0 var(--neon-green);
-        }
-        .premium-badge {
-            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
-            color: var(--dark);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 30px;
-            border-top: 5px solid var(--dark);
-            color: var(--dark);
-            font-size: 1.1rem;
-            font-weight: 700;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-        }
-        footer small {
-            display: block;
-            margin-top: 10px;
-            color: #666;
+            padding: 20px;
+            background: #000000;
+            color: #ffffff;
+            margin-top: auto;
+            border-top: 3px solid #00ff00;
             font-size: 0.9rem;
         }
         
-        /* Neon Text Effects */
-        .neon-text {
-            color: var(--dark);
-            text-shadow: 0 0 10px var(--neon-green),
-                        0 0 20px var(--neon-green),
-                        0 0 40px var(--neon-green);
-        }
-        .neon-border {
-            border: 3px solid var(--dark);
-            box-shadow: 0 0 10px var(--neon-blue),
-                       0 0 20px var(--neon-blue),
-                       inset 0 0 10px var(--neon-blue);
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
         }
         
-        /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 250px;
+            }
+            
+            .content-area {
+                margin-left: 250px;
+            }
+            
+            .search-container {
+                width: 300px;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .company-name {
-                font-size: 2.2rem;
-            }
-            .tagline {
-                font-size: 1.2rem;
-            }
-            .stats {
+            .main-container {
                 flex-direction: column;
-                gap: 20px;
             }
-            .apps-grid, .methods-grid {
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px;
+            }
+            
+            .content-area {
+                margin-left: 0;
+            }
+            
+            .cards-container {
                 grid-template-columns: 1fr;
             }
-            .app-icon, .method-icon {
-                width: 120px;
-                height: 120px;
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
             }
-            .method-icon-large {
-                font-size: 60px;
+            
+            .search-container {
+                width: 100%;
             }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #000000;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff00;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo" alt="Logo">
-            <h1 class="company-name">𝐊𝐇𝐀𝐑𝐀𝐋 𝐌𝐎𝐃𝐒</h1>
-            <p class="tagline">𝒘𝒆𝒍𝒄𝒐𝒎𝒆 𝒕𝒐 𝒌𝒉𝒂𝒓𝒂𝒍 𝒎𝒐𝒅𝒔 𝒐𝒇𝒇𝒊𝒄𝒊𝒂𝒍 𝒑𝒓𝒆𝒎𝒊𝒖𝒎 𝒂𝒑𝒑𝒔 & 𝒎𝒆𝒕𝒉𝒐𝒅𝒔 𝒕𝒐𝒐𝒍</p>
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo" alt="Kharal Mods Logo">
+                <div class="site-title">𝐊𝐇𝐀𝐑𝐀𝐋 𝐌𝐎𝐃𝐒</div>
+                <div class="site-subtitle">Premium Tools & Methods Collection</div>
+            </div>
             
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalApps">0</div>
-                    <div class="stat-label">Premium Apps</div>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="showSection('methods')">
+                    <div class="nav-icon">⚡</div>
+                    <div class="nav-text">All Methods</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalMethods">42</div>
-                    <div class="stat-label">Methods</div>
+                <div class="nav-item" onclick="showSection('apps')">
+                    <div class="nav-icon">📱</div>
+                    <div class="nav-text">Premium Apps</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="activeUsers">156</div>
-                    <div class="stat-label">Active Users</div>
+                <div class="nav-item" onclick="showSection('tools')">
+                    <div class="nav-icon">🛠️</div>
+                    <div class="nav-text">Hacking Tools</div>
+                </div>
+                <div class="nav-item" onclick="showSection('videos')">
+                    <div class="nav-icon">🎬</div>
+                    <div class="nav-text">Tutorial Videos</div>
+                </div>
+                <div class="nav-item" onclick="showSection('scripts')">
+                    <div class="nav-icon">📜</div>
+                    <div class="nav-text">Scripts & Codes</div>
+                </div>
+                <div class="nav-item" onclick="showSection('contact')">
+                    <div class="nav-icon">📞</div>
+                    <div class="nav-text">Contact Admin</div>
                 </div>
             </div>
-        </header>
-
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showTab('apps')">
-                <i class="fas fa-mobile-alt"></i> Premium Apps
-            </button>
-            <button class="tab-btn" onclick="showTab('methods')">
-                <i class="fas fa-bolt"></i> All Methods
-            </button>
+            
+            <div class="sidebar-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Total Methods:</div>
+                    <div class="stat-value" id="totalMethods">42</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Premium Apps:</div>
+                    <div class="stat-value" id="totalApps">12</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Tools:</div>
+                    <div class="stat-value" id="totalTools">8</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Active Users:</div>
+                    <div class="stat-value" id="activeUsers">156</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥
+            </div>
         </div>
-
-        <!-- Apps Section -->
-        <div id="appsSection" class="content-section active">
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="appsSearch" placeholder="Search premium apps...">
-                <button class="clear-search" onclick="clearSearch('appsSearch')">&times;</button>
+        
+        <!-- Right Content Area -->
+        <div class="content-area">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title" id="pageTitle">All Methods</div>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search methods, apps, tools...">
+                    <button class="search-btn" onclick="searchContent()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-            <div class="counter" id="appsCounter">Loading premium apps...</div>
-            <div class="apps-grid" id="appsContainer">
+            
+            <!-- Methods Cards Container -->
+            <div class="cards-container" id="methodsSection">
+                <!-- Methods will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- Apps Cards Container (Hidden by default) -->
+            <div class="cards-container" id="appsSection" style="display: none;">
                 <!-- Apps will be loaded here -->
-                <div class="app-card">
-                    <span class="badge premium-badge">PREMIUM</span>
-                    <img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" class="app-icon" alt="App">
-                    <div class="app-name">WhatsApp Toolkit</div>
-                    <div class="app-type">TOOLKIT</div>
-                    <a href="#">
-                        <button class="btn btn-download">📥 Download Now</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Methods Section -->
-        <div id="methodsSection" class="content-section">
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="methodsSearch" placeholder="Search methods by name or type...">
-                <button class="clear-search" onclick="clearSearch('methodsSearch')">&times;</button>
-            </div>
-            <div class="counter" id="methodsCounter">42 Methods Available</div>
-            <div class="methods-grid" id="methodsContainer">
-                <!-- Methods will be loaded by JavaScript -->
             </div>
         </div>
     </div>
 
-    <footer>
-        © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐥. 𝐀𝐥𝐥 𝐑𝐢𝐠𝐡𝐭𝐬 𝐑𝐞𝐬𝐞𝐫𝐯𝐞𝐝.<br>
-        <small>For educational purposes only. Use at your own risk.</small>
-    </footer>
-
     <script>
         // All Methods Data
         const methodsData = [
-            { number: 1, name: "JazzCash Fake Payment SMS", type: "Video", url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" },
-            { number: 2, name: "WhatsApp Ban Full Video", type: "Video", url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file" },
-            { number: 3, name: "WhatsApp Fake Chat APK", type: "APK", url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file" },
-            { number: 4, name: "WhatsApp Ban Script", type: "TXT", url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file" },
-            { number: 5, name: "WhatsApp Login Not Available Problem", type: "ZIP", url: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file" },
-            { number: 6, name: "Phone Dead Virus APK", type: "APK", url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file" },
-            { number: 7, name: "Mobile Reset APK", type: "APK", url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file" },
-            { number: 8, name: "Mobile Lock Virus APK", type: "APK", url: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file" },
-            { number: 9, name: "Anti Crash WhatsApp APK", type: "APK", url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file" },
-            { number: 10, name: "Gallery Crash", type: "ZIP", url: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file" },
-            { number: 11, name: "Reset All Data / WiFi Hacker APK", type: "APK", url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file" },
-            { number: 12, name: "Voice Changer APK", type: "APK", url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk" },
-            { number: 13, name: "App Cloner Pro Mod APK", type: "APK", url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" },
-            { number: 14, name: "Quran Pak APK", type: "APK", url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file" },
-            { number: 15, name: "Number Info / SIM Owner Details APK", type: "APK", url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file" },
-            { number: 16, name: "Create Own SIM Info App", type: "ZIP", url: "https://www.mediafire.com/file/m4hpw1mucea4gxn/create_your_own_sim_information_app_and_web.zip/file" },
-            { number: 17, name: "Website Hacker / Source Code Finder APK", type: "APK", url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file" },
-            { number: 18, name: "WhatsApp Toolkit APK", type: "APK", url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file" },
-            { number: 19, name: "SHB Toolkit APK", type: "APK", url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file" },
-            { number: 20, name: "TikTok For You Method", type: "Method", url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file" },
-            { number: 21, name: "Methods Pack", type: "Google Doc", url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk" },
-            { number: 22, name: "WhatsApp Official Channel", type: "Channel", url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X" },
-            { number: 23, name: "Telegram Channel", type: "Channel", url: "https://t.me/burhannoir" },
-            { number: 24, name: "WhatsApp Ban Method + Script", type: "ZIP", url: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file" },
-            { number: 25, name: "WhatsApp Bug Bot Method", type: "Video", url: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file" },
-            { number: 26, name: "Bug Bot Website", type: "Website", url: "https://bug-bot.pages.dev/" },
-            { number: 27, name: "Free Fire Magic Bullet Location", type: "File", url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file" },
-            { number: 28, name: "Free Fire Headshot File (Hacker 76)", type: "ZIP", url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file" },
-            { number: 29, name: "Free Fire Panel / XSUIT File", type: "ZIP", url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file" },
-            { number: 30, name: "Free Fire Headshot File (Shacker 76)", type: "ZIP", url: "https://www.mediafire.com/file/eih6rex1zv9hw0n/HEADSHOT_FILE_BY_SHACKER.76.zip/file" },
-            { number: 31, name: "WhatsApp Unblock Guide", type: "Guide", url: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn" },
-            { number: 32, name: "Mobile Crash Through Link", type: "Link", url: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU" },
-            { number: 33, name: "Mobile Reset APK by Ghosty", type: "APK", url: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file" },
-            { number: 34, name: "Temp Mail Premium APK", type: "APK", url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file" },
-            { number: 35, name: "Telegram Clone APK", type: "APK", url: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file" },
-            { number: 36, name: "YouTube Pro APK", type: "APK", url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" },
-            { number: 37, name: "Netflix Premium Mod APK", type: "APK", url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file" },
-            { number: 38, name: "All Social Media Video Downloader APK", type: "APK", url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file" },
-            { number: 39, name: "Dual Space Premium APK", type: "APK", url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file" },
-            { number: 40, name: "Alight Motion Premium APK", type: "APK", url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file" },
-            { number: 41, name: "Photoleap Premium APK", type: "APK", url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file" },
-            { number: 42, name: "CapCut Pro Latest Version APK", type: "APK", url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file" }
+            { 
+                number: 1, 
+                name: "JazzCash Fake Payment SMS", 
+                type: "Video", 
+                url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file",
+                icon: "💰",
+                description: "Learn how to create fake JazzCash payment SMS for educational purposes"
+            },
+            { 
+                number: 2, 
+                name: "WhatsApp Ban Full Video", 
+                type: "Video", 
+                url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file",
+                icon: "📱",
+                description: "Complete video tutorial on WhatsApp banning methods"
+            },
+            { 
+                number: 3, 
+                name: "WhatsApp Fake Chat APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file",
+                icon: "💬",
+                description: "Modified WhatsApp app for creating fake chat conversations"
+            },
+            { 
+                number: 4, 
+                name: "WhatsApp Ban Script", 
+                type: "TXT", 
+                url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file",
+                icon: "📜",
+                description: "Text script for WhatsApp banning automation"
+            },
+            { 
+                number: 5, 
+                name: "WhatsApp Login Problem Fix", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file",
+                icon: "🔧",
+                description: "Fix for WhatsApp login not available problem"
+            },
+            { 
+                number: 6, 
+                name: "Phone Dead Virus APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file",
+                icon: "☠️",
+                description: "Educational virus simulation app for Android"
+            },
+            { 
+                number: 7, 
+                name: "Mobile Reset APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file",
+                icon: "🔄",
+                description: "Tool for simulating mobile reset functions"
+            },
+            { 
+                number: 8, 
+                name: "Mobile Lock Virus APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file",
+                icon: "🔒",
+                description: "Educational mobile lock simulation app"
+            },
+            { 
+                number: 9, 
+                name: "Anti Crash WhatsApp APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file",
+                icon: "🛡️",
+                description: "Modified WhatsApp with anti-crash features"
+            },
+            { 
+                number: 10, 
+                name: "Gallery Crash Method", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file",
+                icon: "📸",
+                description: "Method to crash gallery apps for testing"
+            },
+            { 
+                number: 11, 
+                name: "WiFi Hacker APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file",
+                icon: "📡",
+                description: "Educational WiFi security testing tool"
+            },
+            { 
+                number: 12, 
+                name: "Voice Changer APK", 
+                type: "APK", 
+                url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk",
+                icon: "🎤",
+                description: "Voice modification and effects application"
+            },
+            { 
+                number: 13, 
+                name: "App Cloner Pro", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file",
+                icon: "📋",
+                description: "Premium app cloning tool with multiple accounts"
+            },
+            { 
+                number: 14, 
+                name: "Quran Pak APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file",
+                icon: "📖",
+                description: "Complete Quran application with translations"
+            },
+            { 
+                number: 15, 
+                name: "SIM Owner Details", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file",
+                icon: "📞",
+                description: "SIM card information and details viewer"
+            },
+            { 
+                number: 16, 
+                name: "Create SIM Info App", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/m4hpw1mucea4gxn/create_your_own_sim_information_app_and_web.zip/file",
+                icon: "👨‍💻",
+                description: "Tutorial to create your own SIM info application"
+            },
+            { 
+                number: 17, 
+                name: "Website Source Code Finder", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file",
+                icon: "🌐",
+                description: "Tool to view website source codes on mobile"
+            },
+            { 
+                number: 18, 
+                name: "WhatsApp Toolkit", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file",
+                icon: "🔧",
+                description: "Complete WhatsApp modification toolkit"
+            },
+            { 
+                number: 19, 
+                name: "SHB Toolkit", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file",
+                icon: "🛠️",
+                description: "Shahid Hacker Boy's complete tools collection"
+            },
+            { 
+                number: 20, 
+                name: "TikTok For You Method", 
+                type: "Method", 
+                url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file",
+                icon: "🎵",
+                description: "Method to optimize TikTok For You page algorithm"
+            },
+            { 
+                number: 21, 
+                name: "Methods Pack", 
+                type: "Google Doc", 
+                url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk",
+                icon: "📚",
+                description: "Complete collection of all methods in one document"
+            },
+            { 
+                number: 22, 
+                name: "WhatsApp Official Channel", 
+                type: "Channel", 
+                url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X",
+                icon: "📢",
+                description: "Official WhatsApp channel for updates"
+            },
+            { 
+                number: 23, 
+                name: "Telegram Channel", 
+                type: "Channel", 
+                url: "https://t.me/burhannoir",
+                icon: "✈️",
+                description: "Telegram channel for latest methods and tools"
+            },
+            { 
+                number: 24, 
+                name: "WhatsApp Ban Method + Script", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file",
+                icon: "⚡",
+                description: "Complete WhatsApp banning method with script"
+            },
+            { 
+                number: 25, 
+                name: "WhatsApp Bug Bot Method", 
+                type: "Video", 
+                url: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file",
+                icon: "🐛",
+                description: "Video tutorial for WhatsApp bug bot without panel"
+            },
+            { 
+                number: 26, 
+                name: "Bug Bot Website", 
+                type: "Website", 
+                url: "https://bug-bot.pages.dev/",
+                icon: "🕸️",
+                description: "Official bug bot website for testing"
+            },
+            { 
+                number: 27, 
+                name: "Free Fire Magic Bullet", 
+                type: "File", 
+                url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file",
+                icon: "🎯",
+                description: "Free Fire magic bullet location file"
+            },
+            { 
+                number: 28, 
+                name: "Free Fire Headshot File", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file",
+                icon: "🎮",
+                description: "Headshot configuration for Free Fire"
+            },
+            { 
+                number: 29, 
+                name: "Free Fire XSUIT File", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file",
+                icon: "👕",
+                description: "XSUIT files for Free Fire customization"
+            },
+            { 
+                number: 30, 
+                name: "Free Fire Headshot File 2", 
+                type: "ZIP", 
+                url: "https://www.mediafire.com/file/eih6rex1zv9hw0n/HEADSHOT_FILE_BY_SHACKER.76.zip/file",
+                icon: "🎖️",
+                description: "Alternative headshot file for Free Fire"
+            },
+            { 
+                number: 31, 
+                name: "WhatsApp Unblock Guide", 
+                type: "Guide", 
+                url: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn",
+                icon: "🔓",
+                description: "Complete guide to unblock WhatsApp accounts"
+            },
+            { 
+                number: 32, 
+                name: "Mobile Crash Link", 
+                type: "Link", 
+                url: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU",
+                icon: "📱",
+                description: "Links to test mobile crash vulnerabilities"
+            },
+            { 
+                number: 33, 
+                name: "Mobile Reset APK by Ghosty", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file",
+                icon: "👻",
+                description: "Ghosty's mobile reset application"
+            },
+            { 
+                number: 34, 
+                name: "Temp Mail Premium", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file",
+                icon: "📧",
+                description: "Premium temporary email application"
+            },
+            { 
+                number: 35, 
+                name: "Telegram Clone APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file",
+                icon: "📱",
+                description: "Cloned Telegram application with modifications"
+            },
+            { 
+                number: 36, 
+                name: "YouTube Pro APK", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file",
+                icon: "📺",
+                description: "YouTube premium mod with no ads"
+            },
+            { 
+                number: 37, 
+                name: "Netflix Premium Mod", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file",
+                icon: "🎬",
+                description: "Netflix premium subscription mod"
+            },
+            { 
+                number: 38, 
+                name: "Social Media Video Downloader", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file",
+                icon: "⬇️",
+                description: "Download videos from all social media platforms"
+            },
+            { 
+                number: 39, 
+                name: "Dual Space Premium", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file",
+                icon: "📱",
+                description: "Premium dual space application for multiple accounts"
+            },
+            { 
+                number: 40, 
+                name: "Alight Motion Premium", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file",
+                icon: "🎞️",
+                description: "Premium video editing and animation tool"
+            },
+            { 
+                number: 41, 
+                name: "Photoleap Premium", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file",
+                icon: "🖼️",
+                description: "Premium photo editing application"
+            },
+            { 
+                number: 42, 
+                name: "CapCut Pro Latest", 
+                type: "APK", 
+                url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file",
+                icon: "✂️",
+                description: "Latest CapCut Pro version with premium features"
+            }
         ];
 
-        // Tab Navigation
-        function showTab(tabName) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
+        // Apps Data
+        const appsData = [
+            { name: "WhatsApp Toolkit Pro", type: "TOOL", icon: "🔧", description: "Complete WhatsApp modification toolkit" },
+            { name: "CapCut Pro Editor", type: "EDITOR", icon: "✂️", description: "Premium video editing with all features" },
+            { name: "Netflix Premium", type: "STREAMING", icon: "🎬", description: "Watch Netflix without subscription" },
+            { name: "YouTube Pro", type: "VIDEO", icon: "📺", description: "YouTube without ads with premium features" },
+            { name: "Alight Motion Pro", type: "ANIMATION", icon: "🎞️", description: "Professional motion graphics editor" },
+            { name: "Dual Space Premium", type: "TOOL", icon: "📱", description: "Run multiple accounts of any app" },
+            { name: "Photoleap Pro", type: "PHOTO", icon: "🖼️", description: "AI-powered photo editing tool" },
+            { name: "Temp Mail Pro", type: "EMAIL", icon: "📧", description: "Premium temporary email service" },
+            { name: "App Cloner Pro", type: "TOOL", icon: "📋", description: "Clone any app with premium features" },
+            { name: "Video Downloader Pro", type: "DOWNLOADER", icon: "⬇️", description: "Download videos from all platforms" },
+            { name: "SIM Info Pro", type: "TOOL", icon: "📞", description: "Premium SIM information tool" },
+            { name: "Quran Pak Premium", type: "RELIGIOUS", icon: "📖", description: "Complete Quran with premium features" }
+        ];
+
+        // Initialize
+        window.onload = function() {
+            loadMethods();
+            updateStats();
             
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-btn').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Add search functionality
+            document.getElementById('searchInput').addEventListener('input', searchContent);
             
-            // Show selected section and activate tab
-            document.getElementById(tabName + 'Section').classList.add('active');
-            event.target.classList.add('active');
-            
-            // Load content if needed
-            if (tabName === 'methods') {
-                loadMethods();
-            }
-        }
+            // Simulate active users change
+            setInterval(() => {
+                const randomUsers = Math.floor(Math.random() * 50) + 150;
+                document.getElementById('activeUsers').textContent = randomUsers;
+            }, 5000);
+        };
 
         // Load Methods
         function loadMethods() {
             let methodsHTML = "";
             
             methodsData.forEach(method => {
-                const icon = getMethodIcon(method.type);
-                const buttonClass = method.type === 'APK' ? 'btn-download' : 'btn-method';
-                const buttonText = method.type === 'APK' ? '📥 Download APK' : '🔗 Get Method';
-                
                 methodsHTML += `
                     <div class="method-card" data-name="${method.name.toLowerCase()}" data-type="${method.type.toLowerCase()}">
-                        <span class="badge">#${method.number}</span>
-                        <div class="method-icon-large">${icon}</div>
-                        <div class="method-name">${method.name}</div>
+                        <div class="card-header">
+                            <div class="method-number">${method.number}</div>
+                            <div class="method-name">${method.name}</div>
+                        </div>
                         <div class="method-type">${method.type}</div>
-                        <a href="${method.url}" target="_blank">
-                            <button class="btn ${buttonClass}">${buttonText}</button>
-                        </a>
+                        <div class="method-description">${method.description}</div>
+                        <div class="card-footer">
+                            <div class="method-icon">${method.icon}</div>
+                            <a href="${method.url}" target="_blank">
+                                <button class="download-btn">
+                                    <i class="fas fa-download"></i> Get Now
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 `;
             });
 
-            document.getElementById("methodsContainer").innerHTML = methodsHTML;
-            document.getElementById("totalMethods").textContent = methodsData.length;
-            updateMethodsCounter();
+            document.getElementById("methodsSection").innerHTML = methodsHTML;
+        }
+
+        // Load Apps
+        function loadApps() {
+            let appsHTML = "";
             
-            // Add search functionality
-            document.getElementById('methodsSearch').addEventListener('input', filterMethods);
+            appsData.forEach((app, index) => {
+                appsHTML += `
+                    <div class="method-card app-card" data-name="${app.name.toLowerCase()}" data-type="${app.type.toLowerCase()}">
+                        <div class="card-header">
+                            <div class="method-number">${index + 1}</div>
+                            <div class="method-name">${app.name}</div>
+                        </div>
+                        <div class="method-type">${app.type}</div>
+                        <div class="method-description">${app.description}</div>
+                        <div class="card-footer">
+                            <div class="method-icon">${app.icon}</div>
+                            <button class="download-btn" onclick="downloadApp('${app.name}')">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("appsSection").innerHTML = appsHTML;
         }
 
-        // Get icon for method type
-        function getMethodIcon(type) {
-            const icons = {
-                'APK': '📱',
-                'Video': '🎬',
-                'ZIP': '📦',
-                'TXT': '📄',
-                'Method': '⚡',
-                'Google Doc': '📝',
-                'Channel': '📢',
-                'Website': '🌐',
-                'File': '📁',
-                'Guide': '📖',
-                'Link': '🔗'
+        // Show Section
+        function showSection(section) {
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'methods': 'All Methods',
+                'apps': 'Premium Apps',
+                'tools': 'Hacking Tools',
+                'videos': 'Tutorial Videos',
+                'scripts': 'Scripts & Codes',
+                'contact': 'Contact Admin'
             };
-            return icons[type] || '📄';
+            
+            document.getElementById('pageTitle').textContent = titles[section];
+            
+            // Show selected section
+            document.querySelectorAll('.cards-container').forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            if (section === 'methods') {
+                document.getElementById('methodsSection').style.display = 'grid';
+                if (document.getElementById('methodsSection').innerHTML === '') {
+                    loadMethods();
+                }
+            } else if (section === 'apps') {
+                document.getElementById('appsSection').style.display = 'grid';
+                if (document.getElementById('appsSection').innerHTML === '') {
+                    loadApps();
+                }
+            } else {
+                // For other sections, show methods as placeholder
+                document.getElementById('methodsSection').style.display = 'grid';
+            }
+            
+            // Clear search
+            document.getElementById('searchInput').value = '';
+            searchContent();
         }
 
-        // Filter Methods
-        function filterMethods() {
-            const searchTerm = document.getElementById("methodsSearch").value.toLowerCase();
-            const methodCards = document.querySelectorAll(".method-card");
+        // Search Content
+        function searchContent() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeSection = document.querySelector('.cards-container[style="display: grid"]');
+            
+            if (!activeSection) return;
+            
+            const cards = activeSection.querySelectorAll('.method-card');
             let visibleCount = 0;
             
-            methodCards.forEach(card => {
-                const methodName = card.getAttribute("data-name");
-                const methodType = card.getAttribute("data-type");
+            cards.forEach(card => {
+                const cardName = card.getAttribute('data-name');
+                const cardType = card.getAttribute('data-type');
                 
-                if (methodName.includes(searchTerm) || methodType.includes(searchTerm)) {
-                    card.style.display = "block";
+                if (cardName.includes(searchTerm) || cardType.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
                     visibleCount++;
                 } else {
-                    card.style.display = "none";
+                    card.style.display = 'none';
                 }
             });
-            
-            document.getElementById("methodsCounter").textContent = `${visibleCount} methods found`;
-            updateClearButton('methodsSearch');
         }
 
-        // Clear Search
-        function clearSearch(searchId) {
-            document.getElementById(searchId).value = "";
-            if (searchId === 'appsSearch') {
-                // For apps filtering
-            } else {
-                filterMethods();
-            }
+        // Update Stats
+        function updateStats() {
+            document.getElementById('totalMethods').textContent = methodsData.length;
+            document.getElementById('totalApps').textContent = appsData.length;
+            document.getElementById('totalTools').textContent = '8';
         }
 
-        // Update Clear Button Visibility
-        function updateClearButton(searchId) {
-            const input = document.getElementById(searchId);
-            const clearBtn = input.nextElementSibling;
-            clearBtn.style.display = input.value ? 'block' : 'none';
+        // Download App (Demo function)
+        function downloadApp(appName) {
+            alert(`Downloading ${appName}...\nThis is a demo function. In real implementation, this would start the download.`);
         }
-
-        // Update Counters
-        function updateMethodsCounter() {
-            const visibleMethods = document.querySelectorAll('.method-card[style="display: block"], .method-card:not([style])').length;
-            document.getElementById("methodsCounter").textContent = `${visibleMethods} methods available`;
-        }
-
-        // Initialize
-        window.onload = function() {
-            // Set initial stats
-            document.getElementById("totalMethods").textContent = methodsData.length;
-            
-            // Load methods immediately
-            loadMethods();
-            
-            // Add search functionality to apps
-            document.getElementById('appsSearch').addEventListener('input', function() {
-                updateClearButton('appsSearch');
-            });
-            
-            // Simulate active users change
-            setInterval(() => {
-                const randomUsers = Math.floor(Math.random() * 50) + 150;
-                document.getElementById('activeUsers').textContent = randomUsers;
-            }, 3000);
-        };
-
-        // Demo apps data (can be replaced with Firebase)
-        function loadDemoApps() {
-            const demoApps = [
-                { name: "WhatsApp Toolkit", type: "TOOLKIT", premium: true },
-                { name: "CapCut Pro", type: "VIDEO EDITOR", premium: true },
-                { name: "Netflix Premium", type: "STREAMING", premium: true },
-                { name: "YouTube Pro", type: "VIDEO", premium: true },
-                { name: "Alight Motion", type: "ANIMATION", premium: true },
-                { name: "Dual Space", type: "TOOL", premium: true }
-            ];
-            
-            let appsHTML = "";
-            demoApps.forEach((app, index) => {
-                appsHTML += `
-                    <div class="app-card">
-                        <span class="badge premium-badge">PREMIUM</span>
-                        <img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" class="app-icon" alt="${app.name}">
-                        <div class="app-name">${app.name}</div>
-                        <div class="app-type">${app.type}</div>
-                        <a href="#">
-                            <button class="btn btn-download">📥 Download Now</button>
-                        </a>
-                    </div>
-                `;
-            });
-            
-            document.getElementById("appsContainer").innerHTML = appsHTML;
-            document.getElementById("totalApps").textContent = demoApps.length;
-            document.getElementById("appsCounter").textContent = `${demoApps.length} premium apps available`;
-        }
-        
-        // Load demo apps on page load
-        loadDemoApps();
     </script>
 </body>
 </html>
