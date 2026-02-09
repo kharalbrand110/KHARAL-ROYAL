@@ -3,177 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 - 𝐇𝐨𝐫𝐢𝐳𝐨𝐧𝐭𝐚𝐥 𝐓𝐨𝐨𝐥</title>
+    <title>𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 - 𝐒𝐢𝐦𝐩𝐥𝐞 𝐓𝐨𝐨𝐥</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: #ffffff;
-            color: #000000;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #ffffff;
             min-height: 100vh;
-            overflow-x: hidden;
         }
         
-        /* Main Container with Sidebar and Content */
-        .main-container {
-            display: flex;
-            height: 100vh;
-        }
-        
-        /* Left Sidebar */
-        .sidebar {
-            width: 300px;
+        /* Header */
+        .header {
             background: #000000;
-            color: white;
-            padding: 30px 20px;
+            padding: 15px 30px;
+            border-bottom: 5px solid #00ff00;
             display: flex;
-            flex-direction: column;
-            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
-            position: fixed;
-            height: 100vh;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
             z-index: 100;
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.3);
         }
         
         .logo-container {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #00ff00;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
-        .logo {
-            width: 120px;
-            height: 120px;
+        .logo-img {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            border: 4px solid #00ff00;
+            border: 3px solid #00ff00;
             object-fit: cover;
-            margin: 0 auto 15px;
-            background: white;
-            padding: 5px;
         }
         
-        .site-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #00ff00;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-        
-        .site-subtitle {
-            font-size: 0.9rem;
-            color: #ffffff;
-            opacity: 0.8;
-        }
-        
-        /* Navigation */
-        .nav-menu {
-            flex-grow: 1;
-        }
-        
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .nav-item.active {
-            background: #00ff00;
-            color: #000000;
-            border-color: #000000;
-            transform: translateX(10px);
-            box-shadow: 5px 5px 0 #000000;
-        }
-        
-        .nav-item:hover:not(.active) {
-            background: rgba(0, 255, 0, 0.2);
-            border-color: #00ff00;
-            transform: translateX(5px);
-        }
-        
-        .nav-icon {
-            font-size: 1.5rem;
-            margin-right: 15px;
-            width: 30px;
-            text-align: center;
-        }
-        
-        .nav-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        /* Stats in Sidebar */
-        .sidebar-stats {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(0, 255, 0, 0.1);
-            border-radius: 15px;
-            border: 2px solid #00ff00;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-label {
-            color: #ffffff;
-            font-size: 0.9rem;
-        }
-        
-        .stat-value {
-            color: #00ff00;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        /* Right Content Area */
-        .content-area {
-            flex: 1;
-            margin-left: 300px;
-            padding: 0;
-            background: #ffffff;
-            overflow-y: auto;
-        }
-        
-        /* Top Bar */
-        .top-bar {
-            background: #000000;
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 5px solid #00ff00;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        
-        .page-title {
+        .site-name {
             font-size: 2rem;
             font-weight: 900;
             color: #00ff00;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
+        .site-tagline {
+            font-size: 1rem;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+        
+        /* Search Bar */
         .search-container {
             width: 400px;
             position: relative;
@@ -182,13 +69,17 @@
         .search-input {
             width: 100%;
             padding: 15px 50px 15px 20px;
-            background: #ffffff;
-            border: 3px solid #000000;
-            border-radius: 30px;
-            color: #000000;
+            background: #333333;
+            border: 3px solid #00ff00;
+            border-radius: 50px;
+            color: #ffffff;
             font-size: 1rem;
-            font-weight: 600;
-            box-shadow: 5px 5px 0 #00ff00;
+            font-weight: 500;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
         
         .search-btn {
@@ -198,140 +89,212 @@
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #000000;
+            color: #00ff00;
             font-size: 1.2rem;
             cursor: pointer;
         }
         
-        /* Horizontal Cards Container */
-        .cards-container {
-            padding: 30px 40px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
+        /* Main Container */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 120px);
         }
         
-        /* Card Styles */
-        .method-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 25px;
-            border: 4px solid #000000;
-            position: relative;
+        /* Categories Sidebar */
+        .categories-sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-right: 3px solid #00ff00;
+        }
+        
+        .categories-title {
+            font-size: 1.3rem;
+            color: #00ff00;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #00ff00;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .category-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #222222;
+            border-radius: 10px;
+            cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 8px 8px 0 #000000;
-            min-height: 250px;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-item:hover {
+            background: #333333;
+            border-color: #00ff00;
+            transform: translateX(5px);
+        }
+        
+        .category-item.active {
+            background: #00ff00;
+            color: #000000;
+            font-weight: 700;
+        }
+        
+        .category-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            background: rgba(40, 40, 40, 0.8);
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        /* Tool Card */
+        .tool-card {
+            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s;
+            border: 3px solid #333333;
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
         }
         
-        .method-card:hover {
+        .tool-card:hover {
             transform: translateY(-10px);
-            box-shadow: 15px 15px 0 #00ff00;
             border-color: #00ff00;
+            box-shadow: 0 15px 30px rgba(0, 255, 0, 0.2);
         }
         
-        .card-header {
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00ff00, #ff00ff, #00ffff);
+        }
+        
+        .tool-header {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #000000;
+            margin-bottom: 15px;
         }
         
-        .method-number {
+        .tool-icon {
+            width: 50px;
+            height: 50px;
             background: #000000;
-            color: #ffffff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 900;
+            font-size: 1.8rem;
             margin-right: 15px;
             border: 2px solid #00ff00;
         }
         
-        .method-name {
+        .tool-title {
             font-size: 1.4rem;
-            font-weight: 800;
-            color: #000000;
-            flex-grow: 1;
-            line-height: 1.3;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .method-type {
-            display: inline-block;
-            padding: 8px 20px;
-            background: #000000;
-            color: #ffffff;
-            border-radius: 25px;
-            font-size: 0.9rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            align-self: flex-start;
-            border: 2px solid #00ff00;
+            color: #ffffff;
+            flex: 1;
         }
         
-        .method-description {
-            flex-grow: 1;
-            color: #333333;
+        .tool-badge {
+            background: #00ff00;
+            color: #000000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .tool-description {
+            color: #cccccc;
             margin-bottom: 20px;
-            font-size: 1rem;
             line-height: 1.5;
+            flex: 1;
         }
         
-        .card-footer {
+        .tool-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
         }
         
-        .method-icon {
-            font-size: 2.5rem;
-            color: #000000;
+        .tool-category {
+            color: #00ff00;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
         
-        .download-btn {
-            padding: 12px 30px;
+        .tool-btn {
+            padding: 10px 25px;
             background: #00ff00;
             color: #000000;
-            border: 3px solid #000000;
-            border-radius: 10px;
+            border: none;
+            border-radius: 8px;
             font-size: 1rem;
-            font-weight: 900;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 5px 5px 0 #000000;
         }
         
-        .download-btn:hover {
+        .tool-btn:hover {
             background: #000000;
             color: #00ff00;
-            transform: translateY(-3px);
-            box-shadow: 8px 8px 0 #00ff00;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
         }
         
-        /* Apps Card Style */
-        .app-card {
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #00ff00;
         }
         
-        .app-card .method-number {
-            background: #ff00ff;
+        .stat-item {
+            text-align: center;
         }
         
-        .app-card .download-btn {
-            background: #ff00ff;
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-top: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
         
         /* Footer */
@@ -339,26 +302,15 @@
             text-align: center;
             padding: 20px;
             background: #000000;
-            color: #ffffff;
-            margin-top: auto;
+            margin-top: 40px;
             border-top: 3px solid #00ff00;
-            font-size: 0.9rem;
+            color: #ffffff;
         }
         
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .cards-container {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 250px;
-            }
-            
-            .content-area {
-                margin-left: 250px;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
             
             .search-container {
@@ -371,22 +323,13 @@
                 flex-direction: column;
             }
             
-            .sidebar {
+            .categories-sidebar {
                 width: 100%;
-                height: auto;
-                position: relative;
-                padding: 20px;
+                border-right: none;
+                border-bottom: 3px solid #00ff00;
             }
             
-            .content-area {
-                margin-left: 0;
-            }
-            
-            .cards-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .top-bar {
+            .header {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -394,506 +337,566 @@
             .search-container {
                 width: 100%;
             }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
-        /* Scrollbar Styling */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
         
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #1a1a1a;
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #000000;
-            border: 2px solid #00ff00;
+            background: #00ff00;
             border-radius: 5px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: #00ff00;
+            background: #00cc00;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="main-container">
-        <!-- Left Sidebar -->
-        <div class="sidebar">
-            <div class="logo-container">
-                <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo" alt="Kharal Mods Logo">
-                <div class="site-title">𝐊𝐇𝐀𝐑𝐀𝐋 𝐌𝐎𝐃𝐒</div>
-                <div class="site-subtitle">Premium Tools & Methods Collection</div>
-            </div>
-            
-            <div class="nav-menu">
-                <div class="nav-item active" onclick="showSection('methods')">
-                    <div class="nav-icon">⚡</div>
-                    <div class="nav-text">All Methods</div>
-                </div>
-                <div class="nav-item" onclick="showSection('apps')">
-                    <div class="nav-icon">📱</div>
-                    <div class="nav-text">Premium Apps</div>
-                </div>
-                <div class="nav-item" onclick="showSection('tools')">
-                    <div class="nav-icon">🛠️</div>
-                    <div class="nav-text">Hacking Tools</div>
-                </div>
-                <div class="nav-item" onclick="showSection('videos')">
-                    <div class="nav-icon">🎬</div>
-                    <div class="nav-text">Tutorial Videos</div>
-                </div>
-                <div class="nav-item" onclick="showSection('scripts')">
-                    <div class="nav-icon">📜</div>
-                    <div class="nav-text">Scripts & Codes</div>
-                </div>
-                <div class="nav-item" onclick="showSection('contact')">
-                    <div class="nav-icon">📞</div>
-                    <div class="nav-text">Contact Admin</div>
-                </div>
-            </div>
-            
-            <div class="sidebar-stats">
-                <div class="stat-item">
-                    <div class="stat-label">Total Methods:</div>
-                    <div class="stat-value" id="totalMethods">42</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Premium Apps:</div>
-                    <div class="stat-value" id="totalApps">12</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Tools:</div>
-                    <div class="stat-value" id="totalTools">8</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Active Users:</div>
-                    <div class="stat-value" id="activeUsers">156</div>
-                </div>
-            </div>
-            
-            <div class="footer">
-                © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo-img" alt="Logo">
+            <div>
+                <div class="site-name">𝐊𝐇𝐀𝐑𝐀𝐋 𝐌𝐎𝐃𝐒</div>
+                <div class="site-tagline">Premium Tools & Methods Collection</div>
             </div>
         </div>
         
-        <!-- Right Content Area -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search tools and methods...">
+            <button class="search-btn" onclick="searchTools()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Categories Sidebar -->
+        <div class="categories-sidebar">
+            <div class="categories-title">Categories</div>
+            
+            <div class="category-item active" onclick="filterTools('all')">
+                <span class="category-icon">⚡</span>
+                All Tools
+            </div>
+            
+            <div class="category-item" onclick="filterTools('whatsapp')">
+                <span class="category-icon">📱</span>
+                WhatsApp Tools
+            </div>
+            
+            <div class="category-item" onclick="filterTools('hacking')">
+                <span class="category-icon">🔐</span>
+                Hacking Methods
+            </div>
+            
+            <div class="category-item" onclick="filterTools('apk')">
+                <span class="category-icon">📦</span>
+                Mod APKs
+            </div>
+            
+            <div class="category-item" onclick="filterTools('video')">
+                <span class="category-icon">🎬</span>
+                Video Tutorials
+            </div>
+            
+            <div class="category-item" onclick="filterTools('gaming')">
+                <span class="category-icon">🎮</span>
+                Gaming Tools
+            </div>
+            
+            <div class="category-item" onclick="filterTools('ai')">
+                <span class="category-icon">🤖</span>
+                AI Tools
+            </div>
+            
+            <div class="category-item" onclick="filterTools('media')">
+                <span class="category-icon">🎵</span>
+                Media Tools
+            </div>
+            
+            <div class="category-item" onclick="filterTools('premium')">
+                <span class="category-icon">⭐</span>
+                Premium Apps
+            </div>
+        </div>
+        
+        <!-- Content Area -->
         <div class="content-area">
-            <!-- Top Bar -->
-            <div class="top-bar">
-                <div class="page-title" id="pageTitle">All Methods</div>
-                <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search methods, apps, tools...">
-                    <button class="search-btn" onclick="searchContent()">
-                        <i class="fas fa-search"></i>
-                    </button>
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalTools">42</div>
+                    <div class="stat-label">Total Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="activeUsers">156</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="downloads">2.5K</div>
+                    <div class="stat-label">Downloads</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="categories">8</div>
+                    <div class="stat-label">Categories</div>
                 </div>
             </div>
             
-            <!-- Methods Cards Container -->
-            <div class="cards-container" id="methodsSection">
-                <!-- Methods will be loaded here by JavaScript -->
-            </div>
-            
-            <!-- Apps Cards Container (Hidden by default) -->
-            <div class="cards-container" id="appsSection" style="display: none;">
-                <!-- Apps will be loaded here -->
+            <!-- Tools Grid -->
+            <div class="tools-grid" id="toolsContainer">
+                <!-- Tools will be loaded by JavaScript -->
             </div>
         </div>
     </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥. All Rights Reserved.<br>
+        <small>For educational purposes only. Use at your own risk.</small>
+    </div>
 
     <script>
-        // All Methods Data
-        const methodsData = [
-            { 
-                number: 1, 
-                name: "JazzCash Fake Payment SMS", 
-                type: "Video", 
-                url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file",
+        // All Tools Data
+        const toolsData = [
+            {
+                id: 1,
+                name: "JazzCash Fake Payment SMS",
+                category: "hacking",
                 icon: "💰",
-                description: "Learn how to create fake JazzCash payment SMS for educational purposes"
+                badge: "VIDEO",
+                description: "Learn how to create fake JazzCash payment SMS for educational purposes",
+                url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file"
             },
-            { 
-                number: 2, 
-                name: "WhatsApp Ban Full Video", 
-                type: "Video", 
-                url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file",
+            {
+                id: 2,
+                name: "WhatsApp Ban Method",
+                category: "whatsapp",
                 icon: "📱",
-                description: "Complete video tutorial on WhatsApp banning methods"
+                badge: "VIDEO",
+                description: "Complete video tutorial on WhatsApp banning methods",
+                url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file"
             },
-            { 
-                number: 3, 
-                name: "WhatsApp Fake Chat APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file",
+            {
+                id: 3,
+                name: "WhatsApp Fake Chat",
+                category: "whatsapp",
                 icon: "💬",
-                description: "Modified WhatsApp app for creating fake chat conversations"
+                badge: "APK",
+                description: "Modified WhatsApp app for creating fake chat conversations",
+                url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file"
             },
-            { 
-                number: 4, 
-                name: "WhatsApp Ban Script", 
-                type: "TXT", 
-                url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file",
+            {
+                id: 4,
+                name: "WhatsApp Ban Script",
+                category: "whatsapp",
                 icon: "📜",
-                description: "Text script for WhatsApp banning automation"
+                badge: "SCRIPT",
+                description: "Text script for WhatsApp banning automation",
+                url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file"
             },
-            { 
-                number: 5, 
-                name: "WhatsApp Login Problem Fix", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file",
-                icon: "🔧",
-                description: "Fix for WhatsApp login not available problem"
-            },
-            { 
-                number: 6, 
-                name: "Phone Dead Virus APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file",
+            {
+                id: 5,
+                name: "Phone Dead Virus APK",
+                category: "hacking",
                 icon: "☠️",
-                description: "Educational virus simulation app for Android"
+                badge: "APK",
+                description: "Educational virus simulation app for Android",
+                url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file"
             },
-            { 
-                number: 7, 
-                name: "Mobile Reset APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file",
+            {
+                id: 6,
+                name: "Mobile Reset Tool",
+                category: "hacking",
                 icon: "🔄",
-                description: "Tool for simulating mobile reset functions"
+                badge: "APK",
+                description: "Tool for simulating mobile reset functions",
+                url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file"
             },
-            { 
-                number: 8, 
-                name: "Mobile Lock Virus APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file",
-                icon: "🔒",
-                description: "Educational mobile lock simulation app"
-            },
-            { 
-                number: 9, 
-                name: "Anti Crash WhatsApp APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file",
+            {
+                id: 7,
+                name: "Anti Crash WhatsApp",
+                category: "whatsapp",
                 icon: "🛡️",
-                description: "Modified WhatsApp with anti-crash features"
+                badge: "APK",
+                description: "Modified WhatsApp with anti-crash features",
+                url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file"
             },
-            { 
-                number: 10, 
-                name: "Gallery Crash Method", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file",
-                icon: "📸",
-                description: "Method to crash gallery apps for testing"
-            },
-            { 
-                number: 11, 
-                name: "WiFi Hacker APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file",
+            {
+                id: 8,
+                name: "WiFi Hacker APK",
+                category: "hacking",
                 icon: "📡",
-                description: "Educational WiFi security testing tool"
+                badge: "APK",
+                description: "Educational WiFi security testing tool",
+                url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file"
             },
-            { 
-                number: 12, 
-                name: "Voice Changer APK", 
-                type: "APK", 
-                url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk",
+            {
+                id: 9,
+                name: "Voice Changer APK",
+                category: "media",
                 icon: "🎤",
-                description: "Voice modification and effects application"
+                badge: "APK",
+                description: "Voice modification and effects application",
+                url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk"
             },
-            { 
-                number: 13, 
-                name: "App Cloner Pro", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file",
+            {
+                id: 10,
+                name: "App Cloner Pro",
+                category: "premium",
                 icon: "📋",
-                description: "Premium app cloning tool with multiple accounts"
+                badge: "PREMIUM",
+                description: "Premium app cloning tool with multiple accounts",
+                url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file"
             },
-            { 
-                number: 14, 
-                name: "Quran Pak APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file",
+            {
+                id: 11,
+                name: "Quran Pak APK",
+                category: "premium",
                 icon: "📖",
-                description: "Complete Quran application with translations"
+                badge: "APK",
+                description: "Complete Quran application with translations",
+                url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file"
             },
-            { 
-                number: 15, 
-                name: "SIM Owner Details", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file",
+            {
+                id: 12,
+                name: "SIM Owner Details",
+                category: "hacking",
                 icon: "📞",
-                description: "SIM card information and details viewer"
+                badge: "APK",
+                description: "SIM card information and details viewer",
+                url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file"
             },
-            { 
-                number: 16, 
-                name: "Create SIM Info App", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/m4hpw1mucea4gxn/create_your_own_sim_information_app_and_web.zip/file",
-                icon: "👨‍💻",
-                description: "Tutorial to create your own SIM info application"
-            },
-            { 
-                number: 17, 
-                name: "Website Source Code Finder", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file",
+            {
+                id: 13,
+                name: "Website Source Code Finder",
+                category: "hacking",
                 icon: "🌐",
-                description: "Tool to view website source codes on mobile"
+                badge: "APK",
+                description: "Tool to view website source codes on mobile",
+                url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file"
             },
-            { 
-                number: 18, 
-                name: "WhatsApp Toolkit", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file",
+            {
+                id: 14,
+                name: "WhatsApp Toolkit",
+                category: "whatsapp",
                 icon: "🔧",
-                description: "Complete WhatsApp modification toolkit"
+                badge: "TOOLKIT",
+                description: "Complete WhatsApp modification toolkit",
+                url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file"
             },
-            { 
-                number: 19, 
-                name: "SHB Toolkit", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file",
+            {
+                id: 15,
+                name: "SHB Toolkit",
+                category: "hacking",
                 icon: "🛠️",
-                description: "Shahid Hacker Boy's complete tools collection"
+                badge: "TOOLKIT",
+                description: "Shahid Hacker Boy's complete tools collection",
+                url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file"
             },
-            { 
-                number: 20, 
-                name: "TikTok For You Method", 
-                type: "Method", 
-                url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file",
+            {
+                id: 16,
+                name: "TikTok For You Method",
+                category: "hacking",
                 icon: "🎵",
-                description: "Method to optimize TikTok For You page algorithm"
+                badge: "METHOD",
+                description: "Method to optimize TikTok For You page algorithm",
+                url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file"
             },
-            { 
-                number: 21, 
-                name: "Methods Pack", 
-                type: "Google Doc", 
-                url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk",
+            {
+                id: 17,
+                name: "Methods Pack",
+                category: "hacking",
                 icon: "📚",
-                description: "Complete collection of all methods in one document"
+                badge: "DOC",
+                description: "Complete collection of all methods in one document",
+                url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk"
             },
-            { 
-                number: 22, 
-                name: "WhatsApp Official Channel", 
-                type: "Channel", 
-                url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X",
+            {
+                id: 18,
+                name: "WhatsApp Official Channel",
+                category: "whatsapp",
                 icon: "📢",
-                description: "Official WhatsApp channel for updates"
+                badge: "CHANNEL",
+                description: "Official WhatsApp channel for updates",
+                url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X"
             },
-            { 
-                number: 23, 
-                name: "Telegram Channel", 
-                type: "Channel", 
-                url: "https://t.me/burhannoir",
+            {
+                id: 19,
+                name: "Telegram Channel",
+                category: "media",
                 icon: "✈️",
-                description: "Telegram channel for latest methods and tools"
+                badge: "CHANNEL",
+                description: "Telegram channel for latest methods and tools",
+                url: "https://t.me/burhannoir"
             },
-            { 
-                number: 24, 
-                name: "WhatsApp Ban Method + Script", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file",
-                icon: "⚡",
-                description: "Complete WhatsApp banning method with script"
-            },
-            { 
-                number: 25, 
-                name: "WhatsApp Bug Bot Method", 
-                type: "Video", 
-                url: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file",
-                icon: "🐛",
-                description: "Video tutorial for WhatsApp bug bot without panel"
-            },
-            { 
-                number: 26, 
-                name: "Bug Bot Website", 
-                type: "Website", 
-                url: "https://bug-bot.pages.dev/",
-                icon: "🕸️",
-                description: "Official bug bot website for testing"
-            },
-            { 
-                number: 27, 
-                name: "Free Fire Magic Bullet", 
-                type: "File", 
-                url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file",
+            {
+                id: 20,
+                name: "Free Fire Magic Bullet",
+                category: "gaming",
                 icon: "🎯",
-                description: "Free Fire magic bullet location file"
+                badge: "FILE",
+                description: "Free Fire magic bullet location file",
+                url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file"
             },
-            { 
-                number: 28, 
-                name: "Free Fire Headshot File", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file",
+            {
+                id: 21,
+                name: "Free Fire Headshot File",
+                category: "gaming",
                 icon: "🎮",
-                description: "Headshot configuration for Free Fire"
+                badge: "ZIP",
+                description: "Headshot configuration for Free Fire",
+                url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file"
             },
-            { 
-                number: 29, 
-                name: "Free Fire XSUIT File", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file",
+            {
+                id: 22,
+                name: "Free Fire XSUIT File",
+                category: "gaming",
                 icon: "👕",
-                description: "XSUIT files for Free Fire customization"
+                badge: "ZIP",
+                description: "XSUIT files for Free Fire customization",
+                url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file"
             },
-            { 
-                number: 30, 
-                name: "Free Fire Headshot File 2", 
-                type: "ZIP", 
-                url: "https://www.mediafire.com/file/eih6rex1zv9hw0n/HEADSHOT_FILE_BY_SHACKER.76.zip/file",
-                icon: "🎖️",
-                description: "Alternative headshot file for Free Fire"
-            },
-            { 
-                number: 31, 
-                name: "WhatsApp Unblock Guide", 
-                type: "Guide", 
-                url: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn",
-                icon: "🔓",
-                description: "Complete guide to unblock WhatsApp accounts"
-            },
-            { 
-                number: 32, 
-                name: "Mobile Crash Link", 
-                type: "Link", 
-                url: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU",
-                icon: "📱",
-                description: "Links to test mobile crash vulnerabilities"
-            },
-            { 
-                number: 33, 
-                name: "Mobile Reset APK by Ghosty", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file",
-                icon: "👻",
-                description: "Ghosty's mobile reset application"
-            },
-            { 
-                number: 34, 
-                name: "Temp Mail Premium", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file",
+            {
+                id: 23,
+                name: "Temp Mail Premium",
+                category: "premium",
                 icon: "📧",
-                description: "Premium temporary email application"
+                badge: "PREMIUM",
+                description: "Premium temporary email application",
+                url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file"
             },
-            { 
-                number: 35, 
-                name: "Telegram Clone APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file",
-                icon: "📱",
-                description: "Cloned Telegram application with modifications"
-            },
-            { 
-                number: 36, 
-                name: "YouTube Pro APK", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file",
+            {
+                id: 24,
+                name: "YouTube Pro APK",
+                category: "premium",
                 icon: "📺",
-                description: "YouTube premium mod with no ads"
+                badge: "PREMIUM",
+                description: "YouTube premium mod with no ads",
+                url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file"
             },
-            { 
-                number: 37, 
-                name: "Netflix Premium Mod", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file",
+            {
+                id: 25,
+                name: "Netflix Premium Mod",
+                category: "premium",
                 icon: "🎬",
-                description: "Netflix premium subscription mod"
+                badge: "PREMIUM",
+                description: "Netflix premium subscription mod",
+                url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file"
             },
-            { 
-                number: 38, 
-                name: "Social Media Video Downloader", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file",
+            {
+                id: 26,
+                name: "Social Media Video Downloader",
+                category: "media",
                 icon: "⬇️",
-                description: "Download videos from all social media platforms"
+                badge: "PREMIUM",
+                description: "Download videos from all social media platforms",
+                url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file"
             },
-            { 
-                number: 39, 
-                name: "Dual Space Premium", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file",
+            {
+                id: 27,
+                name: "Dual Space Premium",
+                category: "premium",
                 icon: "📱",
-                description: "Premium dual space application for multiple accounts"
+                badge: "PREMIUM",
+                description: "Premium dual space application for multiple accounts",
+                url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file"
             },
-            { 
-                number: 40, 
-                name: "Alight Motion Premium", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file",
+            {
+                id: 28,
+                name: "Alight Motion Premium",
+                category: "premium",
                 icon: "🎞️",
-                description: "Premium video editing and animation tool"
+                badge: "PREMIUM",
+                description: "Premium video editing and animation tool",
+                url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file"
             },
-            { 
-                number: 41, 
-                name: "Photoleap Premium", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file",
+            {
+                id: 29,
+                name: "Photoleap Premium",
+                category: "premium",
                 icon: "🖼️",
-                description: "Premium photo editing application"
+                badge: "PREMIUM",
+                description: "Premium photo editing application",
+                url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file"
             },
-            { 
-                number: 42, 
-                name: "CapCut Pro Latest", 
-                type: "APK", 
-                url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file",
+            {
+                id: 30,
+                name: "CapCut Pro Latest",
+                category: "premium",
                 icon: "✂️",
-                description: "Latest CapCut Pro version with premium features"
+                badge: "PREMIUM",
+                description: "Latest CapCut Pro version with premium features",
+                url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file"
+            },
+            {
+                id: 31,
+                name: "AI Chatbot Tool",
+                category: "ai",
+                icon: "🤖",
+                badge: "AI TOOL",
+                description: "Advanced AI chatbot for various purposes",
+                url: "#"
+            },
+            {
+                id: 32,
+                name: "AI Studio",
+                category: "ai",
+                icon: "🎨",
+                badge: "AI TOOL",
+                description: "AI-powered content creation studio",
+                url: "#"
+            },
+            {
+                id: 33,
+                name: "AI Website Creator",
+                category: "ai",
+                icon: "🌐",
+                badge: "AI TOOL",
+                description: "Create websites automatically with AI",
+                url: "#"
+            },
+            {
+                id: 34,
+                name: "Sound Effects Tool",
+                category: "media",
+                icon: "🔊",
+                badge: "TOOL",
+                description: "Collection of sound effects and audio tools",
+                url: "#"
+            },
+            {
+                id: 35,
+                name: "All Media Downloader",
+                category: "media",
+                icon: "📥",
+                badge: "TOOL",
+                description: "Download media from all platforms",
+                url: "#"
+            },
+            {
+                id: 36,
+                name: "Anime Zone",
+                category: "media",
+                icon: "🌸",
+                badge: "TOOL",
+                description: "Anime content and tools collection",
+                url: "#"
+            },
+            {
+                id: 37,
+                name: "Anonymous Portal",
+                category: "hacking",
+                icon: "👤",
+                badge: "TOOL",
+                description: "Anonymous browsing and privacy tools",
+                url: "#"
+            },
+            {
+                id: 38,
+                name: "App Store",
+                category: "premium",
+                icon: "📲",
+                badge: "STORE",
+                description: "Collection of premium applications",
+                url: "#"
+            },
+            {
+                id: 39,
+                name: "Background Remover",
+                category: "media",
+                icon: "🖼️",
+                badge: "TOOL",
+                description: "Remove backgrounds from images automatically",
+                url: "#"
+            },
+            {
+                id: 40,
+                name: "Beta Version TTS",
+                category: "ai",
+                icon: "🗣️",
+                badge: "BETA",
+                description: "Text-to-speech tool with multiple voices",
+                url: "#"
+            },
+            {
+                id: 41,
+                name: "Calculator Tool",
+                category: "hacking",
+                icon: "🧮",
+                badge: "TOOL",
+                description: "Advanced calculator for various calculations",
+                url: "#"
+            },
+            {
+                id: 42,
+                name: "All Hacks Collection",
+                category: "hacking",
+                icon: "⚡",
+                badge: "COLLECTION",
+                description: "Complete collection of all hacking methods",
+                url: "#"
             }
-        ];
-
-        // Apps Data
-        const appsData = [
-            { name: "WhatsApp Toolkit Pro", type: "TOOL", icon: "🔧", description: "Complete WhatsApp modification toolkit" },
-            { name: "CapCut Pro Editor", type: "EDITOR", icon: "✂️", description: "Premium video editing with all features" },
-            { name: "Netflix Premium", type: "STREAMING", icon: "🎬", description: "Watch Netflix without subscription" },
-            { name: "YouTube Pro", type: "VIDEO", icon: "📺", description: "YouTube without ads with premium features" },
-            { name: "Alight Motion Pro", type: "ANIMATION", icon: "🎞️", description: "Professional motion graphics editor" },
-            { name: "Dual Space Premium", type: "TOOL", icon: "📱", description: "Run multiple accounts of any app" },
-            { name: "Photoleap Pro", type: "PHOTO", icon: "🖼️", description: "AI-powered photo editing tool" },
-            { name: "Temp Mail Pro", type: "EMAIL", icon: "📧", description: "Premium temporary email service" },
-            { name: "App Cloner Pro", type: "TOOL", icon: "📋", description: "Clone any app with premium features" },
-            { name: "Video Downloader Pro", type: "DOWNLOADER", icon: "⬇️", description: "Download videos from all platforms" },
-            { name: "SIM Info Pro", type: "TOOL", icon: "📞", description: "Premium SIM information tool" },
-            { name: "Quran Pak Premium", type: "RELIGIOUS", icon: "📖", description: "Complete Quran with premium features" }
         ];
 
         // Initialize
         window.onload = function() {
-            loadMethods();
+            loadTools('all');
             updateStats();
             
             // Add search functionality
-            document.getElementById('searchInput').addEventListener('input', searchContent);
+            document.getElementById('searchInput').addEventListener('input', searchTools);
             
             // Simulate active users change
             setInterval(() => {
                 const randomUsers = Math.floor(Math.random() * 50) + 150;
                 document.getElementById('activeUsers').textContent = randomUsers;
+                
+                // Simulate downloads increase
+                const downloads = document.getElementById('downloads').textContent;
+                const currentDownloads = parseInt(downloads.replace('K', '000')) || 2500;
+                const newDownloads = currentDownloads + Math.floor(Math.random() * 10);
+                document.getElementById('downloads').textContent = (newDownloads / 1000).toFixed(1) + 'K';
             }, 5000);
         };
 
-        // Load Methods
-        function loadMethods() {
-            let methodsHTML = "";
+        // Load Tools
+        function loadTools(category) {
+            let toolsHTML = "";
+            let filteredTools = toolsData;
             
-            methodsData.forEach(method => {
-                methodsHTML += `
-                    <div class="method-card" data-name="${method.name.toLowerCase()}" data-type="${method.type.toLowerCase()}">
-                        <div class="card-header">
-                            <div class="method-number">${method.number}</div>
-                            <div class="method-name">${method.name}</div>
+            if (category !== 'all') {
+                filteredTools = toolsData.filter(tool => tool.category === category);
+            }
+            
+            filteredTools.forEach(tool => {
+                toolsHTML += `
+                    <div class="tool-card" data-name="${tool.name.toLowerCase()}" data-category="${tool.category}">
+                        <div class="tool-header">
+                            <div class="tool-icon">${tool.icon}</div>
+                            <div class="tool-title">${tool.name}</div>
+                            <div class="tool-badge">${tool.badge}</div>
                         </div>
-                        <div class="method-type">${method.type}</div>
-                        <div class="method-description">${method.description}</div>
-                        <div class="card-footer">
-                            <div class="method-icon">${method.icon}</div>
-                            <a href="${method.url}" target="_blank">
-                                <button class="download-btn">
-                                    <i class="fas fa-download"></i> Get Now
+                        <div class="tool-description">${tool.description}</div>
+                        <div class="tool-footer">
+                            <div class="tool-category">${getCategoryName(tool.category)}</div>
+                            <a href="${tool.url}" target="_blank">
+                                <button class="tool-btn">
+                                    <i class="fas fa-download"></i> Get Tool
                                 </button>
                             </a>
                         </div>
@@ -901,113 +904,72 @@
                 `;
             });
 
-            document.getElementById("methodsSection").innerHTML = methodsHTML;
+            document.getElementById("toolsContainer").innerHTML = toolsHTML;
+            document.getElementById("totalTools").textContent = filteredTools.length;
+            
+            // Update active category
+            updateActiveCategory(category);
         }
 
-        // Load Apps
-        function loadApps() {
-            let appsHTML = "";
-            
-            appsData.forEach((app, index) => {
-                appsHTML += `
-                    <div class="method-card app-card" data-name="${app.name.toLowerCase()}" data-type="${app.type.toLowerCase()}">
-                        <div class="card-header">
-                            <div class="method-number">${index + 1}</div>
-                            <div class="method-name">${app.name}</div>
-                        </div>
-                        <div class="method-type">${app.type}</div>
-                        <div class="method-description">${app.description}</div>
-                        <div class="card-footer">
-                            <div class="method-icon">${app.icon}</div>
-                            <button class="download-btn" onclick="downloadApp('${app.name}')">
-                                <i class="fas fa-download"></i> Download
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.getElementById("appsSection").innerHTML = appsHTML;
+        // Filter Tools by Category
+        function filterTools(category) {
+            loadTools(category);
         }
 
-        // Show Section
-        function showSection(section) {
-            // Update navigation
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-            
-            // Update page title
-            const titles = {
-                'methods': 'All Methods',
-                'apps': 'Premium Apps',
-                'tools': 'Hacking Tools',
-                'videos': 'Tutorial Videos',
-                'scripts': 'Scripts & Codes',
-                'contact': 'Contact Admin'
-            };
-            
-            document.getElementById('pageTitle').textContent = titles[section];
-            
-            // Show selected section
-            document.querySelectorAll('.cards-container').forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            if (section === 'methods') {
-                document.getElementById('methodsSection').style.display = 'grid';
-                if (document.getElementById('methodsSection').innerHTML === '') {
-                    loadMethods();
-                }
-            } else if (section === 'apps') {
-                document.getElementById('appsSection').style.display = 'grid';
-                if (document.getElementById('appsSection').innerHTML === '') {
-                    loadApps();
-                }
-            } else {
-                // For other sections, show methods as placeholder
-                document.getElementById('methodsSection').style.display = 'grid';
-            }
-            
-            // Clear search
-            document.getElementById('searchInput').value = '';
-            searchContent();
-        }
-
-        // Search Content
-        function searchContent() {
+        // Search Tools
+        function searchTools() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const activeSection = document.querySelector('.cards-container[style="display: grid"]');
-            
-            if (!activeSection) return;
-            
-            const cards = activeSection.querySelectorAll('.method-card');
+            const toolCards = document.querySelectorAll('.tool-card');
             let visibleCount = 0;
             
-            cards.forEach(card => {
-                const cardName = card.getAttribute('data-name');
-                const cardType = card.getAttribute('data-type');
+            toolCards.forEach(card => {
+                const toolName = card.getAttribute('data-name');
+                const toolCategory = card.getAttribute('data-category');
                 
-                if (cardName.includes(searchTerm) || cardType.includes(searchTerm) || searchTerm === '') {
+                if (toolName.includes(searchTerm) || getCategoryName(toolCategory).toLowerCase().includes(searchTerm) || searchTerm === '') {
                     card.style.display = 'block';
                     visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+            
+            document.getElementById('totalTools').textContent = visibleCount;
+        }
+
+        // Get Category Name
+        function getCategoryName(category) {
+            const categories = {
+                'all': 'All Tools',
+                'whatsapp': 'WhatsApp Tools',
+                'hacking': 'Hacking Methods',
+                'apk': 'Mod APKs',
+                'video': 'Video Tutorials',
+                'gaming': 'Gaming Tools',
+                'ai': 'AI Tools',
+                'media': 'Media Tools',
+                'premium': 'Premium Apps'
+            };
+            return categories[category] || category;
+        }
+
+        // Update Active Category
+        function updateActiveCategory(category) {
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.category-item').forEach(item => {
+                if (item.textContent.toLowerCase().includes(category)) {
+                    item.classList.add('active');
+                }
+            });
         }
 
         // Update Stats
         function updateStats() {
-            document.getElementById('totalMethods').textContent = methodsData.length;
-            document.getElementById('totalApps').textContent = appsData.length;
-            document.getElementById('totalTools').textContent = '8';
-        }
-
-        // Download App (Demo function)
-        function downloadApp(appName) {
-            alert(`Downloading ${appName}...\nThis is a demo function. In real implementation, this would start the download.`);
+            document.getElementById('totalTools').textContent = toolsData.length;
+            document.getElementById('categories').textContent = '8';
         }
     </script>
 </body>
