@@ -8,112 +8,125 @@
 
 <style>
 :root{
- --bg:#0b0f1a;--card:#121a2b;--text:#fff;--accent:#00e5ff;
+ --bg:#070b16;
+ --card:rgba(255,255,255,0.06);
+ --text:#fff;
+ --accent:#00e5ff;
+ --border:rgba(255,255,255,0.12);
 }
-.light{--bg:#f2f4f8;--card:#fff;--text:#111;--accent:#0066ff}
 *{box-sizing:border-box;font-family:Segoe UI,Roboto}
-body{margin:0;background:var(--bg);color:var(--text);display:none}
+body{
+ margin:0;
+ background:radial-gradient(circle at top,#0c1330,var(--bg));
+ color:var(--text);
+ display:none;
+}
 
 /* SPLASH */
 #splash{
  position:fixed;inset:0;z-index:9999;
- background:#0b0f1a;display:flex;flex-direction:column;
- align-items:center;justify-content:center;color:#fff
+ background:#050816;
+ display:flex;flex-direction:column;
+ align-items:center;justify-content:center;
 }
 .loader{
- width:280px;height:14px;border-radius:20px;
- background:linear-gradient(90deg,#222 25%,#3a3a3a 37%,#222 63%);
- background-size:400% 100%;
- animation:shimmer 1.4s infinite;
+ width:300px;height:14px;border-radius:30px;
+ background:linear-gradient(90deg,#111,#00e5ff,#111);
+ background-size:300% 100%;
+ animation:load 1.4s infinite;
 }
-@keyframes shimmer{
- 0%{background-position:100% 0}
- 100%{background-position:-100% 0}
-}
+@keyframes load{100%{background-position:300%}}
 
-/* PASSWORD */
-#lock{
- position:fixed;inset:0;z-index:9000;
- background:var(--bg);display:flex;
- align-items:center;justify-content:center
+/* VIP LOCK */
+#vipLock{
+ position:fixed;inset:0;z-index:8000;
+ display:none;align-items:center;justify-content:center;
+ backdrop-filter:blur(10px);
 }
-.lockbox{
- background:var(--card);padding:25px;border-radius:15px;
- width:300px;text-align:center
+.vipbox{
+ background:var(--card);
+ border:1px solid var(--border);
+ padding:28px;border-radius:22px;
+ width:320px;text-align:center;
+ box-shadow:0 30px 70px rgba(0,0,0,.7);
 }
-.lockbox input{
- width:100%;padding:12px;border-radius:25px;border:none;margin-top:10px
+.vipbox input{
+ width:100%;padding:13px;border-radius:30px;border:none;margin-top:10px
 }
-.lockbox button{
- margin-top:12px;padding:10px 18px;border-radius:20px;
- background:var(--accent);border:none;font-weight:600
+.vipbox button{
+ margin-top:14px;padding:12px 24px;border-radius:30px;
+ border:none;font-weight:700;
+ background:linear-gradient(135deg,#ffd700,#ffae00);
 }
+.vipbox h3{color:#ffd700}
 
-/* NOTIFICATION */
-#notify{
- position:fixed;top:0;left:0;right:0;
- background:var(--accent);color:#000;
- padding:8px;text-align:center;font-size:13px;z-index:1000
-}
+/* HEADER */
+header{text-align:center;padding:28px 10px}
+header h1{margin:0;color:var(--accent);letter-spacing:2px}
 
-/* UI */
-header{text-align:center;padding:25px 10px}
-header h1{margin:0;color:var(--accent)}
+/* TOP */
 .top{
- display:flex;gap:10px;max-width:1100px;
- margin:auto;padding:10px
+ display:flex;gap:12px;max-width:1100px;margin:auto;padding:15px
 }
-.top input{flex:1;padding:12px;border-radius:25px;border:none}
-.toggle{
- width:44px;height:44px;border-radius:50%;
- background:var(--card);display:flex;
- align-items:center;justify-content:center;cursor:pointer
-}
-.tabs{text-align:center}
-.tabs button{
- margin:5px;padding:6px 14px;border-radius:20px;
- border:1px solid var(--accent);background:none;color:var(--accent)
-}
-.tabs button.active,.tabs button:hover{
- background:var(--accent);color:#000
-}
+.top input{flex:1;padding:14px;border-radius:30px;border:none}
+
+/* CARDS */
 .container{
- max-width:1100px;margin:auto;padding:15px;
- display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
- gap:15px
+ max-width:1200px;margin:auto;padding:20px;
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:22px
 }
 .card{
- background:var(--card);padding:15px;border-radius:15px
+ background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+ border:1px solid var(--border);
+ border-radius:22px;padding:26px 20px;text-align:center;
+ position:relative;transition:.4s;
+ box-shadow:0 20px 45px rgba(0,0,0,.5);
 }
-.card h3{margin:0 0 10px;font-size:15px;display:flex;gap:10px}
-.card h3 i{color:var(--accent)}
+.card:hover{transform:translateY(-10px)}
+.card i{
+ font-size:46px;color:var(--accent);
+ filter:drop-shadow(0 0 12px var(--accent))
+}
+.card h3{margin:12px 0 8px;font-size:16px}
+.card small{opacity:.6;font-size:12px}
+
+/* VIP BADGE */
+.vip{
+ position:absolute;top:12px;right:12px;
+ background:linear-gradient(135deg,#ffd700,#ffae00);
+ color:#000;font-size:11px;
+ padding:4px 10px;border-radius:20px;font-weight:700
+}
+
+/* BUTTON */
 .card a{
- display:inline-block;margin-top:8px;
- padding:7px 14px;border-radius:20px;
- background:var(--accent);color:#000;text-decoration:none;font-size:13px
+ display:inline-block;margin-top:12px;
+ padding:10px 26px;border-radius:30px;
+ background:linear-gradient(135deg,var(--accent),#00ffa2);
+ color:#000;font-weight:700;text-decoration:none
 }
-footer{text-align:center;padding:15px;color:#888;font-size:13px}
+footer{text-align:center;padding:18px;opacity:.6;font-size:13px}
 </style>
 </head>
 
 <body>
 
 <div id="splash">
-  <h2>KHARAL MODS</h2>
-  <p>Loading Toolkit…</p>
-  <div class="loader"></div>
+ <h2 style="color:#00e5ff">KHARAL MODS</h2>
+ <p>Loading Premium Toolkit…</p>
+ <div class="loader"></div>
 </div>
 
-<div id="lock">
- <div class="lockbox">
-  <h3><i class="fa-solid fa-lock"></i> Secure Access</h3>
-  <input type="password" id="pass" placeholder="Enter Password">
-  <button onclick="unlock()">Unlock</button>
-  <p id="err" style="color:red;font-size:12px"></p>
+<!-- VIP LOCK -->
+<div id="vipLock">
+ <div class="vipbox">
+  <h3><i class="fa-solid fa-crown"></i> VIP ACCESS</h3>
+  <input type="password" id="vipPass" placeholder="Enter VIP Code">
+  <button onclick="unlockVIP()">Unlock</button>
+  <p id="vipErr" style="color:red;font-size:12px"></p>
  </div>
 </div>
-
-<div id="notify">🔥 KHARAL MODS Toolkit Updated | Stay Connected</div>
 
 <header>
  <h1>KHARAL MODS</h1>
@@ -122,94 +135,32 @@ footer{text-align:center;padding:15px;color:#888;font-size:13px}
 
 <div class="top">
  <input type="text" id="search" placeholder="Search tools…">
- <div class="toggle" onclick="toggleMode()">
-  <i class="fa-solid fa-moon"></i>
- </div>
 </div>
 
-<div class="tabs">
- <button class="active" onclick="filter('all')">ALL</button>
- <button onclick="filter('whatsapp')">WHATSAPP</button>
- <button onclick="filter('apk')">APK</button>
- <button onclick="filter('game')">GAMES</button>
+<div class="container">
+
+<!-- NORMAL -->
+<div class="card">
+ <i class="fa-brands fa-whatsapp"></i>
+ <h3>WhatsApp Fake Chat</h3>
+ <small>Downloads: <span data-count="fakechat">0</span></small>
+ <a onclick="download('fakechat')">Download</a>
 </div>
 
-<div class="container" id="tools">
-
-<!-- Example Cards with icons and links -->
-<div class="card whatsapp">
-  <h3><i class="fa-brands fa-whatsapp"></i> WhatsApp Fake Chat</h3>
-  <a href="https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file" target="_blank">Download</a>
+<!-- VIP TOOL -->
+<div class="card viptool">
+ <span class="vip">VIP</span>
+ <i class="fa-solid fa-lock"></i>
+ <h3>WhatsApp Ban Script</h3>
+ <small>Downloads: <span data-count="ban">0</span></small>
+ <a onclick="vipCheck('ban')">Download</a>
 </div>
 
-<div class="card whatsapp">
-  <h3><i class="fa-solid fa-lock"></i> WhatsApp Ban Script</h3>
-  <a href="https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-mobile-screen-button"></i> JazzCash SMS Hack</h3>
-  <a href="https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-gear"></i> Mobile Reset APK</h3>
-  <a href="https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-video"></i> Voice Changer APK</h3>
-  <a href="https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-clone"></i> App Cloner Pro</h3>
-  <a href="https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-film"></i> TikTok For You Method</h3>
-  <a href="https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-envelope"></i> Temp Mail Premium</h3>
-  <a href="https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-brands fa-telegram"></i> Telegram Clone</h3>
-  <a href="https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-brands fa-youtube"></i> YouTube Pro APK</h3>
-  <a href="https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-tv"></i> Netflix Mod APK</h3>
-  <a href="https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-circle-half-stroke"></i> Dual Space Premium</h3>
-  <a href="https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-image"></i> Alight Motion Premium</h3>
-  <a href="https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-image"></i> Photoleap Premium</h3>
-  <a href="https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file" target="_blank">Download</a>
-</div>
-
-<div class="card apk">
-  <h3><i class="fa-solid fa-cut"></i> CapCut Pro Latest</h3>
-  <a href="https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file" target="_blank">Download</a>
+<div class="card">
+ <i class="fa-solid fa-mobile-screen"></i>
+ <h3>JazzCash SMS Hack</h3>
+ <small>Downloads: <span data-count="jazz">0</span></small>
+ <a onclick="download('jazz')">Download</a>
 </div>
 
 </div>
@@ -219,35 +170,46 @@ footer{text-align:center;padding:15px;color:#888;font-size:13px}
 <script>
 /* SPLASH */
 setTimeout(()=>{
- document.getElementById("splash").style.display="none";
+ splash.style.display="none";
  document.body.style.display="block";
-},5000);
+ loadCounts();
+},4000);
 
-/* PASSWORD */
-const PASSWORD="kharalmods";
-function unlock(){
- if(pass.value===PASSWORD){
-  lock.style.display="none";
- }else err.innerText="Wrong password!";
+/* COUNTER */
+function loadCounts(){
+ document.querySelectorAll("[data-count]").forEach(el=>{
+  let k=el.dataset.count;
+  el.innerText=localStorage.getItem(k)||0;
+ });
+}
+function download(key){
+ let c=+localStorage.getItem(key)||0;
+ localStorage.setItem(key,++c);
+ loadCounts();
+ alert("Download started (demo)");
 }
 
-/* THEME */
-function toggleMode(){document.body.classList.toggle("light")}
+/* VIP */
+const VIP_CODE="kharalvip";
+function vipCheck(key){
+ if(localStorage.getItem("vip")==="yes"){
+  download(key);
+ }else{
+  vipLock.style.display="flex";
+ }
+}
+function unlockVIP(){
+ if(vipPass.value===VIP_CODE){
+  localStorage.setItem("vip","yes");
+  vipLock.style.display="none";
+ }else vipErr.innerText="Invalid VIP Code!";
+}
 
 /* SEARCH */
 search.onkeyup=()=>{
  let v=search.value.toLowerCase();
  document.querySelectorAll(".card").forEach(c=>{
   c.style.display=c.innerText.toLowerCase().includes(v)?"block":"none";
- });
-}
-
-/* FILTER */
-function filter(cat){
- document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
- event.target.classList.add("active");
- document.querySelectorAll(".card").forEach(c=>{
-  c.style.display=(cat=="all"||c.classList.contains(cat))?"block":"none";
  });
 }
 </script>
