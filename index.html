@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KHARAL MODS Toolkit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+ --bg:#0b0f1a;--card:#121a2b;--text:#fff;--accent:#00e5ff;
+}
+.light{--bg:#f2f4f8;--card:#fff;--text:#111;--accent:#0066ff}
+*{box-sizing:border-box;font-family:Segoe UI,Roboto}
+body{margin:0;background:var(--bg);color:var(--text);display:none}
+
+/* SPLASH */
+#splash{
+ position:fixed;inset:0;z-index:9999;
+ background:#0b0f1a;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;color:#fff
+}
+.loader{
+ width:280px;height:14px;border-radius:20px;
+ background:linear-gradient(90deg,#222 25%,#3a3a3a 37%,#222 63%);
+ background-size:400% 100%;
+ animation:shimmer 1.4s infinite;
+}
+@keyframes shimmer{
+ 0%{background-position:100% 0}
+ 100%{background-position:-100% 0}
+}
+
+/* PASSWORD */
+#lock{
+ position:fixed;inset:0;z-index:9000;
+ background:var(--bg);display:flex;
+ align-items:center;justify-content:center
+}
+.lockbox{
+ background:var(--card);padding:25px;border-radius:15px;
+ width:300px;text-align:center
+}
+.lockbox input{
+ width:100%;padding:12px;border-radius:25px;border:none;margin-top:10px
+}
+.lockbox button{
+ margin-top:12px;padding:10px 18px;border-radius:20px;
+ background:var(--accent);border:none;font-weight:600
+}
+
+/* NOTIFICATION */
+#notify{
+ position:fixed;top:0;left:0;right:0;
+ background:var(--accent);color:#000;
+ padding:8px;text-align:center;font-size:13px;z-index:1000
+}
+
+/* UI */
+header{text-align:center;padding:25px 10px}
+header h1{margin:0;color:var(--accent)}
+.top{
+ display:flex;gap:10px;max-width:1100px;
+ margin:auto;padding:10px
+}
+.top input{flex:1;padding:12px;border-radius:25px;border:none}
+.toggle{
+ width:44px;height:44px;border-radius:50%;
+ background:var(--card);display:flex;
+ align-items:center;justify-content:center;cursor:pointer
+}
+.tabs{text-align:center}
+.tabs button{
+ margin:5px;padding:6px 14px;border-radius:20px;
+ border:1px solid var(--accent);background:none;color:var(--accent)
+}
+.tabs button.active,.tabs button:hover{
+ background:var(--accent);color:#000
+}
+.container{
+ max-width:1100px;margin:auto;padding:15px;
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+ gap:15px
+}
+.card{
+ background:var(--card);padding:15px;border-radius:15px
+}
+.card h3{margin:0 0 10px;font-size:15px;display:flex;gap:10px}
+.card h3 i{color:var(--accent)}
+.card a{
+ display:inline-block;margin-top:8px;
+ padding:7px 14px;border-radius:20px;
+ background:var(--accent);color:#000;text-decoration:none;font-size:13px
+}
+footer{text-align:center;padding:15px;color:#888;font-size:13px}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+  <h2>KHARAL MODS</h2>
+  <p>Loading Toolkit…</p>
+  <div class="loader"></div>
+</div>
+
+<div id="lock">
+ <div class="lockbox">
+  <h3><i class="fa-solid fa-lock"></i> Secure Access</h3>
+  <input type="password" id="pass" placeholder="Enter Password">
+  <button onclick="unlock()">Unlock</button>
+  <p id="err" style="color:red;font-size:12px"></p>
+ </div>
+</div>
+
+<div id="notify">🔥 KHARAL MODS Toolkit Updated | Stay Connected</div>
+
+<header>
+ <h1>KHARAL MODS</h1>
+ <small>All-in-One Premium Toolkit</small>
+</header>
+
+<div class="top">
+ <input type="text" id="search" placeholder="Search tools…">
+ <div class="toggle" onclick="toggleMode()">
+  <i class="fa-solid fa-moon"></i>
+ </div>
+</div>
+
+<div class="tabs">
+ <button class="active" onclick="filter('all')">ALL</button>
+ <button onclick="filter('whatsapp')">WHATSAPP</button>
+ <button onclick="filter('apk')">APK</button>
+ <button onclick="filter('game')">GAMES</button>
+</div>
+
+<div class="container" id="tools">
+
+<!-- Example Cards with icons and links -->
+<div class="card whatsapp">
+  <h3><i class="fa-brands fa-whatsapp"></i> WhatsApp Fake Chat</h3>
+  <a href="https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card whatsapp">
+  <h3><i class="fa-solid fa-lock"></i> WhatsApp Ban Script</h3>
+  <a href="https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-mobile-screen-button"></i> JazzCash SMS Hack</h3>
+  <a href="https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-gear"></i> Mobile Reset APK</h3>
+  <a href="https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-video"></i> Voice Changer APK</h3>
+  <a href="https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-clone"></i> App Cloner Pro</h3>
+  <a href="https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-film"></i> TikTok For You Method</h3>
+  <a href="https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-envelope"></i> Temp Mail Premium</h3>
+  <a href="https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-brands fa-telegram"></i> Telegram Clone</h3>
+  <a href="https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-brands fa-youtube"></i> YouTube Pro APK</h3>
+  <a href="https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-tv"></i> Netflix Mod APK</h3>
+  <a href="https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-circle-half-stroke"></i> Dual Space Premium</h3>
+  <a href="https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-image"></i> Alight Motion Premium</h3>
+  <a href="https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-image"></i> Photoleap Premium</h3>
+  <a href="https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file" target="_blank">Download</a>
+</div>
+
+<div class="card apk">
+  <h3><i class="fa-solid fa-cut"></i> CapCut Pro Latest</h3>
+  <a href="https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file" target="_blank">Download</a>
+</div>
+
+</div>
+
+<footer>© 2026 • KHARAL MODS</footer>
+
+<script>
+/* SPLASH */
+setTimeout(()=>{
+ document.getElementById("splash").style.display="none";
+ document.body.style.display="block";
+},5000);
+
+/* PASSWORD */
+const PASSWORD="kharalmods";
+function unlock(){
+ if(pass.value===PASSWORD){
+  lock.style.display="none";
+ }else err.innerText="Wrong password!";
+}
+
+/* THEME */
+function toggleMode(){document.body.classList.toggle("light")}
+
+/* SEARCH */
+search.onkeyup=()=>{
+ let v=search.value.toLowerCase();
+ document.querySelectorAll(".card").forEach(c=>{
+  c.style.display=c.innerText.toLowerCase().includes(v)?"block":"none";
+ });
+}
+
+/* FILTER */
+function filter(cat){
+ document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+ event.target.classList.add("active");
+ document.querySelectorAll(".card").forEach(c=>{
+  c.style.display=(cat=="all"||c.classList.contains(cat))?"block":"none";
+ });
+}
+</script>
+
+</body>
+</html>
