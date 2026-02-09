@@ -7,9 +7,12 @@
     <style>
         :root {
             --primary: #00feba;
-            --secondary: #5b548a;
-            --dark: #0f2027;
+            --secondary: #ff00ff;
+            --dark: #000000;
             --light: #ffffff;
+            --neon-green: #00ff00;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
         }
         * {
             margin: 0;
@@ -18,73 +21,129 @@
             font-family: 'Poppins', sans-serif;
         }
         body {
-            background: linear-gradient(135deg, var(--dark), #203a43);
-            color: var(--light);
+            background: #ffffff;
+            color: var(--dark);
             min-height: 100vh;
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(0, 254, 186, 0.1);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 254, 186, 0.3);
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 254, 186, 0.1), rgba(255, 0, 255, 0.1));
+            border-radius: 20px;
+            border: 3px solid var(--dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 3px solid var(--primary);
+            border: 5px solid var(--dark);
             object-fit: cover;
-            margin: 0 auto 15px;
+            margin: 0 auto 25px;
             display: block;
-            box-shadow: 0 0 20px rgba(0, 254, 186, 0.5);
+            box-shadow: 0 0 30px rgba(0, 254, 186, 0.5);
+            background: white;
+            padding: 10px;
         }
         .company-name {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(0, 254, 186, 0.5);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--dark);
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 var(--neon-green),
+                        -3px -3px 0 var(--neon-pink);
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         .tagline {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 15px;
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 1px 1px 0 var(--neon-blue);
         }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            border: 2px solid var(--dark);
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            min-width: 150px;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid var(--dark);
+            box-shadow: 5px 5px 0 var(--dark);
+            transition: all 0.3s;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 var(--neon-green);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--dark);
+            text-shadow: 2px 2px 0 var(--neon-pink);
+        }
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Navigation Tabs */
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 15px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 12px 25px;
-            background: rgba(51, 51, 51, 0.7);
-            border: none;
-            border-radius: 30px;
-            color: var(--light);
-            font-weight: 600;
+            padding: 15px 30px;
+            background: white;
+            border: 3px solid var(--dark);
+            border-radius: 50px;
+            color: var(--dark);
+            font-weight: 800;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s;
-            border: 2px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 5px 5px 0 var(--dark);
         }
         .tab-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 254, 186, 0.3);
+            background: var(--dark);
+            color: white;
+            box-shadow: 5px 5px 0 var(--neon-green);
+            border-color: var(--dark);
         }
         .tab-btn:hover:not(.active) {
-            background: rgba(0, 254, 186, 0.2);
-            border-color: rgba(0, 254, 186, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 0 var(--neon-pink);
         }
+        
+        /* Content Sections */
         .content-section {
             display: none;
             animation: fadeIn 0.5s;
@@ -96,114 +155,74 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .form-box {
-            background: rgba(30, 30, 30, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        .form-title {
-            text-align: center;
-            margin-bottom: 25px;
-            color: var(--primary);
-            font-size: 1.8rem;
-        }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(51, 51, 51, 0.7);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 254, 186, 0.3);
-        }
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 254, 186, 0.4);
-        }
-        .btn-secondary {
-            background: linear-gradient(135deg, #5b548a, #8a548a);
-        }
-        .btn-secondary:hover {
-            box-shadow: 0 10px 20px rgba(91, 84, 138, 0.4);
-        }
+        
+        /* Search Box */
         .search-box {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             position: relative;
         }
         .search-box input {
             width: 100%;
-            padding: 14px 45px 14px 45px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(51, 51, 51, 0.7);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 60px 18px 60px;
+            border: 3px solid var(--dark);
+            border-radius: 15px;
+            background: white;
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 5px 5px 0 var(--dark);
+            transition: all 0.3s;
+        }
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 8px 8px 0 var(--neon-blue);
+            border-color: var(--neon-blue);
         }
         .search-icon {
             position: absolute;
-            left: 15px;
+            left: 25px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary);
+            color: var(--dark);
+            font-size: 1.5rem;
         }
         .clear-search {
             position: absolute;
-            right: 15px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #ff4444;
+            color: #ff0000;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
+            font-weight: bold;
             display: none;
         }
+        
+        /* Grid Layout */
         .apps-grid, .methods-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
         }
+        
+        /* Cards */
         .app-card, .method-card {
-            background: rgba(34, 34, 34, 0.9);
-            border-radius: 12px;
-            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+            border: 4px solid var(--dark);
             position: relative;
             overflow: hidden;
+            box-shadow: 8px 8px 0 var(--dark);
         }
         .app-card:hover, .method-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 254, 186, 0.2);
-            border-color: var(--primary);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 15px 15px 0 var(--neon-green);
         }
         .app-card::before, .method-card::before {
             content: '';
@@ -211,116 +230,174 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 6px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-pink), var(--neon-blue));
         }
+        
+        /* Icons - EXTRA LARGE SIZE */
         .app-icon, .method-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin: 0 auto 15px;
-            border: 3px solid var(--primary);
-            background: rgba(0, 254, 186, 0.1);
-            padding: 10px;
+            width: 150px;  /* Increased size */
+            height: 150px; /* Increased size */
+            border-radius: 25px;
+            object-fit: contain;
+            margin: 0 auto 20px;
+            border: 4px solid var(--dark);
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(0, 254, 186, 0.3);
         }
+        .method-icon-large {
+            font-size: 80px;  /* Very large icon */
+            margin: 20px 0;
+            text-shadow: 3px 3px 0 var(--dark);
+        }
+        
+        /* Text Styles */
         .app-name, .method-name {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--light);
-            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 var(--neon-pink);
         }
         .app-type, .method-type {
             display: inline-block;
-            padding: 4px 12px;
-            background: rgba(0, 254, 186, 0.2);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
+            padding: 8px 20px;
+            background: var(--dark);
+            color: white;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            border: 2px solid var(--dark);
         }
-        .loader {
-            display: none;
-            margin: 20px auto;
-            border: 4px solid rgba(51, 51, 51, 0.3);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: 3px solid var(--dark);
+            border-radius: 12px;
+            background: white;
+            color: var(--dark);
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 5px 5px 0 var(--dark);
+            margin-top: 10px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 0 var(--neon-green);
+            background: var(--dark);
+            color: white;
         }
-        .message {
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(0, 254, 186, 0.1);
-            color: var(--primary);
+        .btn-download {
+            background: var(--neon-green);
+            color: var(--dark);
         }
-        .message.error {
-            background: rgba(255, 68, 68, 0.1);
-            color: #ff4444;
+        .btn-method {
+            background: var(--neon-pink);
+            color: var(--dark);
         }
-        .message.success {
-            background: rgba(0, 255, 0, 0.1);
-            color: #00ff00;
-        }
+        
+        /* Counter */
         .counter {
             text-align: center;
-            margin: 20px 0;
-            color: var(--primary);
-            font-size: 1.1rem;
+            margin: 30px 0;
+            color: var(--dark);
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 0 var(--neon-blue);
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            border: 3px solid var(--dark);
+            box-shadow: 5px 5px 0 var(--dark);
         }
+        
+        /* Badges */
         .badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--primary);
-            color: var(--dark);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            top: 15px;
+            right: 15px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 900;
+            border: 2px solid white;
+            box-shadow: 3px 3px 0 var(--neon-green);
         }
         .premium-badge {
-            background: linear-gradient(135deg, #ffd700, #ff9900);
-            color: #000;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+            color: var(--dark);
         }
+        
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
+            margin-top: 60px;
+            padding: 30px;
+            border-top: 5px solid var(--dark);
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+        footer small {
+            display: block;
+            margin-top: 10px;
+            color: #666;
             font-size: 0.9rem;
         }
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(0, 254, 186, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 254, 186, 0.2);
+        
+        /* Neon Text Effects */
+        .neon-text {
+            color: var(--dark);
+            text-shadow: 0 0 10px var(--neon-green),
+                        0 0 20px var(--neon-green),
+                        0 0 40px var(--neon-green);
         }
-        .stat-item {
-            text-align: center;
+        .neon-border {
+            border: 3px solid var(--dark);
+            box-shadow: 0 0 10px var(--neon-blue),
+                       0 0 20px var(--neon-blue),
+                       inset 0 0 10px var(--neon-blue);
         }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .company-name {
+                font-size: 2.2rem;
+            }
+            .tagline {
+                font-size: 1.2rem;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .apps-grid, .methods-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-icon, .method-icon {
+                width: 120px;
+                height: 120px;
+            }
+            .method-icon-large {
+                font-size: 60px;
+            }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -340,7 +417,7 @@
                     <div class="stat-label">Methods</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="activeUsers">0</div>
+                    <div class="stat-number" id="activeUsers">156</div>
                     <div class="stat-label">Active Users</div>
                 </div>
             </div>
@@ -348,99 +425,57 @@
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showTab('signup')">📝 Register</button>
-            <button class="tab-btn" onclick="showTab('login')">🔐 Login</button>
-            <button class="tab-btn" onclick="showTab('apps')">📱 Premium Apps</button>
-            <button class="tab-btn" onclick="showTab('methods')">⚡ Methods</button>
-        </div>
-
-        <!-- Signup Section -->
-        <div id="signupSection" class="content-section active">
-            <div class="form-box">
-                <h2 class="form-title">Create New Account</h2>
-                <div class="input-group">
-                    <input type="email" id="email" placeholder="Your Email Address" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Create Strong Password" required>
-                </div>
-                <button class="btn" onclick="signUp()">
-                    <i class="fas fa-user-plus"></i> Register Now
-                </button>
-                <div id="signupLoader" class="loader"></div>
-                <div id="signupMessage" class="message"></div>
-            </div>
-        </div>
-
-        <!-- Login Section -->
-        <div id="loginSection" class="content-section">
-            <div class="form-box">
-                <h2 class="form-title">Login to Your Account</h2>
-                <div class="input-group">
-                    <input type="email" id="loginEmail" placeholder="Registered Email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="loginPass" placeholder="Your Password" required>
-                </div>
-                <button class="btn" onclick="loginUser()">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-                <div id="loginLoader" class="loader"></div>
-                <div id="loginMessage" class="message"></div>
-            </div>
+            <button class="tab-btn active" onclick="showTab('apps')">
+                <i class="fas fa-mobile-alt"></i> Premium Apps
+            </button>
+            <button class="tab-btn" onclick="showTab('methods')">
+                <i class="fas fa-bolt"></i> All Methods
+            </button>
         </div>
 
         <!-- Apps Section -->
-        <div id="appsSection" class="content-section">
+        <div id="appsSection" class="content-section active">
             <div class="search-box">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="appsSearch" placeholder="Search apps by name..." oninput="filterApps()">
+                <input type="text" id="appsSearch" placeholder="Search premium apps...">
                 <button class="clear-search" onclick="clearSearch('appsSearch')">&times;</button>
             </div>
-            <div class="counter" id="appsCounter">Loading apps...</div>
-            <div class="apps-grid" id="appsContainer"></div>
+            <div class="counter" id="appsCounter">Loading premium apps...</div>
+            <div class="apps-grid" id="appsContainer">
+                <!-- Apps will be loaded here -->
+                <div class="app-card">
+                    <span class="badge premium-badge">PREMIUM</span>
+                    <img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" class="app-icon" alt="App">
+                    <div class="app-name">WhatsApp Toolkit</div>
+                    <div class="app-type">TOOLKIT</div>
+                    <a href="#">
+                        <button class="btn btn-download">📥 Download Now</button>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Methods Section -->
         <div id="methodsSection" class="content-section">
             <div class="search-box">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="methodsSearch" placeholder="Search methods by name or type..." oninput="filterMethods()">
+                <input type="text" id="methodsSearch" placeholder="Search methods by name or type...">
                 <button class="clear-search" onclick="clearSearch('methodsSearch')">&times;</button>
             </div>
             <div class="counter" id="methodsCounter">42 Methods Available</div>
-            <div class="methods-grid" id="methodsContainer"></div>
+            <div class="methods-grid" id="methodsContainer">
+                <!-- Methods will be loaded by JavaScript -->
+            </div>
         </div>
     </div>
 
     <footer>
-        © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥. 𝐀𝐥𝐥 𝐑𝐢𝐠𝐡𝐭𝐬 𝐑𝐞𝐬𝐞𝐫𝐯𝐞𝐝.<br>
+        © 2024 𝐊𝐡𝐚𝐫𝐚𝐥 𝐌𝐨𝐝𝐬 𝐎𝐟𝐟𝐢𝐜𝐢𝐥. 𝐀𝐥𝐥 𝐑𝐢𝐠𝐡𝐭𝐬 𝐑𝐞𝐬𝐞𝐫𝐯𝐞𝐝.<br>
         <small>For educational purposes only. Use at your own risk.</small>
     </footer>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBIwUsxyeQmoeT2ctH2LxqRU__dhqp9s94",
-            authDomain: "kharal-b47b6.firebaseapp.com",
-            databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
-            projectId: "kharal-b47b6",
-            storageBucket: "kharal-b47b6.appspot.com",
-            messagingSenderId: "528214841740",
-            appId: "1:528214841740:web:e394a574ef2ba2c16e9ea9"
-        };
-
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const database = firebase.database();
-
-        // Methods Data
+        // All Methods Data
         const methodsData = [
             { number: 1, name: "JazzCash Fake Payment SMS", type: "Video", url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" },
             { number: 2, name: "WhatsApp Ban Full Video", type: "Video", url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file" },
@@ -505,144 +540,7 @@
             // Load content if needed
             if (tabName === 'methods') {
                 loadMethods();
-            } else if (tabName === 'apps') {
-                updateAppsCounter();
             }
-        }
-
-        // User Registration
-        function signUp() {
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value.trim();
-            
-            if (!email || !password) {
-                showMessage('signupMessage', 'Please fill all fields', 'error');
-                return;
-            }
-
-            if (password.length < 6) {
-                showMessage('signupMessage', 'Password must be at least 6 characters', 'error');
-                return;
-            }
-
-            showLoader('signupLoader');
-            showMessage('signupMessage', '', '');
-            
-            const userId = email.replace(/[.#$[\]]/g, '_');
-            
-            database.ref("userRequests/" + userId).set({
-                email: email,
-                password: password,
-                status: "pending",
-                registeredAt: new Date().toISOString(),
-                lastLogin: null
-            })
-            .then(() => {
-                hideLoader('signupLoader');
-                showMessage('signupMessage', '✅ Registration successful! Your request has been sent to admin. Wait for approval.', 'success');
-                document.getElementById("email").value = "";
-                document.getElementById("password").value = "";
-                setTimeout(() => showTab('login'), 2000);
-            })
-            .catch(error => {
-                hideLoader('signupLoader');
-                showMessage('signupMessage', '❌ Error: ' + error.message, 'error');
-            });
-        }
-
-        // User Login
-        function loginUser() {
-            const email = document.getElementById("loginEmail").value.trim();
-            const password = document.getElementById("loginPass").value.trim();
-            
-            if (!email || !password) {
-                showMessage('loginMessage', 'Please fill all fields', 'error');
-                return;
-            }
-
-            showLoader('loginLoader');
-            showMessage('loginMessage', '', '');
-            
-            const userId = email.replace(/[.#$[\]]/g, '_');
-            
-            database.ref("userRequests/" + userId).once("value")
-            .then(snapshot => {
-                hideLoader('loginLoader');
-                
-                if (!snapshot.exists()) {
-                    showMessage('loginMessage', '❌ User not found. Please register first.', 'error');
-                    return;
-                }
-
-                const user = snapshot.val();
-                if (user.status !== "approved") {
-                    showMessage('loginMessage', '⏳ Account not approved yet. Please contact admin for approval.', 'error');
-                    return;
-                }
-
-                if (user.password !== password) {
-                    showMessage('loginMessage', '❌ Incorrect password. Please try again.', 'error');
-                    return;
-                }
-
-                // Update last login time
-                database.ref("userRequests/" + userId).update({
-                    lastLogin: new Date().toISOString()
-                });
-
-                document.getElementById("loginEmail").value = "";
-                document.getElementById("loginPass").value = "";
-                showMessage('loginMessage', '✅ Login successful! Loading premium content...', 'success');
-                
-                // Load apps and show apps section
-                loadAppsFromFirebase();
-                setTimeout(() => {
-                    showTab('apps');
-                    showMessage('loginMessage', '', '');
-                }, 1500);
-            })
-            .catch(error => {
-                hideLoader('loginLoader');
-                showMessage('loginMessage', '❌ Error: ' + error.message, 'error');
-            });
-        }
-
-        // Load Apps from Firebase
-        function loadAppsFromFirebase() {
-            database.ref("apps").on("value", snapshot => {
-                let appsHTML = "";
-                let appCount = 0;
-                
-                if (snapshot.exists()) {
-                    snapshot.forEach(child => {
-                        const app = child.val();
-                        const isPremium = app.premium || false;
-                        
-                        appsHTML += `
-                            <div class="app-card" data-name="${app.name.toLowerCase()}">
-                                ${isPremium ? '<span class="badge premium-badge">PREMIUM</span>' : ''}
-                                <img src="${app.logo || 'https://via.placeholder.com/150/00feba/0f2027?text=APP'}" 
-                                     class="app-icon" 
-                                     alt="${app.name}"
-                                     onerror="this.src='https://via.placeholder.com/150/00feba/0f2027?text=${app.name.substring(0,2)}'">
-                                <div class="app-name">${app.name}</div>
-                                <div class="app-type">${app.type || 'APK'}</div>
-                                <a href="${app.downloadURL}" target="_blank">
-                                    <button class="btn">📥 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃</button>
-                                </a>
-                            </div>
-                        `;
-                        appCount++;
-                    });
-                    
-                    document.getElementById("totalApps").textContent = appCount;
-                } else {
-                    appsHTML = '<div class="app-card" style="grid-column: 1/-1; text-align: center; padding: 40px;">No apps available yet. Please check back later.</div>';
-                }
-
-                document.getElementById("appsContainer").innerHTML = appsHTML;
-                updateAppsCounter();
-            });
         }
 
         // Load Methods
@@ -651,15 +549,17 @@
             
             methodsData.forEach(method => {
                 const icon = getMethodIcon(method.type);
+                const buttonClass = method.type === 'APK' ? 'btn-download' : 'btn-method';
+                const buttonText = method.type === 'APK' ? '📥 Download APK' : '🔗 Get Method';
                 
                 methodsHTML += `
                     <div class="method-card" data-name="${method.name.toLowerCase()}" data-type="${method.type.toLowerCase()}">
                         <span class="badge">#${method.number}</span>
-                        <div style="font-size: 2rem; margin: 15px 0; color: #00feba;">${icon}</div>
+                        <div class="method-icon-large">${icon}</div>
                         <div class="method-name">${method.name}</div>
                         <div class="method-type">${method.type}</div>
                         <a href="${method.url}" target="_blank">
-                            <button class="btn btn-secondary">🔗 𝐆𝐄𝐓 𝐌𝐄𝐓𝐇𝐎𝐃</button>
+                            <button class="btn ${buttonClass}">${buttonText}</button>
                         </a>
                     </div>
                 `;
@@ -668,6 +568,9 @@
             document.getElementById("methodsContainer").innerHTML = methodsHTML;
             document.getElementById("totalMethods").textContent = methodsData.length;
             updateMethodsCounter();
+            
+            // Add search functionality
+            document.getElementById('methodsSearch').addEventListener('input', filterMethods);
         }
 
         // Get icon for method type
@@ -686,26 +589,6 @@
                 'Link': '🔗'
             };
             return icons[type] || '📄';
-        }
-
-        // Filter Apps
-        function filterApps() {
-            const searchTerm = document.getElementById("appsSearch").value.toLowerCase();
-            const appCards = document.querySelectorAll(".app-card");
-            let visibleCount = 0;
-            
-            appCards.forEach(card => {
-                const appName = card.getAttribute("data-name");
-                if (appName.includes(searchTerm)) {
-                    card.style.display = "block";
-                    visibleCount++;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-            
-            document.getElementById("appsCounter").textContent = `${visibleCount} apps found`;
-            updateClearButton('appsSearch');
         }
 
         // Filter Methods
@@ -734,7 +617,7 @@
         function clearSearch(searchId) {
             document.getElementById(searchId).value = "";
             if (searchId === 'appsSearch') {
-                filterApps();
+                // For apps filtering
             } else {
                 filterMethods();
             }
@@ -748,29 +631,9 @@
         }
 
         // Update Counters
-        function updateAppsCounter() {
-            const visibleApps = document.querySelectorAll('.app-card[style="display: block"], .app-card:not([style])').length;
-            document.getElementById("appsCounter").textContent = `${visibleApps} apps available`;
-        }
-
         function updateMethodsCounter() {
             const visibleMethods = document.querySelectorAll('.method-card[style="display: block"], .method-card:not([style])').length;
             document.getElementById("methodsCounter").textContent = `${visibleMethods} methods available`;
-        }
-
-        // Helper Functions
-        function showLoader(loaderId) {
-            document.getElementById(loaderId).style.display = 'block';
-        }
-
-        function hideLoader(loaderId) {
-            document.getElementById(loaderId).style.display = 'none';
-        }
-
-        function showMessage(elementId, message, type = '') {
-            const element = document.getElementById(elementId);
-            element.innerHTML = message;
-            element.className = 'message ' + type;
         }
 
         // Initialize
@@ -778,22 +641,54 @@
             // Set initial stats
             document.getElementById("totalMethods").textContent = methodsData.length;
             
-            // Check for auto-login
-            const savedEmail = localStorage.getItem('kharal_email');
-            if (savedEmail) {
-                document.getElementById('loginEmail').value = savedEmail;
-                document.getElementById('loginPass').focus();
-            }
-            
             // Load methods immediately
             loadMethods();
+            
+            // Add search functionality to apps
+            document.getElementById('appsSearch').addEventListener('input', function() {
+                updateClearButton('appsSearch');
+            });
+            
+            // Simulate active users change
+            setInterval(() => {
+                const randomUsers = Math.floor(Math.random() * 50) + 150;
+                document.getElementById('activeUsers').textContent = randomUsers;
+            }, 3000);
         };
 
-        // Simulate active users (for demo)
-        setInterval(() => {
-            const randomUsers = Math.floor(Math.random() * 100) + 50;
-            document.getElementById('activeUsers').textContent = randomUsers;
-        }, 5000);
+        // Demo apps data (can be replaced with Firebase)
+        function loadDemoApps() {
+            const demoApps = [
+                { name: "WhatsApp Toolkit", type: "TOOLKIT", premium: true },
+                { name: "CapCut Pro", type: "VIDEO EDITOR", premium: true },
+                { name: "Netflix Premium", type: "STREAMING", premium: true },
+                { name: "YouTube Pro", type: "VIDEO", premium: true },
+                { name: "Alight Motion", type: "ANIMATION", premium: true },
+                { name: "Dual Space", type: "TOOL", premium: true }
+            ];
+            
+            let appsHTML = "";
+            demoApps.forEach((app, index) => {
+                appsHTML += `
+                    <div class="app-card">
+                        <span class="badge premium-badge">PREMIUM</span>
+                        <img src="https://cdn-icons-png.flaticon.com/512/226/226269.png" class="app-icon" alt="${app.name}">
+                        <div class="app-name">${app.name}</div>
+                        <div class="app-type">${app.type}</div>
+                        <a href="#">
+                            <button class="btn btn-download">📥 Download Now</button>
+                        </a>
+                    </div>
+                `;
+            });
+            
+            document.getElementById("appsContainer").innerHTML = appsHTML;
+            document.getElementById("totalApps").textContent = demoApps.length;
+            document.getElementById("appsCounter").textContent = `${demoApps.length} premium apps available`;
+        }
+        
+        // Load demo apps on page load
+        loadDemoApps();
     </script>
 </body>
 </html>
