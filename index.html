@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kharal Mods - Simple Tool</title>
+    <title>Kharal Mods Premium Tool</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -18,23 +18,99 @@
             min-height: 100vh;
         }
         
-        /* Top Bar - Top pe fixed */
+        /* Password Protection Overlay */
+        #passwordOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .password-box {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 3px solid #00ff00;
+            box-shadow: 0 0 30px #00ff00;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-title {
+            color: #000000;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .password-btn {
+            background: #00ff00;
+            color: #000000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        .password-btn:hover {
+            background: #000000;
+            color: #00ff00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+        
+        .password-error {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Main Content - Hidden until password correct */
+        #mainContent {
+            display: none;
+        }
+        
+        /* Top Bar - Uper fixed */
         .top-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background: #000000;
-            padding: 15px 20px;
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
             border-bottom: 3px solid #00ff00;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            height: 60px;
         }
         
-        .logo {
+        .logo-section {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -47,15 +123,17 @@
             border: 2px solid #00ff00;
         }
         
-        .site-name {
+        .brand-name {
             color: #00ff00;
             font-size: 1.5rem;
             font-weight: bold;
             text-transform: uppercase;
         }
         
-        .search-box {
-            width: 300px;
+        .search-section {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
             position: relative;
         }
         
@@ -82,7 +160,7 @@
         
         /* Main Container */
         .container {
-            padding: 100px 20px 20px 20px;
+            padding: 80px 20px 20px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -99,8 +177,7 @@
             font-weight: 900;
             color: #000000;
             text-shadow: 0 0 10px #00ff00,
-                         0 0 20px #00ff00,
-                         0 0 30px #00ff00;
+                         0 0 20px #00ff00;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -111,7 +188,7 @@
             font-size: 1.2rem;
         }
         
-        /* Categories - Horizontal */
+        /* Categories */
         .categories {
             display: flex;
             justify-content: center;
@@ -130,6 +207,7 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
+            font-size: 14px;
         }
         
         .category-btn:hover {
@@ -144,28 +222,65 @@
             box-shadow: 0 0 15px #00ff00;
         }
         
-        /* Simple Cards Grid */
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            border: 2px solid #000000;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #000000;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        /* Methods Grid */
         .methods-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
             margin-top: 20px;
         }
         
+        /* Method Card */
         .method-card {
             background: #ffffff;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             border: 3px solid #000000;
             transition: all 0.3s;
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 220px;
         }
         
         .method-card:hover {
             border-color: #00ff00;
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
         }
         
         .method-number {
@@ -186,34 +301,22 @@
             box-shadow: 0 0 10px #00ff00;
         }
         
+        .method-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #000000;
+        }
+        
         .method-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #000000;
-            margin-bottom: 10px;
-            padding-right: 40px;
+            margin-bottom: 15px;
             line-height: 1.4;
-        }
-        
-        .method-type {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #000000;
-            color: #ffffff;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-            border: 1px solid #00ff00;
-        }
-        
-        .method-url {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            word-break: break-all;
-            border: 1px solid #ddd;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .method-btn {
@@ -228,43 +331,13 @@
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.9rem;
         }
         
         .method-btn:hover {
             background: #00ff00;
             color: #000000;
             box-shadow: 0 0 15px #00ff00;
-        }
-        
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            padding: 20px;
-            background: #f8f8f8;
-            border-radius: 10px;
-            border: 2px solid #000000;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #000000;
-            text-shadow: 0 0 10px #00ff00;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
         }
         
         /* Footer */
@@ -281,16 +354,17 @@
         @media (max-width: 768px) {
             .top-bar {
                 flex-direction: column;
-                gap: 10px;
+                height: auto;
                 padding: 10px;
             }
             
-            .search-box {
+            .search-section {
                 width: 100%;
+                margin: 10px 0;
             }
             
             .container {
-                padding: 140px 10px 20px 10px;
+                padding: 120px 10px 20px 10px;
             }
             
             .main-title {
@@ -309,118 +383,201 @@
     </style>
 </head>
 <body>
-    <!-- Top Bar - Top pe fixed -->
-    <div class="top-bar">
-        <div class="logo">
-            <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo-img" alt="Logo">
-            <div class="site-name">Kharal Mods</div>
-        </div>
-        
-        <div class="search-box">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search methods...">
-            <button class="search-btn" onclick="searchMethods()">🔍</button>
+    <!-- Password Protection -->
+    <div id="passwordOverlay">
+        <div class="password-box">
+            <div class="password-title">Kharal Mods Access</div>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Enter Password">
+            <button class="password-btn" onclick="checkPassword()">Access Tools</button>
+            <div class="password-error" id="passwordError">❌ Incorrect Password!</div>
         </div>
     </div>
     
-    <!-- Main Container -->
-    <div class="container">
-        <div class="page-title">
-            <h1 class="main-title">All Methods Collection</h1>
-            <p class="sub-title">Complete collection of 42 premium methods and tools</p>
-        </div>
-        
-        <!-- Categories -->
-        <div class="categories">
-            <button class="category-btn active" onclick="showAll()">All</button>
-            <button class="category-btn" onclick="filterByType('APK')">APKs</button>
-            <button class="category-btn" onclick="filterByType('Video')">Videos</button>
-            <button class="category-btn" onclick="filterByType('ZIP')">ZIP Files</button>
-            <button class="category-btn" onclick="filterByType('TXT')">Scripts</button>
-            <button class="category-btn" onclick="filterByType('Tool')">Tools</button>
-            <button class="category-btn" onclick="filterByType('Premium')">Premium</button>
-        </div>
-        
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number" id="totalCount">42</div>
-                <div class="stat-label">Total Methods</div>
+    <!-- Main Content (Hidden until password correct) -->
+    <div id="mainContent">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="logo-section">
+                <img src="https://i.postimg.cc/m21SHQPr/07-42-09-images.jpg" class="logo-img" alt="Logo">
+                <div class="brand-name">Kharal-Mods</div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number" id="visibleCount">42</div>
-                <div class="stat-label">Showing</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Free Access</div>
+            
+            <div class="search-section">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search methods...">
+                <button class="search-btn" onclick="searchMethods()">🔍</button>
             </div>
         </div>
         
-        <!-- Methods Grid -->
-        <div class="methods-grid" id="methodsContainer">
-            <!-- Methods will be loaded here by JavaScript -->
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            © 2024 Kharal Mods Official | For Educational Purposes Only
+        <!-- Main Container -->
+        <div class="container">
+            <div class="page-title">
+                <h1 class="main-title">Premium Methods Collection</h1>
+                <p class="sub-title">Complete collection of premium hacking methods and tools</p>
+            </div>
+            
+            <!-- Categories -->
+            <div class="categories">
+                <button class="category-btn active" onclick="showAll()">All Methods</button>
+                <button class="category-btn" onclick="filterByType('Hack')">Hacking</button>
+                <button class="category-btn" onclick="filterByType('Premium')">Premium</button>
+                <button class="category-btn" onclick="filterByType('Trick')">Tricks</button>
+                <button class="category-btn" onclick="filterByType('Tool')">Tools</button>
+                <button class="category-btn" onclick="filterByType('Social')">Social Media</button>
+                <button class="category-btn" onclick="filterByType('APK')">APKs</button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCount">55</div>
+                    <div class="stat-label">Total Methods</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="visibleCount">55</div>
+                    <div class="stat-label">Showing</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Working</div>
+                </div>
+            </div>
+            
+            <!-- Methods Grid -->
+            <div class="methods-grid" id="methodsContainer">
+                <!-- Methods will be loaded here by JavaScript -->
+            </div>
+            
+            <!-- Footer -->
+            <div class="footer">
+                © 2024 Kharal Mods Official | Password Protected System
+            </div>
         </div>
     </div>
 
     <script>
-        // All Methods Data
+        // Password
+        const correctPassword = "kharalmods00";
+        
+        // Check Password
+        function checkPassword() {
+            const inputPassword = document.getElementById('passwordInput').value;
+            const errorDiv = document.getElementById('passwordError');
+            
+            if (inputPassword === correctPassword) {
+                document.getElementById('passwordOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadAllMethods();
+            } else {
+                errorDiv.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                
+                // Add shake animation
+                const passwordBox = document.querySelector('.password-box');
+                passwordBox.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    passwordBox.style.animation = '';
+                }, 500);
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Add shake animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% {transform: translateX(0);}
+                10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+                20%, 40%, 60%, 80% {transform: translateX(5px);}
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // All Methods Data with icons
         const methodsData = [
-            { number: 1, name: "JazzCash Fake Payment SMS", type: "Video", url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" },
-            { number: 2, name: "WhatsApp Ban Full Video", type: "Video", url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file" },
-            { number: 3, name: "WhatsApp Fake Chat APK", type: "APK", url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file" },
-            { number: 4, name: "WhatsApp Ban Script", type: "TXT", url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file" },
-            { number: 5, name: "WhatsApp Login Problem Fix", type: "ZIP", url: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file" },
-            { number: 6, name: "Phone Dead Virus APK", type: "APK", url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file" },
-            { number: 7, name: "Mobile Reset APK", type: "APK", url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file" },
-            { number: 8, name: "Mobile Lock Virus APK", type: "APK", url: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file" },
-            { number: 9, name: "Anti Crash WhatsApp APK", type: "APK", url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file" },
-            { number: 10, name: "Gallery Crash", type: "ZIP", url: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file" },
-            { number: 11, name: "WiFi Hacker APK", type: "APK", url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file" },
-            { number: 12, name: "Voice Changer APK", type: "APK", url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk" },
-            { number: 13, name: "App Cloner Pro", type: "APK", url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" },
-            { number: 14, name: "Quran Pak APK", type: "APK", url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file" },
-            { number: 15, name: "SIM Owner Details", type: "APK", url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file" },
-            { number: 16, name: "Create SIM Info App", type: "ZIP", url: "https://www.mediafire.com/file/m4hpw1mucea4gxn/create_your_own_sim_information_app_and_web.zip/file" },
-            { number: 17, name: "Website Source Code Finder", type: "APK", url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file" },
-            { number: 18, name: "WhatsApp Toolkit", type: "Tool", url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file" },
-            { number: 19, name: "SHB Toolkit", type: "Tool", url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file" },
-            { number: 20, name: "TikTok For You Method", type: "Tool", url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file" },
-            { number: 21, name: "Methods Pack", type: "Tool", url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk" },
-            { number: 22, name: "WhatsApp Official Channel", type: "Tool", url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X" },
-            { number: 23, name: "Telegram Channel", type: "Tool", url: "https://t.me/burhannoir" },
-            { number: 24, name: "WhatsApp Ban Method + Script", type: "ZIP", url: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file" },
-            { number: 25, name: "WhatsApp Bug Bot Method", type: "Video", url: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file" },
-            { number: 26, name: "Bug Bot Website", type: "Tool", url: "https://bug-bot.pages.dev/" },
-            { number: 27, name: "Free Fire Magic Bullet", type: "Tool", url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file" },
-            { number: 28, name: "Free Fire Headshot File", type: "ZIP", url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file" },
-            { number: 29, name: "Free Fire XSUIT File", type: "ZIP", url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file" },
-            { number: 30, name: "Free Fire Headshot File 2", type: "ZIP", url: "https://www.mediafire.com/file/eih6rex1zv9hw0n/HEADSHOT_FILE_BY_SHACKER.76.zip/file" },
-            { number: 31, name: "WhatsApp Unblock Guide", type: "Tool", url: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn" },
-            { number: 32, name: "Mobile Crash Link", type: "Tool", url: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU" },
-            { number: 33, name: "Mobile Reset APK by Ghosty", type: "APK", url: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file" },
-            { number: 34, name: "Temp Mail Premium", type: "Premium", url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file" },
-            { number: 35, name: "Telegram Clone APK", type: "APK", url: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file" },
-            { number: 36, name: "YouTube Pro APK", type: "Premium", url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" },
-            { number: 37, name: "Netflix Premium Mod", type: "Premium", url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file" },
-            { number: 38, name: "Social Media Video Downloader", type: "Premium", url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file" },
-            { number: 39, name: "Dual Space Premium", type: "Premium", url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file" },
-            { number: 40, name: "Alight Motion Premium", type: "Premium", url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file" },
-            { number: 41, name: "Photoleap Premium", type: "Premium", url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file" },
-            { number: 42, name: "CapCut Pro Latest", type: "Premium", url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file" }
+            // Original 42 methods
+            { number: 1, name: "JazzCash Fake Payment SMS", type: "Trick", icon: "💰", url: "https://www.mediafire.com/file/8mge6o9f01tgv3u/Jazz_Cash_Fake_Payment_SmS.mp4/file" },
+            { number: 2, name: "WhatsApp Ban Full Video", type: "Hack", icon: "📱", url: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file" },
+            { number: 3, name: "WhatsApp Fake Chat APK", type: "APK", icon: "💬", url: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file" },
+            { number: 4, name: "WhatsApp Ban Script", type: "Tool", icon: "📜", url: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file" },
+            { number: 5, name: "WhatsApp Login Problem Fix", type: "Tool", icon: "🔧", url: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file" },
+            { number: 6, name: "Phone Dead Virus APK", type: "Hack", icon: "☠️", url: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file" },
+            { number: 7, name: "Mobile Reset APK", type: "Hack", icon: "🔄", url: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file" },
+            { number: 8, name: "Mobile Lock Virus APK", type: "Hack", icon: "🔒", url: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file" },
+            { number: 9, name: "Anti Crash WhatsApp APK", type: "APK", icon: "🛡️", url: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file" },
+            { number: 10, name: "Gallery Crash", type: "Hack", icon: "📸", url: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file" },
+            { number: 11, name: "WiFi Hacker APK", type: "Hack", icon: "📡", url: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file" },
+            { number: 12, name: "Voice Changer APK", type: "APK", icon: "🎤", url: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk" },
+            { number: 13, name: "App Cloner Pro", type: "Premium", icon: "📋", url: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" },
+            { number: 14, name: "Quran Pak APK", type: "APK", icon: "📖", url: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file" },
+            { number: 15, name: "SIM Owner Details", type: "Tool", icon: "📞", url: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file" },
+            { number: 16, name: "Create SIM Info App", type: "Tool", icon: "👨‍💻", url: "https://www.mediafire.com/file/m4hpw1mucea4gxn/create_your_own_sim_information_app_and_web.zip/file" },
+            { number: 17, name: "Website Source Code Finder", type: "Tool", icon: "🌐", url: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file" },
+            { number: 18, name: "WhatsApp Toolkit", type: "Tool", icon: "🔧", url: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file" },
+            { number: 19, name: "SHB Toolkit", type: "Tool", icon: "🛠️", url: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file" },
+            { number: 20, name: "TikTok For You Method", type: "Social", icon: "🎵", url: "https://www.mediafire.com/file/zjyufsq4a3ralvf/tiktok_for_you_mathod_by_chuhan_hacker/file" },
+            { number: 21, name: "Methods Pack", type: "Tool", icon: "📚", url: "https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk" },
+            { number: 22, name: "WhatsApp Official Channel", type: "Social", icon: "📢", url: "https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X" },
+            { number: 23, name: "Telegram Channel", type: "Social", icon: "✈️", url: "https://t.me/burhannoir" },
+            { number: 24, name: "WhatsApp Ban Method + Script", type: "Tool", icon: "⚡", url: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file" },
+            { number: 25, name: "WhatsApp Bug Bot Method", type: "Tool", icon: "🐛", url: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file" },
+            { number: 26, name: "Bug Bot Website", type: "Tool", icon: "🕸️", url: "https://bug-bot.pages.dev/" },
+            { number: 27, name: "Free Fire Magic Bullet", type: "Tool", icon: "🎯", url: "https://www.mediafire.com/file/pd5q2qavkecxun9/global_magic_bullet_location.7z/file" },
+            { number: 28, name: "Free Fire Headshot File", type: "Tool", icon: "🎮", url: "https://www.mediafire.com/file/t7mdrhvor0vy18m/HEADSHOT_FILE_BY_HACKER_76.zip/file" },
+            { number: 29, name: "Free Fire XSUIT File", type: "Tool", icon: "👕", url: "https://www.mediafire.com/file/fedpj1p5ialdxyo/XSUIT_FILE_BY_HACKER_76.zip/file" },
+            { number: 30, name: "Free Fire Headshot File 2", type: "Tool", icon: "🎖️", url: "https://www.mediafire.com/file/eih6rex1zv9hw0n/HEADSHOT_FILE_BY_SHACKER.76.zip/file" },
+            { number: 31, name: "WhatsApp Unblock Guide", type: "Tool", icon: "🔓", url: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn" },
+            { number: 32, name: "Mobile Crash Link", type: "Hack", icon: "📱", url: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU" },
+            { number: 33, name: "Mobile Reset APK by Ghosty", type: "APK", icon: "👻", url: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file" },
+            { number: 34, name: "Temp Mail Premium", type: "Premium", icon: "📧", url: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file" },
+            { number: 35, name: "Telegram Clone APK", type: "APK", icon: "📱", url: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file" },
+            { number: 36, name: "YouTube Pro APK", type: "Premium", icon: "📺", url: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" },
+            { number: 37, name: "Netflix Premium Mod", type: "Premium", icon: "🎬", url: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file" },
+            { number: 38, name: "Social Media Video Downloader", type: "Premium", icon: "⬇️", url: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file" },
+            { number: 39, name: "Dual Space Premium", type: "Premium", icon: "📱", url: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file" },
+            { number: 40, name: "Alight Motion Premium", type: "Premium", icon: "🎞️", url: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file" },
+            { number: 41, name: "Photoleap Premium", type: "Premium", icon: "🖼️", url: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file" },
+            { number: 42, name: "CapCut Pro Latest", type: "Premium", icon: "✂️", url: "https://www.mediafire.com/file/8u0wb8mw2v4evx3/CapCut_proModdedJadoon13.9.2.apk/file" },
+            
+            // Newly added methods
+            { number: 43, name: "How to Hack Facebook", type: "Hack", icon: "👤", url: "https://www.mediafire.com/file/yiqhpb2y9495lpu/VID_20260208_012238_067.mp4/file" },
+            { number: 44, name: "Facebook Hack APK", type: "APK", icon: "🔓", url: "https://www.mediafire.com/file/ha2mudmu1wryxex/facebook_1.0_.apk/file" },
+            { number: 45, name: "TikTok Free Likes", type: "Social", icon: "❤️", url: "https://tpi.li/TikTokfreeLikes" },
+            { number: 46, name: "WhatsApp Fake Reacts", type: "Social", icon: "👍", url: "https://tpi.li/WhatsAppFakeReacts" },
+            { number: 47, name: "Pak Fake Number Trick", type: "Trick", icon: "🇵🇰", url: "https://tpi.li/FakeNumberTrick" },
+            { number: 48, name: "UK Fake Number Trick", type: "Trick", icon: "🇬🇧", url: "https://tpi.li/UkFakeNumersUnlimited" },
+            { number: 49, name: "Perma Number Open", type: "Tool", icon: "📞", url: "https://tpi.li/PermaNumOpenLive" },
+            { number: 50, name: "Channel Ban Method", type: "Hack", icon: "🚫", url: "https://tpi.li/WaChannelsBan" },
+            { number: 51, name: "ChatGPT Premium 1 Year", type: "Premium", icon: "🤖", url: "https://tpi.li/OfficialChatgpt3MonthsFree" },
+            { number: 52, name: "Full Android Hack", type: "Hack", icon: "📱", url: "https://tpi.li/ANDROIDH4cK" },
+            { number: 53, name: "Carding Course Hindi", type: "Hack", icon: "💳", url: "https://tpi.li/CardingPrivateCourseLeaked" },
+            { number: 54, name: "Track Anyone Location", type: "Hack", icon: "📍", url: "https://tpi.li/LocationTrackAnyone" },
+            { number: 55, name: "Bug Bot File", type: "Tool", icon: "🐞", url: "https://tpi.li/WaBugBot" },
+            { number: 56, name: "Contacts Hack Method", type: "Hack", icon: "📱", url: "https://tpi.li/ContackHackMethod" },
+            { number: 57, name: "+93 Fake Number Trick", type: "Trick", icon: "🇦🇫", url: "https://tpi.li/93FakeNumberTrick" },
+            { number: 58, name: "+962 Fake Number Trick", type: "Trick", icon: "🇯🇴", url: "https://tpi.li/962FakeNumberTrick" },
+            { number: 59, name: "Facebook ID Ban", type: "Hack", icon: "👤", url: "https://tpi.li/FaceBookIdBan" },
+            { number: 60, name: "WiFi Hack From Mobile", type: "Hack", icon: "📶", url: "https://tpi.li/WifiHackFromMobile" }
         ];
 
-        // Initialize
-        window.onload = function() {
+        // Initialize after password
+        function initializeApp() {
             loadAllMethods();
             
             // Add search functionality
             document.getElementById('searchInput').addEventListener('input', searchMethods);
-        };
+            
+            // Focus on search after load
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 500);
+        }
 
         // Load All Methods
         function loadAllMethods() {
@@ -430,9 +587,8 @@
                 methodsHTML += `
                     <div class="method-card" data-name="${method.name.toLowerCase()}" data-type="${method.type}">
                         <div class="method-number">${method.number}</div>
+                        <div class="method-icon">${method.icon}</div>
                         <div class="method-name">${method.name}</div>
-                        <div class="method-type">${method.type}</div>
-                        <div class="method-url">${method.url.substring(0, 50)}...</div>
                         <a href="${method.url}" target="_blank">
                             <button class="method-btn">Download Now</button>
                         </a>
@@ -446,10 +602,10 @@
 
         // Show All Methods
         function showAll() {
-            updateActiveButton('All');
+            updateActiveButton('All Methods');
             const cards = document.querySelectorAll('.method-card');
             cards.forEach(card => {
-                card.style.display = 'block';
+                card.style.display = 'flex';
             });
             updateCounters();
         }
@@ -463,7 +619,7 @@
             cards.forEach(card => {
                 const cardType = card.getAttribute('data-type');
                 if (cardType === type) {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                     visibleCount++;
                 } else {
                     card.style.display = 'none';
@@ -484,7 +640,7 @@
                 const cardType = card.getAttribute('data-type');
                 
                 if (cardName.includes(searchTerm) || cardType.toLowerCase().includes(searchTerm) || searchTerm === '') {
-                    card.style.display = 'block';
+                    card.style.display = 'flex';
                     visibleCount++;
                 } else {
                     card.style.display = 'none';
@@ -506,16 +662,21 @@
                 }
             });
             
-            if (activeType === 'All') {
+            if (activeType === 'All Methods') {
                 document.querySelectorAll('.category-btn')[0].classList.add('active');
             }
         }
 
         // Update Counters
         function updateCounters() {
-            const visibleCards = document.querySelectorAll('.method-card[style="display: block"], .method-card:not([style])').length;
+            const visibleCards = document.querySelectorAll('.method-card[style="display: flex"], .method-card:not([style])').length;
             document.getElementById('visibleCount').textContent = visibleCards;
             document.getElementById('totalCount').textContent = methodsData.length;
+        }
+        
+        // Call initialize when password is correct
+        if (document.getElementById('passwordOverlay').style.display === 'none') {
+            initializeApp();
         }
     </script>
 </body>
