@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KHARAL STORE - Premium Hacks Store</title>
     
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -15,30 +12,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: #0a0c15; min-height: 100vh; }
 
-        /* Login/Register */
-        .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0f0f1a, #1a1a2e); padding: 20px; }
-        .auth-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(255,255,255,0.1); }
-        .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .auth-card .subtitle { text-align: center; color: #8b92a8; font-size: 14px; margin-bottom: 30px; }
-        .auth-card input { width: 100%; padding: 14px 16px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 14px; }
-        .auth-card input:focus { outline: none; border-color: #00a859; }
-        .auth-card button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .auth-card button:hover { transform: translateY(-2px); }
-        .switch-text { text-align: center; margin-top: 20px; font-size: 14px; color: #8b92a8; }
-        .switch-text span { color: #00a859; cursor: pointer; }
-        .error-msg { background: rgba(231,76,60,0.2); color: #e74c3c; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
-
         /* Main App */
-        .app-container { display: none; background: #0a0c15; min-height: 100vh; padding-bottom: 80px; }
+        .app-container { min-height: 100vh; padding-bottom: 80px; }
         
         /* Header */
         .main-header { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
         .logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .user-info { display: flex; align-items: center; gap: 15px; }
+        
         .balance-card { background: linear-gradient(135deg, #00a859, #008040); padding: 8px 18px; border-radius: 30px; text-align: center; }
         .balance-card .label { font-size: 10px; opacity: 0.8; color: white; }
         .balance-card .amount { font-size: 16px; font-weight: bold; color: white; }
-        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
 
         /* Store Section */
         .store-container { padding: 20px; }
@@ -88,18 +71,6 @@
         .purchase-card .product-price { font-size: 16px; font-weight: 700; color: #00a859; margin-bottom: 8px; }
         .download-link { display: inline-block; background: #00a859; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; margin-top: 8px; }
 
-        /* Profile Section */
-        .profile-container { padding: 20px; }
-        .profile-card { background: linear-gradient(135deg, #00d4ff20, #00a85920); border-radius: 20px; padding: 25px; text-align: center; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 32px; font-weight: bold; color: white; }
-        .profile-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
-        .profile-email { font-size: 12px; color: #8b92a8; }
-        .info-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-        .info-card p { margin: 8px 0; color: #cbd5e0; font-size: 14px; }
-        .info-card strong { color: #00a859; }
-        .copy-btn { width: 100%; padding: 12px; background: #00a859; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .logout-btn { width: 100%; padding: 12px; background: rgba(231,76,60,0.2); border: 1px solid #e74c3c; border-radius: 10px; color: #e74c3c; font-weight: 600; cursor: pointer; margin-top: 10px; }
-
         /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,12,21,0.95); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.05); z-index: 100; }
         .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; transition: all 0.3s; color: #8b92a8; }
@@ -120,45 +91,12 @@
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
-<div id="loginPage" class="auth-container">
-    <div class="auth-card">
-        <h2><i class="fas fa-store"></i> KHARAL STORE</h2>
-        <div class="subtitle">Welcome back! Login to your account</div>
-        <div id="loginError" class="error-msg"></div>
-        <input type="email" id="loginEmail" placeholder="Email Address">
-        <input type="password" id="loginPassword" placeholder="Password">
-        <button onclick="handleLogin()">Login</button>
-        <div class="switch-text">New customer? <span onclick="showRegister()">Create Account</span></div>
-    </div>
-</div>
-
-<!-- REGISTER PAGE -->
-<div id="registerPage" class="auth-container" style="display:none;">
-    <div class="auth-card">
-        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
-        <div class="subtitle">Join KHARAL STORE today!</div>
-        <div id="registerError" class="error-msg"></div>
-        <input type="text" id="regName" placeholder="Full Name">
-        <input type="email" id="regEmail" placeholder="Email Address">
-        <input type="tel" id="regPhone" placeholder="Phone Number">
-        <input type="text" id="regRef" placeholder="Referral Code (Optional)">
-        <input type="password" id="regPassword" placeholder="Password (min 6 chars)">
-        <input type="password" id="regConfirm" placeholder="Confirm Password">
-        <button onclick="handleRegister()">Register</button>
-        <div class="switch-text">Already have account? <span onclick="showLogin()">Login</span></div>
-    </div>
-</div>
-
-<!-- MAIN APP -->
-<div id="appSection" class="app-container">
+<!-- MAIN APP - NO LOGIN REQUIRED -->
+<div class="app-container">
     <!-- Header -->
     <div class="main-header">
         <div class="logo"><h2><i class="fas fa-skull"></i> KHARAL STORE</h2></div>
-        <div class="user-info">
-            <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
-            <div class="avatar" id="userAvatar" onclick="switchTab('profile')">U</div>
-        </div>
+        <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
     </div>
 
     <!-- Store View -->
@@ -182,9 +120,9 @@
         <div id="depositForm">
             <div class="deposit-info">
                 <i class="fas fa-mobile-alt" style="font-size: 40px; color: #00a859;"></i>
-                <h3>JazzCash</h3>
+                <h3>JazzCash / EasyPaisa</h3>
                 <div class="account-number" onclick="copyText('923292359951')">923292359951 <i class="fas fa-copy"></i></div>
-                <p>Account Title: Munir Ahmad</p>
+                <p>Account Title: Munir ahmad</p>
             </div>
             <div class="upload-area" onclick="document.getElementById('depositFile').click()">
                 <input type="file" id="depositFile" accept="image/*" hidden onchange="previewDeposit(this)">
@@ -204,30 +142,11 @@
         <div id="purchasesList" class="purchases-grid"></div>
     </div>
 
-    <!-- Profile View -->
-    <div id="profileView" class="profile-container" style="display:none;">
-        <div class="profile-card">
-            <div class="profile-avatar" id="profileAvatar">U</div>
-            <div class="profile-name" id="profileName">User</div>
-            <div class="profile-email" id="profileEmail">-</div>
-        </div>
-        <div class="info-card">
-            <p><strong>📱 Phone:</strong> <span id="profilePhone">-</span></p>
-            <p><strong>📅 Joined:</strong> <span id="profileJoined">-</span></p>
-            <p><strong>🔗 Referral Code:</strong> <span id="profileRefCode">-</span></p>
-            <button class="copy-btn" onclick="copyReferral()"><i class="fas fa-link"></i> Copy Referral Link</button>
-            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
-        <h3 style="margin:20px 0 10px;">Commission History</h3>
-        <div id="commissionHistory" class="purchases-grid"></div>
-    </div>
-
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('store')"><i class="fas fa-store"></i><span>Store</span></div>
         <div class="nav-item" onclick="switchTab('purchases')"><i class="fas fa-shopping-bag"></i><span>Purchases</span></div>
         <div class="nav-item" onclick="switchTab('deposit')"><i class="fas fa-wallet"></i><span>Deposit</span></div>
-        <div class="nav-item" onclick="switchTab('profile')"><i class="fas fa-user"></i><span>Profile</span></div>
     </div>
 </div>
 
@@ -240,28 +159,7 @@
 </div>
 
 <script>
-    // Firebase Config
-    const firebaseConfig = {
-        apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
-        authDomain: "long-d1bcb.firebaseapp.com",
-        databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
-        projectId: "long-d1bcb",
-        storageBucket: "long-d1bcb.firebasestorage.app",
-        messagingSenderId: "515546162619",
-        appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e"
-    };
-    
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    
-    const auth = firebase.auth();
-    const db = firebase.database();
-    
-    let currentUser = null;
-    let userData = null;
-    let depositFile = null;
-    let currentCategory = "All";
-    
-    // Products Data (Added from admin panel)
+    // Products Data
     const products = [
         { id: 1, name: "CAPCUT GOLDEN 2026", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247 },
         { id: 2, name: "CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892 },
@@ -291,6 +189,19 @@
     // Sort products by price high to low
     const sortedProducts = [...products].sort((a, b) => b.price - a.price);
     
+    // Store purchases in localStorage instead of Firebase
+    let purchases = JSON.parse(localStorage.getItem('khral_purchases') || '{}');
+    let balance = parseFloat(localStorage.getItem('khral_balance') || '0');
+    
+    let currentCategory = "All";
+    let depositFile = null;
+    
+    function updateBalanceDisplay() {
+        document.getElementById('headerBalance').innerText = `Rs ${balance.toFixed(2)}`;
+        document.getElementById('walletBalance').innerText = `Rs ${balance.toFixed(2)}`;
+        localStorage.setItem('khral_balance', balance);
+    }
+    
     function showToast(msg) {
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -300,103 +211,6 @@
     }
     
     function copyText(text) { navigator.clipboard.writeText(text); showToast("Copied: " + text); }
-    
-    function copyReferral() {
-        const link = window.location.origin + window.location.pathname + "?ref=" + currentUser.uid;
-        navigator.clipboard.writeText(link);
-        showToast("Referral link copied!");
-    }
-    
-    function showLogin() {
-        document.getElementById('loginPage').style.display = 'flex';
-        document.getElementById('registerPage').style.display = 'none';
-        document.getElementById('appSection').style.display = 'none';
-    }
-    
-    function showRegister() {
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('registerPage').style.display = 'flex';
-        document.getElementById('appSection').style.display = 'none';
-    }
-    
-    async function handleRegister() {
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-        const phone = document.getElementById('regPhone').value;
-        const refCode = document.getElementById('regRef').value;
-        const pass = document.getElementById('regPassword').value;
-        const confirm = document.getElementById('regConfirm').value;
-        const errorDiv = document.getElementById('registerError');
-        
-        if(!name || !email || !phone || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Fill all fields"; return; }
-        if(pass !== confirm) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Passwords don't match"; return; }
-        if(pass.length < 6) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Password min 6 characters"; return; }
-        errorDiv.style.display = 'none';
-        
-        try {
-            const user = await auth.createUserWithEmailAndPassword(email, pass);
-            await db.ref('users/' + user.user.uid).set({
-                username: name, email: email, phone: phone, balance: 0,
-                uid: user.user.uid, status: 'active', joinedDate: new Date().toLocaleDateString(),
-                referredBy: refCode || 'none', pendingCommission: 0, purchases: {}
-            });
-            if(refCode && refCode !== 'none') {
-                const refSnap = await db.ref('users').orderByChild('uid').equalTo(refCode).once('value');
-                if(refSnap.exists()) {
-                    const referrer = Object.values(refSnap.val())[0];
-                    await db.ref('users/' + refCode).update({ balance: (referrer.balance || 0) + 50 });
-                }
-            }
-            showToast("Account created! Please login.");
-            showLogin();
-        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
-    }
-    
-    async function handleLogin() {
-        const email = document.getElementById('loginEmail').value;
-        const pass = document.getElementById('loginPassword').value;
-        const errorDiv = document.getElementById('loginError');
-        if(!email || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Enter email and password"; return; }
-        errorDiv.style.display = 'none';
-        try {
-            const user = await auth.signInWithEmailAndPassword(email, pass);
-            currentUser = user.user;
-            loadUserData();
-        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
-    }
-    
-    async function loadUserData() {
-        db.ref('users/' + currentUser.uid).on('value', snap => {
-            userData = snap.val();
-            if(userData) {
-                document.getElementById('headerBalance').innerText = `Rs ${userData.balance || 0}`;
-                document.getElementById('walletBalance').innerText = `Rs ${userData.balance || 0}`;
-                document.getElementById('userAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
-                document.getElementById('profileAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
-                document.getElementById('profileName').innerText = userData.username;
-                document.getElementById('profileEmail').innerText = userData.email;
-                document.getElementById('profilePhone').innerText = userData.phone || '-';
-                document.getElementById('profileJoined').innerText = userData.joinedDate || '-';
-                document.getElementById('profileRefCode').innerText = currentUser.uid;
-            }
-        });
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('registerPage').style.display = 'none';
-        document.getElementById('appSection').style.display = 'block';
-        loadCategories();
-        renderProducts();
-        loadPurchases();
-        loadCommissionHistory();
-        switchTab('store');
-    }
-    
-    function logout() {
-        auth.signOut();
-        currentUser = null;
-        userData = null;
-        document.getElementById('appSection').style.display = 'none';
-        showLogin();
-    }
     
     function loadCategories() {
         const categories = ["All", ...new Set(sortedProducts.map(p => p.category))];
@@ -420,9 +234,8 @@
         
         const container = document.getElementById('productsList');
         container.innerHTML = filtered.map(product => {
-            const isPurchased = userData?.purchases?.[product.id];
-            const hasBalance = (userData?.balance || 0) >= product.price;
-            const canBuy = !isPurchased && hasBalance;
+            const isPurchased = purchases[product.id];
+            const canBuy = !isPurchased && balance >= product.price;
             
             return `
                 <div class="product-card">
@@ -437,7 +250,7 @@
                         <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
                         ${isPurchased ? 
                             `<button class="buy-btn purchased" onclick="downloadProduct(${product.id})"><i class="fas fa-download"></i> Download</button>` : 
-                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!hasBalance ? 'disabled style="opacity:0.5"' : ''}>Buy Now</button>`}
+                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!canBuy ? 'disabled style="opacity:0.5"' : ''}>Buy Now</button>`}
                     </div>
                 </div>
             `;
@@ -445,29 +258,28 @@
         if(container.innerHTML === '') container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No products found</div>';
     }
     
-    async function buyProduct(productId) {
+    function buyProduct(productId) {
         const product = sortedProducts.find(p => p.id === productId);
         if(!product) return;
-        if((userData?.balance || 0) < product.price) {
+        if(balance < product.price) {
             showToast(`Insufficient balance! Need Rs ${product.price}. Please deposit.`);
             switchTab('deposit');
             return;
         }
-        if(userData?.purchases?.[productId]) {
+        if(purchases[productId]) {
             showToast("You already purchased this product!");
             return;
         }
         if(confirm(`Buy "${product.name}" for Rs ${product.price}?`)) {
-            const newBalance = (userData.balance || 0) - product.price;
-            await db.ref('users/' + currentUser.uid).update({
-                balance: newBalance,
-                [`purchases/${productId}`]: {
-                    name: product.name,
-                    price: product.price,
-                    downloadLink: product.downloadLink,
-                    purchasedAt: new Date().toLocaleString()
-                }
-            });
+            balance -= product.price;
+            purchases[productId] = {
+                name: product.name,
+                price: product.price,
+                downloadLink: product.downloadLink,
+                purchasedAt: new Date().toLocaleString()
+            };
+            localStorage.setItem('khral_purchases', JSON.stringify(purchases));
+            updateBalanceDisplay();
             showToast(`Purchased "${product.name}" successfully!`);
             loadPurchases();
             renderProducts();
@@ -481,8 +293,7 @@
         }
     }
     
-    async function loadPurchases() {
-        const purchases = userData?.purchases || {};
+    function loadPurchases() {
         const container = document.getElementById('purchasesList');
         container.innerHTML = '';
         const items = Object.values(purchases);
@@ -499,18 +310,6 @@
                     <a href="${item.downloadLink}" target="_blank" class="download-link"><i class="fas fa-download"></i> Download</a>
                 </div>
             `;
-        });
-    }
-    
-    async function loadCommissionHistory() {
-        const commSnap = await db.ref('commissionHistory').orderByChild('referrerUID').equalTo(currentUser.uid).limitToLast(10).once('value');
-        const commissions = commSnap.val() || {};
-        const container = document.getElementById('commissionHistory');
-        container.innerHTML = '';
-        const items = Object.values(commissions).reverse();
-        if(items.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px; grid-column:1/-1; color:#8b92a8;">No commissions yet</div>'; return; }
-        items.forEach(comm => {
-            container.innerHTML += `<div class="purchase-card" style="display:block; text-align:left;"><div><strong>${comm.fromUsername}</strong> joined</div><div style="color:#00a859;">+Rs ${comm.amount}</div><div style="font-size:11px;">${comm.date}</div></div>`;
         });
     }
     
@@ -542,19 +341,20 @@
         reader.readAsDataURL(file);
     }
     
-    async function submitDeposit() {
+    function submitDeposit() {
         const amount = parseFloat(document.getElementById('depositAmount').value);
         const txn = document.getElementById('depositTxn').value;
         if(!depositFile) { showToast("Upload screenshot"); return; }
         if(amount < 300) { showToast("Min deposit 300"); return; }
         if(!txn) { showToast("Enter transaction ID"); return; }
+        
         compressImage(depositFile, async (compressed) => {
-            await db.ref('deposits').push({
-                uid: currentUser.uid, username: userData.username, amount: amount, tid: txn,
-                screenshot: compressed, status: 'pending', date: new Date().toLocaleString(),
-                referredBy: userData.referredBy || 'none'
-            });
-            showToast("Deposit request sent! Will be approved within 12 hours.");
+            // Store deposit request (for admin to approve)
+            // For now, instantly add balance (demo mode)
+            balance += amount;
+            updateBalanceDisplay();
+            showToast(`Rs ${amount} added to your balance! (Demo mode)`);
+            
             document.getElementById('depositAmount').value = '';
             document.getElementById('depositTxn').value = '';
             document.getElementById('depositPreview').style.display = 'none';
@@ -568,19 +368,17 @@
         document.getElementById('storeView').style.display = tab === 'store' ? 'block' : 'none';
         document.getElementById('depositView').style.display = tab === 'deposit' ? 'block' : 'none';
         document.getElementById('purchasesView').style.display = tab === 'purchases' ? 'block' : 'none';
-        document.getElementById('profileView').style.display = tab === 'profile' ? 'block' : 'none';
         if(tab === 'store') renderProducts();
         if(tab === 'purchases') loadPurchases();
-        if(tab === 'profile') loadCommissionHistory();
     }
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const refCode = urlParams.get('ref');
-    if(refCode) { setTimeout(() => { const refInput = document.getElementById('regRef'); if(refInput) refInput.value = refCode; }, 500); }
     
     document.getElementById('searchInput')?.addEventListener('input', () => renderProducts());
     
-    auth.onAuthStateChanged(user => { if(user) { currentUser = user; loadUserData(); } });
+    // Initialize
+    updateBalanceDisplay();
+    loadCategories();
+    renderProducts();
+    loadPurchases();
 </script>
 </body>
 </html>
