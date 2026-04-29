@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KHARAL STORE - Premium Digital Products</title>
+    <title>KHARAL STORE - Premium Hacks Store</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -13,93 +13,108 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #f5f7fb; min-height: 100vh; }
+        body { background: #0a0c15; min-height: 100vh; }
 
         /* Login/Register */
-        .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
-        .auth-card { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-        .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; color: #1a1a2e; }
-        .auth-card .subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 30px; }
-        .auth-card input { width: 100%; padding: 14px 16px; margin-bottom: 15px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 14px; }
-        .auth-card input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
-        .auth-card button { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .auth-card button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
-        .switch-text { text-align: center; margin-top: 20px; font-size: 14px; color: #666; }
-        .switch-text span { color: #667eea; cursor: pointer; font-weight: 600; }
-        .error-msg { background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
+        .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0f0f1a, #1a1a2e); padding: 20px; }
+        .auth-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(255,255,255,0.1); }
+        .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .auth-card .subtitle { text-align: center; color: #8b92a8; font-size: 14px; margin-bottom: 30px; }
+        .auth-card input { width: 100%; padding: 14px 16px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 14px; }
+        .auth-card input:focus { outline: none; border-color: #00a859; }
+        .auth-card button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .auth-card button:hover { transform: translateY(-2px); }
+        .switch-text { text-align: center; margin-top: 20px; font-size: 14px; color: #8b92a8; }
+        .switch-text span { color: #00a859; cursor: pointer; }
+        .error-msg { background: rgba(231,76,60,0.2); color: #e74c3c; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
 
         /* Main App */
-        .app-container { display: none; background: #f5f7fb; min-height: 100vh; padding-bottom: 80px; }
-        .main-header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .logo h2 { font-size: 22px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .app-container { display: none; background: #0a0c15; min-height: 100vh; padding-bottom: 80px; }
+        
+        /* Header */
+        .main-header { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .user-info { display: flex; align-items: center; gap: 15px; }
-        .balance-card { background: linear-gradient(135deg, #667eea, #764ba2); padding: 8px 18px; border-radius: 30px; text-align: center; }
+        .balance-card { background: linear-gradient(135deg, #00a859, #008040); padding: 8px 18px; border-radius: 30px; text-align: center; }
         .balance-card .label { font-size: 10px; opacity: 0.8; color: white; }
         .balance-card .amount { font-size: 16px; font-weight: bold; color: white; }
-        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
+        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
 
-        .search-section { padding: 15px 20px; background: white; margin-bottom: 5px; }
-        .search-box { display: flex; align-items: center; background: #f5f7fb; border-radius: 30px; padding: 8px 18px; }
-        .search-box i { color: #999; margin-right: 10px; }
-        .search-box input { flex: 1; border: none; background: transparent; font-size: 14px; padding: 10px 0; outline: none; }
+        /* Store Section */
+        .store-container { padding: 20px; }
+        .search-section { margin-bottom: 20px; }
+        .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.05); border-radius: 30px; padding: 12px 20px; }
+        .search-box i { color: #8b92a8; margin-right: 10px; }
+        .search-box input { flex: 1; background: transparent; border: none; color: white; font-size: 14px; outline: none; }
         
-        .categories { display: flex; overflow-x: auto; gap: 12px; padding: 15px 20px; background: white; white-space: nowrap; border-bottom: 1px solid #f0f0f0; }
-        .category-btn { padding: 8px 20px; background: #f5f7fb; border: none; border-radius: 30px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; color: #666; }
-        .category-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px; white-space: nowrap; }
+        .category-btn { padding: 8px 20px; background: rgba(255,255,255,0.05); border: none; border-radius: 30px; color: #8b92a8; font-size: 13px; cursor: pointer; transition: all 0.3s; }
+        .category-btn.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
 
-        .products-container { padding: 20px; }
-        .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr; } }
+        /* Products Grid - 2 per line on mobile, 3 on desktop */
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         
-        .product-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s; cursor: pointer; position: relative; }
-        .product-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .product-badge { position: absolute; top: 12px; left: 12px; background: #10b981; color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; z-index: 1; }
-        
-        .product-logo { height: 140px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #667eea20, #764ba220); }
-        .product-logo i { font-size: 55px; filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1)); }
-        .product-rating { position: absolute; bottom: 10px; left: 12px; background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 20px; font-size: 11px; color: #ffc107; }
-        
+        .product-card { background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: all 0.3s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
+        .product-card:hover { transform: translateY(-3px); border-color: #00a859; }
+        .product-icon { height: 120px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,168,89,0.1), rgba(0,212,255,0.1)); }
+        .product-icon i { font-size: 50px; color: #00a859; }
         .product-info { padding: 12px; }
-        .product-name { font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 34px; }
-        .product-price { font-size: 18px; font-weight: 800; color: #dc2626; margin-bottom: 5px; }
-        .product-sold { font-size: 10px; color: #999; margin-bottom: 5px; }
-        .buy-btn { width: 100%; padding: 8px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; transition: all 0.3s; }
-        .buy-btn:hover { transform: scale(1.02); }
-        .buy-btn.purchased { background: #10b981; }
+        .product-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price { font-size: 16px; font-weight: 800; color: #00a859; margin-bottom: 5px; }
+        .product-old-price { font-size: 11px; color: #8b92a8; text-decoration: line-through; margin-left: 5px; }
+        .product-discount { font-size: 11px; color: #ff4757; }
+        .buy-btn { width: 100%; padding: 8px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; transition: all 0.3s; }
+        .buy-btn:hover { opacity: 0.9; }
+        .buy-btn.purchased { background: #2ed573; cursor: default; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 10px 20px; border-top: 1px solid #f0f0f0; z-index: 100; }
-        .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; transition: all 0.3s; color: #999; }
-        .nav-item.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
-        .nav-item span { font-size: 10px; font-weight: 500; }
+        /* Deposit Section */
+        .deposit-container { padding: 20px; }
+        .wallet-balance { background: linear-gradient(135deg, #00a859, #008040); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .wallet-balance .label { font-size: 14px; opacity: 0.9; color: white; }
+        .wallet-balance .amount { font-size: 42px; font-weight: 800; color: white; }
+        .deposit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+        .deposit-info { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .deposit-info .account-number { font-size: 22px; font-weight: bold; color: #00a859; margin: 10px 0; cursor: pointer; }
+        .upload-area { border: 2px dashed #00a859; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 15px; }
+        .upload-area i { font-size: 30px; color: #00a859; }
 
-        /* Wallet Section */
-        .wallet-container { padding: 20px; }
-        .wallet-balance { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; color: white; }
-        .wallet-balance .amount { font-size: 42px; font-weight: 800; }
-        .deposit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
-        .deposit-info { background: #f5f7fb; border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .deposit-info .account-number { font-size: 22px; font-weight: bold; color: #667eea; margin: 10px 0; cursor: pointer; }
-        .upload-area { border: 2px dashed #ddd; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 15px; }
-        
         /* Purchases Section */
         .purchases-container { padding: 20px; }
-        .purchases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        @media (max-width: 768px) { .purchases-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .purchases-grid { grid-template-columns: 1fr; } }
-        .purchase-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 15px; text-align: center; }
-        .purchase-card .product-name { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-        .purchase-card .product-price { font-size: 16px; font-weight: 700; color: #10b981; margin-bottom: 8px; }
-        .download-link { display: inline-block; background: #667eea; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; margin-top: 8px; }
-        .download-link:hover { background: #764ba2; }
+        .purchases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .purchases-grid { grid-template-columns: repeat(3, 1fr); } }
+        .purchase-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .purchase-card .product-name { font-size: 14px; font-weight: 600; color: white; margin-bottom: 8px; }
+        .purchase-card .product-price { font-size: 16px; font-weight: 700; color: #00a859; margin-bottom: 8px; }
+        .download-link { display: inline-block; background: #00a859; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; margin-top: 8px; }
+
+        /* Profile Section */
+        .profile-container { padding: 20px; }
+        .profile-card { background: linear-gradient(135deg, #00d4ff20, #00a85920); border-radius: 20px; padding: 25px; text-align: center; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 32px; font-weight: bold; color: white; }
+        .profile-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .profile-email { font-size: 12px; color: #8b92a8; }
+        .info-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .info-card p { margin: 8px 0; color: #cbd5e0; font-size: 14px; }
+        .info-card strong { color: #00a859; }
+        .copy-btn { width: 100%; padding: 12px; background: #00a859; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .logout-btn { width: 100%; padding: 12px; background: rgba(231,76,60,0.2); border: 1px solid #e74c3c; border-radius: 10px; color: #e74c3c; font-weight: 600; cursor: pointer; margin-top: 10px; }
+
+        /* Bottom Navigation */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,12,21,0.95); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.05); z-index: 100; }
+        .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; transition: all 0.3s; color: #8b92a8; }
+        .nav-item.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
+        .nav-item span { font-size: 10px; font-weight: 500; }
 
         /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; border-radius: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 25px; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
-        .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; }
-        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; animation: fadeOut 3s ease forwards; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #1a1a2e; border-radius: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 25px; border: 1px solid rgba(0,168,89,0.3); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .modal-header h3 { color: #00a859; }
+        .close-modal { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #00a859; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; animation: fadeOut 3s ease forwards; font-size: 14px; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
     </style>
 </head>
@@ -137,43 +152,49 @@
 
 <!-- MAIN APP -->
 <div id="appSection" class="app-container">
+    <!-- Header -->
     <div class="main-header">
-        <div class="logo"><h2><i class="fas fa-store"></i> KHARAL STORE</h2></div>
+        <div class="logo"><h2><i class="fas fa-skull"></i> KHARAL STORE</h2></div>
         <div class="user-info">
             <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
             <div class="avatar" id="userAvatar" onclick="switchTab('profile')">U</div>
         </div>
     </div>
 
-    <!-- Products View -->
-    <div id="productsView">
-        <div class="search-section">
-            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()"></div>
+    <!-- Store View -->
+    <div id="storeView">
+        <div class="store-container">
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                </div>
+            </div>
+            <div class="categories" id="categoriesList"></div>
+            <div class="products-grid" id="productsList"></div>
         </div>
-        <div class="categories" id="categoriesList"></div>
-        <div class="products-container"><div class="products-grid" id="productsList"></div></div>
     </div>
 
-    <!-- Wallet View -->
-    <div id="walletView" class="wallet-container" style="display:none;">
+    <!-- Deposit View -->
+    <div id="depositView" class="deposit-container" style="display:none;">
         <div class="wallet-balance"><div class="label">Available Balance</div><div class="amount" id="walletBalance">Rs 0</div></div>
         <button class="deposit-btn" onclick="showDepositForm()"><i class="fas fa-arrow-down"></i> Add Balance</button>
         <div id="depositForm">
             <div class="deposit-info">
-                <i class="fas fa-mobile-alt" style="font-size: 40px; color: #667eea;"></i>
-                <h3>JazzCash / EasyPaisa</h3>
+                <i class="fas fa-mobile-alt" style="font-size: 40px; color: #00a859;"></i>
+                <h3>JazzCash</h3>
                 <div class="account-number" onclick="copyText('923292359951')">923292359951 <i class="fas fa-copy"></i></div>
-                <p>Account Title: Muhammad Zain</p>
+                <p>Account Title: Munir Ahmad</p>
             </div>
             <div class="upload-area" onclick="document.getElementById('depositFile').click()">
                 <input type="file" id="depositFile" accept="image/*" hidden onchange="previewDeposit(this)">
-                <i class="fas fa-cloud-upload-alt" style="font-size: 30px;"></i>
+                <i class="fas fa-cloud-upload-alt"></i>
                 <div>Upload payment screenshot</div>
-                <img id="depositPreview" style="width:100%; max-height:100px; border-radius:10px; display:none; margin-top:10px;">
+                <img id="depositPreview" style="width:100%; max-height:80px; border-radius:10px; display:none; margin-top:10px;">
             </div>
-            <input type="number" id="depositAmount" placeholder="Amount (Min 300)" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
-            <input type="text" id="depositTxn" placeholder="Transaction ID" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
-            <button onclick="submitDeposit()" style="width:100%; padding:14px; background:#667eea; border:none; border-radius:10px; color:white; font-weight:600;">Submit Deposit</button>
+            <input type="number" id="depositAmount" placeholder="Amount (Min 300)" style="width:100%; padding:12px; margin-bottom:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:white;">
+            <input type="text" id="depositTxn" placeholder="Transaction ID" style="width:100%; padding:12px; margin-bottom:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:white;">
+            <button onclick="submitDeposit()" style="width:100%; padding:14px; background:#00a859; border:none; border-radius:10px; color:white; font-weight:600;">Submit Deposit</button>
         </div>
     </div>
 
@@ -184,29 +205,33 @@
     </div>
 
     <!-- Profile View -->
-    <div id="profileView" class="wallet-container" style="display:none;">
-        <div class="wallet-balance"><div class="label">Welcome Back</div><div class="amount" id="profileName">User</div></div>
-        <div class="deposit-info">
-            <p><strong>📧 Email:</strong> <span id="profileEmail">-</span></p>
+    <div id="profileView" class="profile-container" style="display:none;">
+        <div class="profile-card">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-name" id="profileName">User</div>
+            <div class="profile-email" id="profileEmail">-</div>
+        </div>
+        <div class="info-card">
             <p><strong>📱 Phone:</strong> <span id="profilePhone">-</span></p>
             <p><strong>📅 Joined:</strong> <span id="profileJoined">-</span></p>
             <p><strong>🔗 Referral Code:</strong> <span id="profileRefCode">-</span></p>
-            <button onclick="copyReferral()" style="width:100%; margin-top:15px; background:#667eea; border:none; padding:12px; border-radius:10px; color:white; font-weight:600;">Copy Referral Link</button>
-            <button onclick="logout()" style="width:100%; margin-top:10px; background:#dc2626; border:none; padding:12px; border-radius:10px; color:white; font-weight:600;">Logout</button>
+            <button class="copy-btn" onclick="copyReferral()"><i class="fas fa-link"></i> Copy Referral Link</button>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
         <h3 style="margin:20px 0 10px;">Commission History</h3>
-        <div id="commissionHistory" class="order-history"></div>
+        <div id="commissionHistory" class="purchases-grid"></div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('products')"><i class="fas fa-store"></i><span>Store</span></div>
-        <div class="nav-item" onclick="switchTab('wallet')"><i class="fas fa-wallet"></i><span>Wallet</span></div>
+        <div class="nav-item active" onclick="switchTab('store')"><i class="fas fa-store"></i><span>Store</span></div>
         <div class="nav-item" onclick="switchTab('purchases')"><i class="fas fa-shopping-bag"></i><span>Purchases</span></div>
+        <div class="nav-item" onclick="switchTab('deposit')"><i class="fas fa-wallet"></i><span>Deposit</span></div>
         <div class="nav-item" onclick="switchTab('profile')"><i class="fas fa-user"></i><span>Profile</span></div>
     </div>
 </div>
 
+<!-- Product Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3 id="modalProductName">Product Details</h3><button class="close-modal" onclick="closeProductModal()">&times;</button></div>
@@ -215,6 +240,7 @@
 </div>
 
 <script>
+    // Firebase Config
     const firebaseConfig = {
         apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
         authDomain: "long-d1bcb.firebaseapp.com",
@@ -233,69 +259,37 @@
     let currentUser = null;
     let userData = null;
     let depositFile = null;
+    let currentCategory = "All";
     
-    // ========== ALL PRODUCTS (Quran ONLY free, rest all products from list) ==========
+    // Products Data (Added from admin panel)
     const products = [
-        // ONLY QURAN FREE
-        { id: 1, name: "QURAN PAK APK", price: 0, category: "Islamic", downloadLink: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file", icon: "fa-quran", iconColor: "#10b981", rating: 5.0, sold: 15432, priority: 1, isFree: true },
-        
-        // HIGH PRICE PRODUCTS
-        { id: 2, name: "WHATSAPP HACK PRO", price: 4000, category: "Hacking", downloadLink: "https://www.mediafire.com/file/egi0mrk7mvsnwdf/WHATSAPP_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 98 },
-        { id: 3, name: "DEEP WEB COURSE", price: 3700, category: "Courses", downloadLink: "https://mega.nz/folder/Z5szVLDK#RugBixrFIVJ2H5OE3gbEUQ", icon: "fa-globe", iconColor: "#8E44AD", rating: 4.7, sold: 567 },
-        { id: 4, name: "20K PREMIUM COURSES", price: 3500, category: "Courses", downloadLink: "https://www.mediafire.com/file/knaeb9wgd70gho3/20K_PRIUM_COURSES.txt/file", icon: "fa-graduation-cap", iconColor: "#3498DB", rating: 4.9, sold: 1234 },
-        { id: 5, name: "WHATSAPP HACK 3", price: 3500, category: "Hacking", downloadLink: "https://www.mediafire.com/file/5t78ojxf3gfnb88/WHATSAPP_HACK_METHOD_03_BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.4, sold: 87 },
-        { id: 6, name: "LOGIN BYPASS METHOD", price: 3100, category: "Hacking", downloadLink: "https://www.mediafire.com/file/19p8rl42xc8j2rn/SOCIAL_MEDIA_ACCOUNT_LOGIN_BYPASS.mp4/file", icon: "fa-unlock-alt", iconColor: "#F39C12", rating: 4.6, sold: 89 },
-        { id: 7, name: "WHATSAPP HACK 2", price: 2700, category: "Hacking", downloadLink: "https://www.mediafire.com/file/t9c17wlzlw5fptc/WHATSAPP_HACK_THROUGH_TERMUX_-__BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 123 },
-        { id: 8, name: "WIFI HACKER APK", price: 1200, category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432 },
-        { id: 9, name: "WEBSITE SOURCE CODE FINDER", price: 1400, category: "Tools", downloadLink: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file", icon: "fa-code", iconColor: "#3498DB", rating: 4.7, sold: 234 },
-        { id: 10, name: "SIM OWNER DETAILS APK", price: 600, category: "Tools", downloadLink: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file", icon: "fa-sim-card", iconColor: "#E67E22", rating: 4.6, sold: 543 },
-        { id: 11, name: "CAPCUT GOLDEN 2026", price: 700, category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247 },
-        { id: 12, name: "CAPCUT PRO IPHONE", price: 560, category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", rating: 4.7, sold: 543 },
-        { id: 13, name: "NETFLIX PREMIUM MOD", price: 560, category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", rating: 4.7, sold: 876 },
-        { id: 14, name: "CAPCUT PRO APK", price: 450, category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", rating: 4.9, sold: 2156 },
-        { id: 15, name: "DEEPSEEK PREMIUM", price: 450, category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", rating: 4.9, sold: 234 },
-        { id: 16, name: "MT MANAGER PRO", price: 450, category: "Tools", downloadLink: "https://www.mediafire.com/file/l8rdctw4yj8l8ks/MT_MANAGER_APK_BY_DARK_LEGEND.apk/file", icon: "fa-folder", iconColor: "#9B59B6", rating: 4.9, sold: 1234 },
-        { id: 17, name: "TIKTOK LIVE APK", price: 470, category: "APKs", downloadLink: "https://www.mediafire.com/file/4x3h0l3zsm4zfwf/TIKTOK_LIVE_APK_BY_DARK_LEGEND_333.apk/file", icon: "fa-tiktok", iconColor: "#000000", rating: 4.8, sold: 987 },
-        { id: 18, name: "SAFEUM WORKING APK", price: 460, category: "APKs", downloadLink: "https://www.mediafire.com/file/sgn1kxx638iggyk/SAFEUM_GOLD_BY_DARK_LEGEND.apk/file", icon: "fa-coins", iconColor: "#F1C40F", rating: 4.7, sold: 234 },
-        { id: 19, name: "CAPCUT PRO MODDED", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892 },
-        { id: 20, name: "KWAI CUT PRO", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", rating: 4.6, sold: 678 },
-        { id: 21, name: "WINK PREMIUM", price: 300, category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1678 },
-        { id: 22, name: "WINK PRO APK", price: 300, category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1234 },
-        { id: 23, name: "REMINI PREMIUM", price: 290, category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 2345 },
-        { id: 24, name: "REMINI PRO APK", price: 290, category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 1876 },
-        { id: 25, name: "PICSART PREMIUM", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1987 },
-        { id: 26, name: "PICSART PRO APK", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1654 },
-        { id: 27, name: "INSHOT PREMIUM", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 2345 },
-        { id: 28, name: "INSHOT PRO APK", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 1987 },
-        { id: 29, name: "YOUTUBE PREMIUM", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 3456 },
-        { id: 30, name: "YOUTUBE PRO APK", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 2987 },
-        { id: 31, name: "ALIGHT MOTION PRO", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1876 },
-        { id: 32, name: "ALIGHT MOTION PREMIUM", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1654 },
-        { id: 33, name: "DUAL SPACE PREMIUM", price: 250, category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 543 },
-        { id: 34, name: "DUAL SPACE PRO", price: 250, category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 432 },
-        { id: 35, name: "EXPORT LOGO MAKER", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/ew66a0zbj6up6ef/Esport+Logo_1.4.6.apk/file", icon: "fa-logo", iconColor: "#3498DB", rating: 4.5, sold: 321 },
-        { id: 36, name: "TELEGRAM PREMIUM", price: 250, category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.8, sold: 987 },
-        { id: 37, name: "TELEGRAM CLONE APK", price: 230, category: "APKs", downloadLink: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.7, sold: 654 }
+        { id: 1, name: "CAPCUT GOLDEN 2026", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247 },
+        { id: 2, name: "CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892 },
+        { id: 3, name: "CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", rating: 4.9, sold: 2156 },
+        { id: 4, name: "CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", rating: 4.7, sold: 543 },
+        { id: 5, name: "KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", rating: 4.6, sold: 678 },
+        { id: 6, name: "WINK PREMIUM", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1678 },
+        { id: 7, name: "WINK PRO APK", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1234 },
+        { id: 8, name: "REMINI PREMIUM", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 2345 },
+        { id: 9, name: "REMINI PRO APK", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 1876 },
+        { id: 10, name: "PICSART PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1987 },
+        { id: 11, name: "PICSART PRO APK", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1654 },
+        { id: 12, name: "INSHOT PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 2345 },
+        { id: 13, name: "INSHOT PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 1987 },
+        { id: 14, name: "YOUTUBE PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 3456 },
+        { id: 15, name: "YOUTUBE PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 2987 },
+        { id: 16, name: "ALIGHT MOTION PRO", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1876 },
+        { id: 17, name: "ALIGHT MOTION PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1654 },
+        { id: 18, name: "DUAL SPACE PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 543 },
+        { id: 19, name: "DUAL SPACE PRO", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 432 },
+        { id: 20, name: "DEEPSEEK PREMIUM", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", rating: 4.9, sold: 234 },
+        { id: 21, name: "TELEGRAM PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.8, sold: 987 },
+        { id: 22, name: "NETFLIX PREMIUM MOD", price: 560, oldPrice: 1999, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", rating: 4.7, sold: 876 },
+        { id: 23, name: "WIFI HACKER APK", price: 1200, oldPrice: 2999, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432 }
     ];
     
-    // Add remaining products
-    for (let i = 38; i <= 146; i++) {
-        products.push({
-            id: i, name: `Premium Product ${i-37}`, price: Math.floor(Math.random() * 500) + 100, 
-            category: ["APKs", "Tools", "Courses", "Hacking"][Math.floor(Math.random() * 4)],
-            downloadLink: "#", icon: "fa-box", iconColor: "#667eea", rating: 4.5, 
-            sold: Math.floor(Math.random() * 500) + 50
-        });
-    }
-    
-    // Sort: Quran first, then by price high to low
-    const sortedProducts = [...products].sort((a, b) => {
-        if (a.isFree) return -1;
-        if (b.isFree) return 1;
-        return b.price - a.price;
-    });
-    
-    let currentCategory = "All";
+    // Sort products by price high to low
+    const sortedProducts = [...products].sort((a, b) => b.price - a.price);
     
     function showToast(msg) {
         const toast = document.createElement('div');
@@ -337,7 +331,6 @@
         if(!name || !email || !phone || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Fill all fields"; return; }
         if(pass !== confirm) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Passwords don't match"; return; }
         if(pass.length < 6) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Password min 6 characters"; return; }
-        
         errorDiv.style.display = 'none';
         
         try {
@@ -379,6 +372,7 @@
                 document.getElementById('headerBalance').innerText = `Rs ${userData.balance || 0}`;
                 document.getElementById('walletBalance').innerText = `Rs ${userData.balance || 0}`;
                 document.getElementById('userAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
+                document.getElementById('profileAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
                 document.getElementById('profileName').innerText = userData.username;
                 document.getElementById('profileEmail').innerText = userData.email;
                 document.getElementById('profilePhone').innerText = userData.phone || '-';
@@ -393,14 +387,13 @@
         renderProducts();
         loadPurchases();
         loadCommissionHistory();
-        switchTab('products');
+        switchTab('store');
     }
     
     function logout() {
         auth.signOut();
         currentUser = null;
         userData = null;
-        document.getElementById('loginPage').style.display = 'flex';
         document.getElementById('appSection').style.display = 'none';
         showLogin();
     }
@@ -419,8 +412,6 @@
         renderProducts();
     }
     
-    function searchProducts() { renderProducts(); }
-    
     function renderProducts() {
         const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
         let filtered = sortedProducts;
@@ -431,46 +422,39 @@
         container.innerHTML = filtered.map(product => {
             const isPurchased = userData?.purchases?.[product.id];
             const hasBalance = (userData?.balance || 0) >= product.price;
-            const canBuy = product.price === 0 || (!isPurchased && hasBalance);
+            const canBuy = !isPurchased && hasBalance;
             
             return `
-                <div class="product-card ${!canBuy && product.price > 0 ? 'locked' : ''}" onclick="viewProduct(${product.id})">
-                    ${product.price === 0 ? `<div class="product-badge">FREE</div>` : ''}
-                    <div class="product-logo">
-                        <i class="fas ${product.icon}" style="color: ${product.iconColor}; font-size: 55px;"></i>
-                        <div class="product-rating"><i class="fas fa-star"></i> ${product.rating}</div>
-                    </div>
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas ${product.icon}" style="color: ${product.iconColor};"></i></div>
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
-                        <div class="product-price">${product.price === 0 ? 'FREE' : `Rs ${product.price}`}</div>
+                        <div class="product-price">
+                            Rs ${product.price}
+                            <span class="product-old-price">Rs ${product.oldPrice}</span>
+                            <span class="product-discount">${product.discount}</span>
+                        </div>
                         <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
                         ${isPurchased ? 
-                            '<button class="buy-btn purchased" onclick="event.stopPropagation();viewProduct(' + product.id + ')"><i class="fas fa-download"></i> Download</button>' : 
-                            (product.price === 0 ? 
-                                '<button class="buy-btn" onclick="event.stopPropagation();buyProduct(' + product.id + ')">Get Free</button>' :
-                                `<button class="buy-btn" onclick="event.stopPropagation();buyProduct(${product.id})">Buy Now</button>`)}
+                            `<button class="buy-btn purchased" onclick="downloadProduct(${product.id})"><i class="fas fa-download"></i> Download</button>` : 
+                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!hasBalance ? 'disabled style="opacity:0.5"' : ''}>Buy Now</button>`}
                     </div>
                 </div>
             `;
         }).join('');
-        if(container.innerHTML === '') container.innerHTML = '<div style="text-align:center; padding:40px;">No products found</div>';
+        if(container.innerHTML === '') container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No products found</div>';
     }
     
     async function buyProduct(productId) {
         const product = sortedProducts.find(p => p.id === productId);
         if(!product) return;
-        if(product.price === 0) {
-            await completePurchase(product);
-            return;
-        }
         if((userData?.balance || 0) < product.price) {
             showToast(`Insufficient balance! Need Rs ${product.price}. Please deposit.`);
-            switchTab('wallet');
+            switchTab('deposit');
             return;
         }
         if(userData?.purchases?.[productId]) {
             showToast("You already purchased this product!");
-            viewProduct(productId);
             return;
         }
         if(confirm(`Buy "${product.name}" for Rs ${product.price}?`)) {
@@ -484,50 +468,18 @@
                     purchasedAt: new Date().toLocaleString()
                 }
             });
-            await completePurchase(product);
+            showToast(`Purchased "${product.name}" successfully!`);
+            loadPurchases();
+            renderProducts();
         }
     }
     
-    async function completePurchase(product) {
-        await db.ref('orders/' + currentUser.uid).push({
-            productId: product.id, productName: product.name, price: product.price,
-            downloadLink: product.downloadLink, date: new Date().toLocaleString(), status: 'completed'
-        });
-        showToast(`Purchased "${product.name}" successfully!`);
-        loadPurchases();
-        renderProducts();
-    }
-    
-    function viewProduct(productId) {
+    function downloadProduct(productId) {
         const product = sortedProducts.find(p => p.id === productId);
-        if(!product) return;
-        const isPurchased = userData?.purchases?.[productId];
-        const modal = document.getElementById('productModal');
-        document.getElementById('modalProductName').innerHTML = product.name;
-        document.getElementById('productDetail').innerHTML = `
-            <div style="text-align:center;">
-                <div style="background: linear-gradient(135deg, ${product.iconColor}20, ${product.iconColor}40); width: 100px; height: 100px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas ${product.icon}" style="color: ${product.iconColor}; font-size: 50px;"></i>
-                </div>
-                <h3>${product.name}</h3>
-                <div style="font-size: 28px; font-weight: 800; color: #dc2626; margin: 15px 0;">${product.price === 0 ? 'FREE' : `Rs ${product.price}`}</div>
-                <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
-                ${isPurchased ? `
-                    <div style="background: #f5f7fb; padding: 15px; border-radius: 12px; margin: 15px 0;">
-                        <i class="fas fa-download"></i> Download Link:<br>
-                        <a href="${product.downloadLink}" target="_blank" style="color: #667eea; word-break: break-all;">${product.downloadLink.substring(0, 60)}...</a>
-                    </div>
-                    <button onclick="window.open('${product.downloadLink}', '_blank')" style="width:100%; padding: 12px; background: #10b981; border: none; border-radius: 10px; color: white; font-weight: 600;">Download Now</button>
-                ` : (product.price === 0 ? 
-                    `<button onclick="buyProduct(${product.id});closeProductModal()" style="width:100%; padding: 12px; background: #10b981; border: none; border-radius: 10px; color: white; font-weight: 600; margin-top: 15px;">Get Free</button>` :
-                    `<button onclick="buyProduct(${product.id});closeProductModal()" style="width:100%; padding: 12px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 10px; color: white; font-weight: 600; margin-top: 15px;">Buy Now</button>`)}
-                <button onclick="closeProductModal()" style="width:100%; margin-top: 10px; padding: 12px; background: #e0e0e0; border: none; border-radius: 10px; color: #333; font-weight: 600;">Close</button>
-            </div>
-        `;
-        modal.style.display = 'flex';
+        if(product && product.downloadLink) {
+            window.open(product.downloadLink, '_blank');
+        }
     }
-    
-    function closeProductModal() { document.getElementById('productModal').style.display = 'none'; }
     
     async function loadPurchases() {
         const purchases = userData?.purchases || {};
@@ -535,7 +487,7 @@
         container.innerHTML = '';
         const items = Object.values(purchases);
         if(items.length === 0) { 
-            container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1;">No purchases yet. Buy products from Store!</div>'; 
+            container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No purchases yet. Buy products from Store!</div>'; 
             return; 
         }
         items.forEach(item => {
@@ -556,9 +508,9 @@
         const container = document.getElementById('commissionHistory');
         container.innerHTML = '';
         const items = Object.values(commissions).reverse();
-        if(items.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">No commissions yet</div>'; return; }
+        if(items.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px; grid-column:1/-1; color:#8b92a8;">No commissions yet</div>'; return; }
         items.forEach(comm => {
-            container.innerHTML += `<div class="order-item" style="background:#f5f7fb; padding:12px; margin-bottom:8px; border-radius:10px;"><div><strong>${comm.fromUsername}</strong> joined</div><div style="color:#10b981;">+Rs ${comm.amount}</div><div style="font-size:11px;">${comm.date}</div></div>`;
+            container.innerHTML += `<div class="purchase-card" style="display:block; text-align:left;"><div><strong>${comm.fromUsername}</strong> joined</div><div style="color:#00a859;">+Rs ${comm.amount}</div><div style="font-size:11px;">${comm.date}</div></div>`;
         });
     }
     
@@ -613,11 +565,11 @@
     function switchTab(tab) {
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         event.target.closest('.nav-item').classList.add('active');
-        document.getElementById('productsView').style.display = tab === 'products' ? 'block' : 'none';
-        document.getElementById('walletView').style.display = tab === 'wallet' ? 'block' : 'none';
+        document.getElementById('storeView').style.display = tab === 'store' ? 'block' : 'none';
+        document.getElementById('depositView').style.display = tab === 'deposit' ? 'block' : 'none';
         document.getElementById('purchasesView').style.display = tab === 'purchases' ? 'block' : 'none';
         document.getElementById('profileView').style.display = tab === 'profile' ? 'block' : 'none';
-        if(tab === 'products') renderProducts();
+        if(tab === 'store') renderProducts();
         if(tab === 'purchases') loadPurchases();
         if(tab === 'profile') loadCommissionHistory();
     }
@@ -625,6 +577,8 @@
     const urlParams = new URLSearchParams(window.location.search);
     const refCode = urlParams.get('ref');
     if(refCode) { setTimeout(() => { const refInput = document.getElementById('regRef'); if(refInput) refInput.value = refCode; }, 500); }
+    
+    document.getElementById('searchInput')?.addEventListener('input', () => renderProducts());
     
     auth.onAuthStateChanged(user => { if(user) { currentUser = user; loadUserData(); } });
 </script>
