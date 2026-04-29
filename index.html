@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KHARAL STORE - Premium Hacks Store</title>
     
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
@@ -12,18 +15,30 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: #0a0c15; min-height: 100vh; }
 
+        /* Login/Register */
+        .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0a0c15, #1a1a2e); padding: 20px; }
+        .auth-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(255,255,255,0.1); }
+        .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .auth-card .subtitle { text-align: center; color: #8b92a8; font-size: 14px; margin-bottom: 30px; }
+        .auth-card input { width: 100%; padding: 14px 16px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 14px; }
+        .auth-card input:focus { outline: none; border-color: #00a859; }
+        .auth-card button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .auth-card button:hover { transform: translateY(-2px); }
+        .switch-text { text-align: center; margin-top: 20px; font-size: 14px; color: #8b92a8; }
+        .switch-text span { color: #00a859; cursor: pointer; }
+        .error-msg { background: rgba(231,76,60,0.2); color: #e74c3c; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
+
         /* Main App */
-        .app-container { min-height: 100vh; padding-bottom: 80px; }
+        .app-container { display: none; background: #0a0c15; min-height: 100vh; padding-bottom: 80px; }
         
-        /* Header */
         .main-header { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
         .logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        
+        .user-info { display: flex; align-items: center; gap: 15px; }
         .balance-card { background: linear-gradient(135deg, #00a859, #008040); padding: 8px 18px; border-radius: 30px; text-align: center; }
         .balance-card .label { font-size: 10px; opacity: 0.8; color: white; }
         .balance-card .amount { font-size: 16px; font-weight: bold; color: white; }
+        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
 
-        /* Store Section */
         .store-container { padding: 20px; }
         .search-section { margin-bottom: 20px; }
         .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.05); border-radius: 30px; padding: 12px 20px; }
@@ -31,27 +46,23 @@
         .search-box input { flex: 1; background: transparent; border: none; color: white; font-size: 14px; outline: none; }
         
         .categories { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px; white-space: nowrap; }
-        .category-btn { padding: 8px 20px; background: rgba(255,255,255,0.05); border: none; border-radius: 30px; color: #8b92a8; font-size: 13px; cursor: pointer; transition: all 0.3s; }
+        .category-btn { padding: 8px 20px; background: rgba(255,255,255,0.05); border: none; border-radius: 30px; color: #8b92a8; font-size: 13px; cursor: pointer; }
         .category-btn.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
 
-        /* Products Grid - 2 per line on mobile, 3 on desktop */
         .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         
-        .product-card { background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; transition: all 0.3s; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
-        .product-card:hover { transform: translateY(-3px); border-color: #00a859; }
+        .product-card { background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         .product-icon { height: 120px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,168,89,0.1), rgba(0,212,255,0.1)); }
         .product-icon i { font-size: 50px; color: #00a859; }
         .product-info { padding: 12px; }
-        .product-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 5px; }
         .product-price { font-size: 16px; font-weight: 800; color: #00a859; margin-bottom: 5px; }
         .product-old-price { font-size: 11px; color: #8b92a8; text-decoration: line-through; margin-left: 5px; }
         .product-discount { font-size: 11px; color: #ff4757; }
-        .buy-btn { width: 100%; padding: 8px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; transition: all 0.3s; }
-        .buy-btn:hover { opacity: 0.9; }
+        .buy-btn { width: 100%; padding: 8px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; }
         .buy-btn.purchased { background: #2ed573; cursor: default; }
 
-        /* Deposit Section */
         .deposit-container { padding: 20px; }
         .wallet-balance { background: linear-gradient(135deg, #00a859, #008040); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; }
         .wallet-balance .label { font-size: 14px; opacity: 0.9; color: white; }
@@ -60,25 +71,32 @@
         .deposit-info { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; }
         .deposit-info .account-number { font-size: 22px; font-weight: bold; color: #00a859; margin: 10px 0; cursor: pointer; }
         .upload-area { border: 2px dashed #00a859; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 15px; }
-        .upload-area i { font-size: 30px; color: #00a859; }
 
-        /* Purchases Section */
         .purchases-container { padding: 20px; }
         .purchases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         @media (min-width: 768px) { .purchases-grid { grid-template-columns: repeat(3, 1fr); } }
-        .purchase-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .purchase-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; text-align: center; }
         .purchase-card .product-name { font-size: 14px; font-weight: 600; color: white; margin-bottom: 8px; }
         .purchase-card .product-price { font-size: 16px; font-weight: 700; color: #00a859; margin-bottom: 8px; }
         .download-link { display: inline-block; background: #00a859; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; margin-top: 8px; }
 
-        /* Bottom Navigation */
+        .profile-container { padding: 20px; }
+        .profile-card { background: linear-gradient(135deg, #00d4ff20, #00a85920); border-radius: 20px; padding: 25px; text-align: center; margin-bottom: 20px; }
+        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 32px; font-weight: bold; color: white; }
+        .profile-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .profile-email { font-size: 12px; color: #8b92a8; }
+        .info-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .info-card p { margin: 8px 0; color: #cbd5e0; font-size: 14px; }
+        .info-card strong { color: #00a859; }
+        .copy-btn { width: 100%; padding: 12px; background: #00a859; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .logout-btn { width: 100%; padding: 12px; background: rgba(231,76,60,0.2); border: 1px solid #e74c3c; border-radius: 10px; color: #e74c3c; font-weight: 600; cursor: pointer; margin-top: 10px; }
+
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,12,21,0.95); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.05); z-index: 100; }
-        .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; transition: all 0.3s; color: #8b92a8; }
+        .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; color: #8b92a8; }
         .nav-item.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
         .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
         .nav-item span { font-size: 10px; font-weight: 500; }
 
-        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: #1a1a2e; border-radius: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 25px; border: 1px solid rgba(0,168,89,0.3); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -91,29 +109,56 @@
 </head>
 <body>
 
-<!-- MAIN APP - NO LOGIN REQUIRED -->
-<div class="app-container">
-    <!-- Header -->
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="auth-container">
+    <div class="auth-card">
+        <h2><i class="fas fa-store"></i> KHALAL STORE</h2>
+        <div class="subtitle">Welcome back! Login to your account</div>
+        <div id="loginError" class="error-msg"></div>
+        <input type="email" id="loginEmail" placeholder="Email Address">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="handleLogin()">Login</button>
+        <div class="switch-text">New customer? <span onclick="showRegister()">Create Account</span></div>
+    </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="auth-container" style="display:none;">
+    <div class="auth-card">
+        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+        <div class="subtitle">Join KHALAL STORE today!</div>
+        <div id="registerError" class="error-msg"></div>
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="email" id="regEmail" placeholder="Email Address">
+        <input type="tel" id="regPhone" placeholder="Phone Number">
+        <input type="text" id="regRef" placeholder="Referral Code (Optional)">
+        <input type="password" id="regPassword" placeholder="Password (min 6 chars)">
+        <input type="password" id="regConfirm" placeholder="Confirm Password">
+        <button onclick="handleRegister()">Register</button>
+        <div class="switch-text">Already have account? <span onclick="showLogin()">Login</span></div>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="appSection" class="app-container">
     <div class="main-header">
-        <div class="logo"><h2><i class="fas fa-skull"></i> KHARAL STORE</h2></div>
-        <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
+        <div class="logo"><h2><i class="fas fa-skull"></i> KHALAL STORE</h2></div>
+        <div class="user-info">
+            <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
+            <div class="avatar" id="userAvatar" onclick="switchTab('profile')">U</div>
+        </div>
     </div>
 
-    <!-- Store View -->
     <div id="storeView">
         <div class="store-container">
             <div class="search-section">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search products...">
-                </div>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search products..." onkeyup="renderProducts()"></div>
             </div>
             <div class="categories" id="categoriesList"></div>
             <div class="products-grid" id="productsList"></div>
         </div>
     </div>
 
-    <!-- Deposit View -->
     <div id="depositView" class="deposit-container" style="display:none;">
         <div class="wallet-balance"><div class="label">Available Balance</div><div class="amount" id="walletBalance">Rs 0</div></div>
         <button class="deposit-btn" onclick="showDepositForm()"><i class="fas fa-arrow-down"></i> Add Balance</button>
@@ -136,21 +181,36 @@
         </div>
     </div>
 
-    <!-- Purchases View -->
     <div id="purchasesView" class="purchases-container" style="display:none;">
         <h3 style="margin-bottom:20px;"><i class="fas fa-shopping-bag"></i> My Purchases</h3>
         <div id="purchasesList" class="purchases-grid"></div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <div id="profileView" class="profile-container" style="display:none;">
+        <div class="profile-card">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-name" id="profileName">User</div>
+            <div class="profile-email" id="profileEmail">-</div>
+        </div>
+        <div class="info-card">
+            <p><strong>📱 Phone:</strong> <span id="profilePhone">-</span></p>
+            <p><strong>📅 Joined:</strong> <span id="profileJoined">-</span></p>
+            <p><strong>🔗 Referral Code:</strong> <span id="profileRefCode">-</span></p>
+            <button class="copy-btn" onclick="copyReferral()"><i class="fas fa-link"></i> Copy Referral Link</button>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        <h3 style="margin:20px 0 10px;">Commission History</h3>
+        <div id="commissionHistory" class="purchases-grid"></div>
+    </div>
+
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('store')"><i class="fas fa-store"></i><span>Store</span></div>
         <div class="nav-item" onclick="switchTab('purchases')"><i class="fas fa-shopping-bag"></i><span>Purchases</span></div>
         <div class="nav-item" onclick="switchTab('deposit')"><i class="fas fa-wallet"></i><span>Deposit</span></div>
+        <div class="nav-item" onclick="switchTab('profile')"><i class="fas fa-user"></i><span>Profile</span></div>
     </div>
 </div>
 
-<!-- Product Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3 id="modalProductName">Product Details</h3><button class="close-modal" onclick="closeProductModal()">&times;</button></div>
@@ -159,48 +219,37 @@
 </div>
 
 <script>
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyD5DvpTiKztjQ_RivjOHqEsNh9K6MMFQJI",
+        authDomain: "kharal-b47b6.firebaseapp.com",
+        databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
+        projectId: "kharal-b47b6",
+        storageBucket: "kharal-b47b6.firebasestorage.app",
+        messagingSenderId: "528214841740",
+        appId: "1:528214841740:web:9b50ad13927e26c66e9ea9"
+    };
+    
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    
+    const auth = firebase.auth();
+    const db = firebase.database();
+    
+    let currentUser = null;
+    let userData = null;
+    let depositFile = null;
+    let currentCategory = "All";
+    
     // Products Data
     const products = [
-        { id: 1, name: "CAPCUT GOLDEN 2026", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247 },
-        { id: 2, name: "CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892 },
-        { id: 3, name: "CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", rating: 4.9, sold: 2156 },
-        { id: 4, name: "CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", rating: 4.7, sold: 543 },
-        { id: 5, name: "KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", rating: 4.6, sold: 678 },
-        { id: 6, name: "WINK PREMIUM", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1678 },
-        { id: 7, name: "WINK PRO APK", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1234 },
-        { id: 8, name: "REMINI PREMIUM", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 2345 },
-        { id: 9, name: "REMINI PRO APK", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 1876 },
-        { id: 10, name: "PICSART PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1987 },
-        { id: 11, name: "PICSART PRO APK", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1654 },
-        { id: 12, name: "INSHOT PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 2345 },
-        { id: 13, name: "INSHOT PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 1987 },
-        { id: 14, name: "YOUTUBE PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 3456 },
-        { id: 15, name: "YOUTUBE PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 2987 },
-        { id: 16, name: "ALIGHT MOTION PRO", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1876 },
-        { id: 17, name: "ALIGHT MOTION PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1654 },
-        { id: 18, name: "DUAL SPACE PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 543 },
-        { id: 19, name: "DUAL SPACE PRO", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 432 },
-        { id: 20, name: "DEEPSEEK PREMIUM", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", rating: 4.9, sold: 234 },
-        { id: 21, name: "TELEGRAM PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.8, sold: 987 },
-        { id: 22, name: "NETFLIX PREMIUM MOD", price: 560, oldPrice: 1999, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", rating: 4.7, sold: 876 },
-        { id: 23, name: "WIFI HACKER APK", price: 1200, oldPrice: 2999, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432 }
+        { id: 1, name: "CAPCUT GOLDEN 2026", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", sold: 1247 },
+        { id: 2, name: "CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", sold: 892 },
+        { id: 3, name: "CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", sold: 2156 },
+        { id: 4, name: "CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", sold: 543 },
+        { id: 5, name: "KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", sold: 678 }
     ];
     
-    // Sort products by price high to low
     const sortedProducts = [...products].sort((a, b) => b.price - a.price);
-    
-    // Store purchases in localStorage instead of Firebase
-    let purchases = JSON.parse(localStorage.getItem('khral_purchases') || '{}');
-    let balance = parseFloat(localStorage.getItem('khral_balance') || '0');
-    
-    let currentCategory = "All";
-    let depositFile = null;
-    
-    function updateBalanceDisplay() {
-        document.getElementById('headerBalance').innerText = `Rs ${balance.toFixed(2)}`;
-        document.getElementById('walletBalance').innerText = `Rs ${balance.toFixed(2)}`;
-        localStorage.setItem('khral_balance', balance);
-    }
     
     function showToast(msg) {
         const toast = document.createElement('div');
@@ -211,6 +260,101 @@
     }
     
     function copyText(text) { navigator.clipboard.writeText(text); showToast("Copied: " + text); }
+    
+    function copyReferral() {
+        const link = window.location.origin + window.location.pathname + "?ref=" + currentUser.uid;
+        navigator.clipboard.writeText(link);
+        showToast("Referral link copied!");
+    }
+    
+    function showLogin() {
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('registerPage').style.display = 'none';
+    }
+    
+    function showRegister() {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('registerPage').style.display = 'flex';
+    }
+    
+    async function handleRegister() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const refCode = document.getElementById('regRef').value;
+        const pass = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirm').value;
+        const errorDiv = document.getElementById('registerError');
+        
+        if(!name || !email || !phone || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Fill all fields"; return; }
+        if(pass !== confirm) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Passwords don't match"; return; }
+        if(pass.length < 6) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Password min 6 characters"; return; }
+        errorDiv.style.display = 'none';
+        
+        try {
+            const user = await auth.createUserWithEmailAndPassword(email, pass);
+            await db.ref('users/' + user.user.uid).set({
+                username: name, email: email, phone: phone, balance: 0,
+                uid: user.user.uid, status: 'active', joinedDate: new Date().toLocaleDateString(),
+                referredBy: refCode || 'none', pendingCommission: 0, purchases: {}
+            });
+            if(refCode && refCode !== 'none') {
+                const refSnap = await db.ref('users').orderByChild('uid').equalTo(refCode).once('value');
+                if(refSnap.exists()) {
+                    const referrer = Object.values(refSnap.val())[0];
+                    await db.ref('users/' + refCode).update({ balance: (referrer.balance || 0) + 50 });
+                }
+            }
+            showToast("Account created! Please login.");
+            showLogin();
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
+    }
+    
+    async function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('loginError');
+        if(!email || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Enter email and password"; return; }
+        errorDiv.style.display = 'none';
+        try {
+            const user = await auth.signInWithEmailAndPassword(email, pass);
+            currentUser = user.user;
+            loadUserData();
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
+    }
+    
+    async function loadUserData() {
+        db.ref('users/' + currentUser.uid).on('value', snap => {
+            userData = snap.val();
+            if(userData) {
+                document.getElementById('headerBalance').innerText = `Rs ${userData.balance || 0}`;
+                document.getElementById('walletBalance').innerText = `Rs ${userData.balance || 0}`;
+                document.getElementById('userAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
+                document.getElementById('profileAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
+                document.getElementById('profileName').innerText = userData.username;
+                document.getElementById('profileEmail').innerText = userData.email;
+                document.getElementById('profilePhone').innerText = userData.phone || '-';
+                document.getElementById('profileJoined').innerText = userData.joinedDate || '-';
+                document.getElementById('profileRefCode').innerText = currentUser.uid;
+            }
+        });
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('registerPage').style.display = 'none';
+        document.getElementById('appSection').style.display = 'block';
+        loadCategories();
+        renderProducts();
+        loadPurchases();
+        loadCommissionHistory();
+        switchTab('store');
+    }
+    
+    function logout() {
+        auth.signOut();
+        currentUser = null;
+        userData = null;
+        document.getElementById('appSection').style.display = 'none';
+        showLogin();
+    }
     
     function loadCategories() {
         const categories = ["All", ...new Set(sortedProducts.map(p => p.category))];
@@ -234,8 +378,8 @@
         
         const container = document.getElementById('productsList');
         container.innerHTML = filtered.map(product => {
-            const isPurchased = purchases[product.id];
-            const canBuy = !isPurchased && balance >= product.price;
+            const isPurchased = userData?.purchases?.[product.id];
+            const hasBalance = (userData?.balance || 0) >= product.price;
             
             return `
                 <div class="product-card">
@@ -250,7 +394,7 @@
                         <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
                         ${isPurchased ? 
                             `<button class="buy-btn purchased" onclick="downloadProduct(${product.id})"><i class="fas fa-download"></i> Download</button>` : 
-                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!canBuy ? 'disabled style="opacity:0.5"' : ''}>Buy Now</button>`}
+                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!hasBalance ? 'disabled style="opacity:0.5"' : ''}>Buy Now</button>`}
                     </div>
                 </div>
             `;
@@ -258,28 +402,32 @@
         if(container.innerHTML === '') container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No products found</div>';
     }
     
-    function buyProduct(productId) {
+    async function buyProduct(productId) {
         const product = sortedProducts.find(p => p.id === productId);
         if(!product) return;
-        if(balance < product.price) {
+        if((userData?.balance || 0) < product.price) {
             showToast(`Insufficient balance! Need Rs ${product.price}. Please deposit.`);
             switchTab('deposit');
             return;
         }
-        if(purchases[productId]) {
+        if(userData?.purchases?.[productId]) {
             showToast("You already purchased this product!");
             return;
         }
         if(confirm(`Buy "${product.name}" for Rs ${product.price}?`)) {
-            balance -= product.price;
-            purchases[productId] = {
-                name: product.name,
-                price: product.price,
-                downloadLink: product.downloadLink,
-                purchasedAt: new Date().toLocaleString()
-            };
-            localStorage.setItem('khral_purchases', JSON.stringify(purchases));
-            updateBalanceDisplay();
+            const newBalance = (userData.balance || 0) - product.price;
+            await db.ref('users/' + currentUser.uid).update({
+                balance: newBalance,
+                [`purchases/${productId}`]: {
+                    name: product.name,
+                    price: product.price,
+                    downloadLink: product.downloadLink,
+                    purchasedAt: new Date().toLocaleString()
+                }
+            });
+            await db.ref('orders/' + currentUser.uid).push({
+                productName: product.name, amount: product.price, date: new Date().toLocaleString()
+            });
             showToast(`Purchased "${product.name}" successfully!`);
             loadPurchases();
             renderProducts();
@@ -293,7 +441,8 @@
         }
     }
     
-    function loadPurchases() {
+    async function loadPurchases() {
+        const purchases = userData?.purchases || {};
         const container = document.getElementById('purchasesList');
         container.innerHTML = '';
         const items = Object.values(purchases);
@@ -310,6 +459,18 @@
                     <a href="${item.downloadLink}" target="_blank" class="download-link"><i class="fas fa-download"></i> Download</a>
                 </div>
             `;
+        });
+    }
+    
+    async function loadCommissionHistory() {
+        const commSnap = await db.ref('commissionHistory').orderByChild('referrerUID').equalTo(currentUser.uid).limitToLast(10).once('value');
+        const commissions = commSnap.val() || {};
+        const container = document.getElementById('commissionHistory');
+        container.innerHTML = '';
+        const items = Object.values(commissions).reverse();
+        if(items.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px; grid-column:1/-1; color:#8b92a8;">No commissions yet</div>'; return; }
+        items.forEach(comm => {
+            container.innerHTML += `<div class="purchase-card" style="display:block; text-align:left;"><div><strong>${comm.fromUsername}</strong> joined</div><div style="color:#00a859;">+Rs ${comm.amount}</div><div style="font-size:11px;">${comm.date}</div></div>`;
         });
     }
     
@@ -341,20 +502,19 @@
         reader.readAsDataURL(file);
     }
     
-    function submitDeposit() {
+    async function submitDeposit() {
         const amount = parseFloat(document.getElementById('depositAmount').value);
         const txn = document.getElementById('depositTxn').value;
         if(!depositFile) { showToast("Upload screenshot"); return; }
         if(amount < 300) { showToast("Min deposit 300"); return; }
         if(!txn) { showToast("Enter transaction ID"); return; }
-        
         compressImage(depositFile, async (compressed) => {
-            // Store deposit request (for admin to approve)
-            // For now, instantly add balance (demo mode)
-            balance += amount;
-            updateBalanceDisplay();
-            showToast(`Rs ${amount} added to your balance! (Demo mode)`);
-            
+            await db.ref('deposits').push({
+                uid: currentUser.uid, username: userData.username, amount: amount, tid: txn,
+                screenshot: compressed, status: 'pending', date: new Date().toLocaleString(),
+                referredBy: userData.referredBy || 'none'
+            });
+            showToast("Deposit request sent! Will be approved within 12 hours.");
             document.getElementById('depositAmount').value = '';
             document.getElementById('depositTxn').value = '';
             document.getElementById('depositPreview').style.display = 'none';
@@ -368,17 +528,17 @@
         document.getElementById('storeView').style.display = tab === 'store' ? 'block' : 'none';
         document.getElementById('depositView').style.display = tab === 'deposit' ? 'block' : 'none';
         document.getElementById('purchasesView').style.display = tab === 'purchases' ? 'block' : 'none';
+        document.getElementById('profileView').style.display = tab === 'profile' ? 'block' : 'none';
         if(tab === 'store') renderProducts();
         if(tab === 'purchases') loadPurchases();
+        if(tab === 'profile') loadCommissionHistory();
     }
     
-    document.getElementById('searchInput')?.addEventListener('input', () => renderProducts());
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if(refCode) { setTimeout(() => { const refInput = document.getElementById('regRef'); if(refInput) refInput.value = refCode; }, 500); }
     
-    // Initialize
-    updateBalanceDisplay();
-    loadCategories();
-    renderProducts();
-    loadPurchases();
+    auth.onAuthStateChanged(user => { if(user) { currentUser = user; loadUserData(); } });
 </script>
 </body>
 </html>
