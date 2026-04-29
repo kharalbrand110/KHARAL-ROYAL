@@ -15,7 +15,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: #f5f7fb; min-height: 100vh; }
 
-        /* Login/Register */
         .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
         .auth-card { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
         .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; color: #1a1a2e; }
@@ -28,7 +27,6 @@
         .switch-text span { color: #667eea; cursor: pointer; font-weight: 600; }
         .error-msg { background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
 
-        /* Main App */
         .app-container { display: none; background: #f5f7fb; min-height: 100vh; padding-bottom: 80px; }
         .main-header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
         .logo h2 { font-size: 22px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -38,7 +36,6 @@
         .balance-card .amount { font-size: 16px; font-weight: bold; color: white; }
         .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
 
-        /* Search & Categories */
         .search-section { padding: 15px 20px; background: white; margin-bottom: 5px; }
         .search-box { display: flex; align-items: center; background: #f5f7fb; border-radius: 30px; padding: 8px 18px; }
         .search-box i { color: #999; margin-right: 10px; }
@@ -47,7 +44,6 @@
         .category-btn { padding: 8px 20px; background: #f5f7fb; border: none; border-radius: 30px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; color: #666; }
         .category-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
 
-        /* Products Grid */
         .products-container { padding: 20px; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         .product-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s; cursor: pointer; position: relative; }
@@ -59,13 +55,11 @@
         .product-logo { height: 160px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .product-logo i { font-size: 65px; filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1)); }
         .product-rating { position: absolute; bottom: 10px; left: 12px; background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 20px; font-size: 11px; color: #ffc107; }
-        .product-rating i { font-size: 10px; margin-right: 4px; }
         
         .product-info { padding: 15px; }
-        .product-name { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+        .product-name { font-size: 15px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .product-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
         .product-price { font-size: 20px; font-weight: 800; color: #dc2626; }
-        .product-price span { font-size: 12px; font-weight: normal; }
         .product-old-price { font-size: 13px; color: #999; text-decoration: line-through; }
         .product-discount { font-size: 12px; color: #10b981; font-weight: 600; }
         .product-sold { font-size: 12px; color: #999; margin-bottom: 8px; }
@@ -74,17 +68,14 @@
         .buy-btn:hover { transform: scale(1.02); }
         .buy-btn.purchased { background: #10b981; }
 
-        /* Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #f0f0f0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 12px 20px; border-top: 1px solid #f0f0f0; }
         .nav-item { text-align: center; cursor: pointer; padding: 8px 16px; border-radius: 30px; transition: all 0.3s; color: #999; }
         .nav-item.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
         .nav-item i { font-size: 20px; display: block; margin-bottom: 4px; }
         .nav-item span { font-size: 11px; font-weight: 500; }
 
-        /* Wallet */
         .wallet-container { padding: 20px; }
         .wallet-balance { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; color: white; }
-        .wallet-balance .label { font-size: 14px; opacity: 0.9; }
         .wallet-balance .amount { font-size: 42px; font-weight: 800; }
         .action-buttons { display: flex; gap: 15px; margin-bottom: 30px; }
         .action-buttons button { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
@@ -96,11 +87,9 @@
         .order-history { max-height: 400px; overflow-y: auto; }
         .order-item { background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: white; border-radius: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 25px; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
-        .modal-header h3 { color: #1a1a2e; }
         .close-modal { background: none; border: none; font-size: 24px; cursor: pointer; }
         .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; animation: fadeOut 3s ease forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
@@ -151,7 +140,7 @@
 
     <div id="productsView">
         <div class="search-section">
-            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()"></div>
+            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search 146+ products..." onkeyup="searchProducts()"></div>
         </div>
         <div class="categories" id="categoriesList"></div>
         <div class="products-container"><div class="products-grid" id="productsList"></div></div>
@@ -172,13 +161,13 @@
             </div>
             <div class="upload-area" onclick="document.getElementById('depositFile').click()">
                 <input type="file" id="depositFile" accept="image/*" hidden onchange="previewDeposit(this)">
-                <i class="fas fa-cloud-upload-alt" style="font-size: 30px; color: #667eea;"></i>
-                <div>Click to upload payment screenshot</div>
-                <img id="depositPreview" style="width: 100%; max-height: 100px; border-radius: 10px; display: none; margin-top: 10px;">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 30px;"></i>
+                <div>Upload payment screenshot</div>
+                <img id="depositPreview" style="width:100%; max-height:100px; border-radius:10px; display:none; margin-top:10px;">
             </div>
             <input type="number" id="depositAmount" placeholder="Amount (Min 300)" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
             <input type="text" id="depositTxn" placeholder="Transaction ID" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
-            <button onclick="submitDeposit()" style="width:100%; padding:14px; background:#667eea; border:none; border-radius:10px; color:white; font-weight:600;">Submit Deposit Request</button>
+            <button onclick="submitDeposit()" style="width:100%; padding:14px; background:#667eea; border:none; border-radius:10px; color:white; font-weight:600;">Submit Deposit</button>
         </div>
         <div id="withdrawForm" style="display:none;">
             <div class="deposit-info"><h3>Withdraw Funds</h3><p>Minimum withdrawal: Rs 1000</p></div>
@@ -188,9 +177,9 @@
             <input type="text" id="withdrawAccount" placeholder="Account Number" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
             <input type="text" id="withdrawName" placeholder="Account Holder Name" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
             <input type="number" id="withdrawAmount" placeholder="Amount (Min 1000)" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #e0e0e0; border-radius:10px;">
-            <button onclick="submitWithdraw()" style="width:100%; padding:14px; background:#dc2626; border:none; border-radius:10px; color:white; font-weight:600;">Submit Withdraw Request</button>
+            <button onclick="submitWithdraw()" style="width:100%; padding:14px; background:#dc2626; border:none; border-radius:10px; color:white; font-weight:600;">Submit Withdraw</button>
         </div>
-        <h3 style="margin: 20px 0 10px;">My Purchases</h3>
+        <h3 style="margin:20px 0 10px;">My Purchases</h3>
         <div id="orderHistory" class="order-history"></div>
     </div>
 
@@ -204,7 +193,7 @@
             <button onclick="copyReferral()" style="width:100%; margin-top:15px; background:#667eea; border:none; padding:12px; border-radius:10px; color:white; font-weight:600;">Copy Referral Link</button>
             <button onclick="logout()" style="width:100%; margin-top:10px; background:#dc2626; border:none; padding:12px; border-radius:10px; color:white; font-weight:600;">Logout</button>
         </div>
-        <h3 style="margin: 20px 0 10px;">Commission History</h3>
+        <h3 style="margin:20px 0 10px;">Commission History</h3>
         <div id="commissionHistory" class="order-history"></div>
     </div>
 
@@ -223,15 +212,16 @@
 </div>
 
 <script>
+    // 🔥 NEW FIREBASE CONFIG 🔥
     const firebaseConfig = {
-  apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
-  authDomain: "long-d1bcb.firebaseapp.com",
-  projectId: "long-d1bcb",
-  storageBucket: "long-d1bcb.firebasestorage.app",
-  messagingSenderId: "515546162619",
-  appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e",
-  measurementId: "G-EQGWR7E0ZV"
-};
+        apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
+        authDomain: "long-d1bcb.firebaseapp.com",
+        databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
+        projectId: "long-d1bcb",
+        storageBucket: "long-d1bcb.firebasestorage.app",
+        messagingSenderId: "515546162619",
+        appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e"
+    };
     
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     
@@ -241,128 +231,73 @@
     let currentUser = null;
     let userData = null;
     let depositFile = null;
-    let selectedProduct = null;
     
-    // Complete Products Array (All 146 products - Quran First, No Duplicates)
-    const productsRaw = [
-        // ========== QURAN FIRST (FREE ISLAMIC PRODUCTS) ==========
-        { id: 1, name: "📖 QURAN PAK APK", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file", icon: "fa-quran", iconColor: "#10b981", rating: 5.0, sold: 15432, location: "Holy Quran", priority: 1, isFree: true },
-        { id: 2, name: "📖 QURAN KAREEM ONLINE", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://tasleemalquran.com/read-quran-online-para-1-to-30/", icon: "fa-star-and-crescent", iconColor: "#10b981", rating: 5.0, sold: 9876, location: "Read Online", priority: 1, isFree: true },
-        { id: 3, name: "🎬 CAPCUT GOLDEN 2026 APK", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247, location: "Premium Edition", priority: 2 },
-        { id: 4, name: "🎬 CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892, location: "Latest Version", priority: 2 },
-        { id: 5, name: "🎬 CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", rating: 4.9, sold: 2156, location: "New Update", priority: 2 },
-        { id: 6, name: "🎬 CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", rating: 4.7, sold: 543, location: "iOS Version", priority: 2 },
-        { id: 7, name: "🎬 KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", rating: 4.6, sold: 678, location: "Editing Tool", priority: 2 },
-        { id: 8, name: "🎬 WINK PREMIUM", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1678, location: "Beauty Editor", priority: 2 },
-        { id: 9, name: "🎬 WINK PRO APK", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1234, location: "Pro Version", priority: 2 },
-        { id: 10, name: "🖼️ REMINI PREMIUM", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 2345, location: "Photo Enhancer", priority: 2 },
-        { id: 11, name: "🖼️ REMINI PRO APK", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 1876, location: "Pro Version", priority: 2 },
-        { id: 12, name: "🎨 PICSART PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1987, location: "Design Studio", priority: 2 },
-        { id: 13, name: "🎨 PICSART PRO APK", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1654, location: "Pro Version", priority: 2 },
-        { id: 14, name: "🎬 INSHOT PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 2345, location: "Video Editor", priority: 2 },
-        { id: 15, name: "🎬 INSHOT PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 1987, location: "Pro Version", priority: 2 },
-        { id: 16, name: "📺 YOUTUBE PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 3456, location: "No Ads", priority: 2 },
-        { id: 17, name: "📺 YOUTUBE PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 2987, location: "Pro Version", priority: 2 },
-        { id: 18, name: "📺 YOUTUBE PRO APK V2", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.7, sold: 1876, location: "Latest Version", priority: 2 },
-        { id: 19, name: "🎬 ALIGHT MOTION PRO", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1876, location: "Motion Graphics", priority: 2 },
-        { id: 20, name: "🎬 ALIGHT MOTION PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1654, location: "Premium Edition", priority: 2 },
-        { id: 21, name: "📱 DUAL SPACE PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 543, location: "App Cloner", priority: 2 },
-        { id: 22, name: "📱 DUAL SPACE PRO", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 432, location: "Pro Version", priority: 2 },
-        { id: 23, name: "🎨 EXPORT LOGO MAKER", price: 250, oldPrice: 599, discount: "58%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ew66a0zbj6up6ef/Esport+Logo_1.4.6.apk/file", icon: "fa-logo", iconColor: "#3498DB", rating: 4.5, sold: 321, location: "Logo Design", priority: 2 },
-        { id: 24, name: "🤖 DEEPSEEK PREMIUM", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", rating: 4.9, sold: 234, location: "AI Assistant", priority: 2 },
-        { id: 25, name: "💬 TELEGRAM PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.8, sold: 987, location: "Messenger", priority: 2 },
-        { id: 26, name: "💬 TELEGRAM CLONE APK", price: 230, oldPrice: 599, discount: "62%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.7, sold: 654, location: "Clone App", priority: 2 },
-        { id: 27, name: "📺 NETFLIX PREMIUM MOD", price: 560, oldPrice: 1999, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", rating: 4.7, sold: 876, location: "Streaming", priority: 2 },
-        { id: 28, name: "🖼️ PHOTOLEAP PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file", icon: "fa-camera", iconColor: "#FF9671", rating: 4.8, sold: 543, location: "Photo Editor", priority: 2 },
-        { id: 29, name: "📧 TEMP MAIL PREMIUM", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file", icon: "fa-envelope", iconColor: "#3498DB", rating: 4.6, sold: 876, location: "Temp Email", priority: 2 },
-        { id: 30, name: "💬 WHATSAPP BAN APK", price: 456, oldPrice: 1299, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/3nlu40d77d91ma8/WHATSAPP_BAN_APK_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 432, location: "Ban Tool", priority: 2 },
-        { id: 31, name: "💬 WHATSAPP UNBAN APK", price: 466, oldPrice: 1299, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/3nlu40d77d91ma8/WHATSAPP_UNBAN_APK_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 387, location: "Unban Tool", priority: 2 },
-        { id: 32, name: "💬 WHATSAPP FAKE CHAT APK", price: 450, oldPrice: 999, discount: "55%", category: "APKs", downloadLink: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.6, sold: 543, location: "Fake Chat", priority: 2 },
-        { id: 33, name: "💬 ANTI CRASH WHATSAPP APK", price: 450, oldPrice: 999, discount: "55%", category: "APKs", downloadLink: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.7, sold: 321, location: "Anti Crash", priority: 2 },
-        { id: 34, name: "🔧 WIFI HACKER APK", price: 1200, oldPrice: 2999, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432, location: "Security Tool", priority: 2 },
-        { id: 35, name: "🎤 VOICE CHANGER APK", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk", icon: "fa-microphone", iconColor: "#E74C3C", rating: 4.6, sold: 654, location: "Voice Mod", priority: 2 },
-        { id: 36, name: "🎤 VOICE CHANGER MOD APK", price: 550, oldPrice: 1499, discount: "63%", category: "APKs", downloadLink: "https://www.mediafire.com/file/e344g9zheemn02m/VOICE_CHANGER_MOD_BY_DARK_LEGEND.apk/file", icon: "fa-microphone", iconColor: "#E74C3C", rating: 4.7, sold: 432, location: "Mod Version", priority: 2 },
-        { id: 37, name: "📱 APP CLONER PRO", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file", icon: "fa-copy", iconColor: "#9B59B6", rating: 4.8, sold: 876, location: "App Cloner", priority: 2 },
-        { id: 38, name: "📱 SHELTER APK CLONER", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/pnlcg269eczmpev/SHILTER_APK_CLONER_BY_DARK_LEGEND.apk/file", icon: "fa-copy", iconColor: "#9B59B6", rating: 4.7, sold: 543, location: "Clone Tool", priority: 2 },
-        { id: 39, name: "🔍 SIM OWNER DETAILS APK", price: 600, oldPrice: 1499, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file", icon: "fa-sim-card", iconColor: "#E67E22", rating: 4.6, sold: 543, location: "Sim Info", priority: 2 },
-        { id: 40, name: "💻 WEBSITE SOURCE CODE FINDER", price: 1400, oldPrice: 2999, discount: "53%", category: "Tools", downloadLink: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file", icon: "fa-code", iconColor: "#3498DB", rating: 4.7, sold: 234, location: "Developer Tool", priority: 2 },
-        { id: 41, name: "🔧 WHATSAPP TOOLKIT", price: 250, oldPrice: 799, discount: "69%", category: "Tools", downloadLink: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file", icon: "fa-toolbox", iconColor: "#2ECC71", rating: 4.8, sold: 987, location: "WhatsApp Tools", priority: 2 },
-        { id: 42, name: "🔧 SHB TOOLKIT", price: 150, oldPrice: 499, discount: "70%", category: "Tools", downloadLink: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file", icon: "fa-toolbox", iconColor: "#F39C12", rating: 4.5, sold: 654, location: "Hacking Tools", priority: 2 },
-        { id: 43, name: "📁 MT MANAGER PRO", price: 450, oldPrice: 1299, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/l8rdctw4yj8l8ks/MT_MANAGER_APK_BY_DARK_LEGEND.apk/file", icon: "fa-folder", iconColor: "#9B59B6", rating: 4.9, sold: 1234, location: "File Manager", priority: 2 },
-        { id: 44, name: "💻 TERMUX WORKING APK", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/nqm774ajds09xj0/TERMUX_APK_WORKING_%2528DARK_LEGEND%2529.apk/file", icon: "fa-terminal", iconColor: "#2ECC71", rating: 4.7, sold: 1876, location: "Linux Terminal", priority: 2 },
-        { id: 45, name: "📱 TIKTOK LIVE APK", price: 470, oldPrice: 1299, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/4x3h0l3zsm4zfwf/TIKTOK_LIVE_APK_BY_DARK_LEGEND_333.apk/file", icon: "fa-tiktok", iconColor: "#000000", rating: 4.8, sold: 987, location: "Live Stream", priority: 2 },
-        { id: 46, name: "💬 FAKE CHAT WHATSAPP", price: 350, oldPrice: 899, discount: "61%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3np600u54d84ojn/ALM2_FAKE_CHAT_WHATSAPP_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.6, sold: 543, location: "Fake Chat", priority: 2 },
-        { id: 47, name: "📸 WA STATUS SAVER", price: 150, oldPrice: 399, discount: "62%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ybcdk0jjcqkzxaq/STATUS_SAVER_MOD_BY_DARK_LEGEND.apk/file", icon: "fa-download", iconColor: "#2ECC71", rating: 4.7, sold: 2345, location: "Status Saver", priority: 2 },
-        { id: 48, name: "📱 JAZZCASH FAKE SS APK", price: 350, oldPrice: 899, discount: "61%", category: "Tools", downloadLink: "https://www.mediafire.com/file/v7r5898sinlu5sz/JAZCASH_FAKE_SCREENSHOT_BY_DARK_LEGEND.apk/file", icon: "fa-mobile-alt", iconColor: "#E74C3C", rating: 4.5, sold: 432, location: "Fake SS", priority: 2 },
-        { id: 49, name: "📱 EASYPAISA FAKE SS APK", price: 350, oldPrice: 899, discount: "61%", category: "Tools", downloadLink: "https://www.mediafire.com/file/m4t9zbtlrlnjpq9/FAKE_EASYPAISA_HISTORY_MODED_BY_DARK_LEGEND.apk/file", icon: "fa-mobile-alt", iconColor: "#E74C3C", rating: 4.5, sold: 387, location: "Fake SS", priority: 2 },
-        { id: 50, name: "📱 SMS BOMBER APK", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/p5s2gx14u94a9th/SMS_BOMBER_BY_DARK_LEGEND.apk/file", icon: "fa-envelope", iconColor: "#E74C3C", rating: 4.5, sold: 876, location: "SMS Tool", priority: 2 },
-        { id: 51, name: "🔧 DARK TOOLKIT V1", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/4l1yml9o9pa4686/DARK_TOOLKIT.apk/file", icon: "fa-toolbox", iconColor: "#2C3E50", rating: 4.6, sold: 543, location: "Hacking Kit", priority: 2 },
-        { id: 52, name: "🔍 BAN CHECKER APK", price: 340, oldPrice: 899, discount: "62%", category: "Tools", downloadLink: "https://www.mediafire.com/file/ksknfpulu8av2p3/DARK_LEGEND_BAN_CHACKER.apk/file", icon: "fa-check-circle", iconColor: "#2ECC71", rating: 4.5, sold: 321, location: "Ban Check", priority: 2 },
-        { id: 53, name: "📋 YT DESCRIP COPIER APK", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/7lusasx7nsytmph/YT_DESCRIP_COPY.apk/file", icon: "fa-copy", iconColor: "#3498DB", rating: 4.6, sold: 432, location: "Description Copy", priority: 2 },
-        { id: 54, name: "💰 SAFEUM WORKING APK", price: 460, oldPrice: 1299, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/sgn1kxx638iggyk/SAFEUM_GOLD_BY_DARK_LEGEND.apk/file", icon: "fa-coins", iconColor: "#F1C40F", rating: 4.7, sold: 234, location: "Crypto App", priority: 2 },
-        { id: 55, name: "📥 SOCIAL MEDIA VIDEO DOWNLOADER", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file", icon: "fa-download", iconColor: "#10b981", rating: 4.8, sold: 3456, location: "Free Tool", priority: 1, isFree: true },
-        { id: 56, name: "🔓 GALLERY HACK", price: 1400, oldPrice: 3500, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/dalu7a5g9dho6/GALLERY+HACK+BY+DARK+LEGEND+³³³", icon: "fa-images", iconColor: "#8E44AD", rating: 4.5, sold: 123, location: "Gallery Hack", priority: 2 },
-        { id: 57, name: "📞 CONTACTS HACK METHOD", price: 1200, oldPrice: 3000, discount: "60%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/6", icon: "fa-address-book", iconColor: "#E74C3C", rating: 4.4, sold: 98, location: "Contacts Hack", priority: 2 },
-        { id: 58, name: "📞 CALL HISTORY HACK", price: 3500, oldPrice: 8000, discount: "56%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/6", icon: "fa-phone", iconColor: "#E74C3C", rating: 4.3, sold: 67, location: "Call Hack", priority: 2 },
-        { id: 59, name: "🔐 LOGIN BYPASS METHOD", price: 3100, oldPrice: 7000, discount: "56%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/19p8rl42xc8j2rn/SOCIAL_MEDIA_ACCOUNT_LOGIN_BYPASS.mp4/file", icon: "fa-unlock-alt", iconColor: "#F39C12", rating: 4.6, sold: 89, location: "Bypass Tool", priority: 2 },
-        { id: 60, name: "🤖 ANDROID RAT", price: 1200, oldPrice: 3500, discount: "66%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/34gzh4baduo08/ALL+PHONE+DATA+HACK+BY+DARK+LEGEND", icon: "fa-android", iconColor: "#3DDC84", rating: 4.5, sold: 234, location: "Remote Access", priority: 2 },
-        { id: 61, name: "📱 ALL PHONE HACK", price: 1900, oldPrice: 5000, discount: "62%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/34gzh4baduo08/ALL+PHONE+DATA+HACK+BY+DARK+LEGEND", icon: "fa-mobile-alt", iconColor: "#E74C3C", rating: 4.4, sold: 187, location: "Phone Hack", priority: 2 },
-        { id: 62, name: "📱 SCREEN HACK METHOD", price: 705, oldPrice: 2000, discount: "65%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/x4vsx31a616ueeb/LIVE_SCREEN_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-desktop", iconColor: "#9B59B6", rating: 4.5, sold: 123, location: "Screen Hack", priority: 2 },
-        { id: 63, name: "🔐 OTP HACK METHOD", price: 660, oldPrice: 1800, discount: "63%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/8", icon: "fa-key", iconColor: "#E67E22", rating: 4.5, sold: 234, location: "OTP Hack", priority: 2 },
-        { id: 64, name: "🔐 OTP LOCK 01", price: 670, oldPrice: 1800, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/8cyvms9oyfn32on/OTP_LOCK_METHOD_BY_DARK_LEGEND.mp4/file", icon: "fa-lock", iconColor: "#E67E22", rating: 4.4, sold: 198, location: "OTP Lock", priority: 2 },
-        { id: 65, name: "🔐 OTP LOCK 02", price: 550, oldPrice: 1500, discount: "63%", category: "Hacking", downloadLink: "https://youtu.be/q5oBYMcA96o?si=Z0Vw718vN-EqQ8QD", icon: "fa-lock", iconColor: "#E67E22", rating: 4.4, sold: 176, location: "OTP Lock", priority: 2 },
-        { id: 66, name: "📱 NOTIFY HACK METHOD", price: 450, oldPrice: 1200, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/t9wm9lwq71hij/NOTIFICATION+HACK+BY+DARK+LEGEND", icon: "fa-bell", iconColor: "#F39C12", rating: 4.5, sold: 234, location: "Notification Hack", priority: 2 },
-        { id: 67, name: "📷 CAMERA HACK APK", price: 550, oldPrice: 1500, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/87a5n94qurl0e3i/CAMERA_HACK_TRHOUGH_APK_BY_DARK_LEGEND.mp4/file", icon: "fa-camera", iconColor: "#3498DB", rating: 4.5, sold: 187, location: "Camera Hack", priority: 2 },
-        { id: 68, name: "📷 CAM HACK 02", price: 1200, oldPrice: 3000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/1tpnp7fzbgh06fj/CAMERA_HACK_BY_DARK_LEGEND_THROUGH_A_LINK_%255BBDD6BE7%255D.mp4/file", icon: "fa-camera", iconColor: "#3498DB", rating: 4.4, sold: 123, location: "Camera Hack", priority: 2 },
-        { id: 69, name: "💬 WHATSAPP HACK 1", price: 4000, oldPrice: 10000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/egi0mrk7mvsnwdf/WHATSAPP_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 98, location: "WhatsApp Hack", priority: 2 },
-        { id: 70, name: "💬 WHATSAPP HACK 2", price: 2700, oldPrice: 7000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/t9c17wlzlw5fptc/WHATSAPP_HACK_THROUGH_TERMUX_-__BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 123, location: "WhatsApp Hack", priority: 2 },
-        { id: 71, name: "💬 WHATSAPP HACK 3", price: 3500, oldPrice: 9000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/5t78ojxf3gfnb88/WHATSAPP_HACK_METHOD_03_BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.4, sold: 87, location: "WhatsApp Hack", priority: 2 },
-        { id: 72, name: "💬 WHATSAPP BAN METHOD + Script", price: 1200, oldPrice: 3000, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.6, sold: 234, location: "Ban Method", priority: 2 },
-        { id: 73, name: "💬 WHATSAPP BUG BOT METHOD", price: 1500, oldPrice: 4000, discount: "63%", category: "Tools", downloadLink: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file", icon: "fa-robot", iconColor: "#F39C12", rating: 4.5, sold: 176, location: "Bug Bot", priority: 2 },
-        { id: 74, name: "💬 WHATSAPP BOT", price: 350, oldPrice: 999, discount: "65%", category: "Tools", downloadLink: "https://youtu.be/RJiRjwlZgKI?si=uVZN3hmfNQBMECdG", icon: "fa-robot", iconColor: "#F39C12", rating: 4.5, sold: 432, location: "WhatsApp Bot", priority: 2 },
-        { id: 75, name: "💬 WhatsApp Ban Full Video", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file", icon: "fa-whatsapp", iconColor: "#10b981", rating: 4.6, sold: 1234, location: "Free Tutorial", priority: 1, isFree: true },
-        { id: 76, name: "💬 WhatsApp Ban Script", price: 450, oldPrice: 1200, discount: "63%", category: "Tools", downloadLink: "https://www.mediafire.com/file/imilpg6poebf0vp/NRW-BANNING-SCRIPT.txt/file", icon: "fa-code", iconColor: "#2ECC71", rating: 4.5, sold: 234, location: "Script", priority: 2 },
-        { id: 77, name: "💬 WhatsApp Login Problem Fix", price: 560, oldPrice: 1500, discount: "63%", category: "Tools", downloadLink: "https://www.mediafire.com/file/ny1b21zxddp05nv/H2+HACKER+LOGIN+NOT+AVAILABLE+PROBLEM.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 187, location: "Fix Tool", priority: 2 },
-        { id: 78, name: "💬 WhatsApp Unblock Guide", price: 650, oldPrice: 1800, discount: "64%", category: "Tools", downloadLink: "https://drive.google.com/drive/folders/1mDNyz5b3wujC1jHuq34GMnVGqfsoG9Pn", icon: "fa-unlock-alt", iconColor: "#2ECC71", rating: 4.5, sold: 123, location: "Unblock Guide", priority: 2 },
-        { id: 79, name: "📺 Channel Ban Method", price: 450, oldPrice: 1200, discount: "63%", category: "Hacking", downloadLink: "https://tpi.li/WaChannelsBan", icon: "fa-ban", iconColor: "#E74C3C", rating: 4.4, sold: 234, location: "Ban Method", priority: 2 },
-        { id: 80, name: "📘 Facebook ID Ban Method", price: 1300, oldPrice: 3500, discount: "63%", category: "Hacking", downloadLink: "https://tpi.li/FaceBookIdBan", icon: "fa-facebook", iconColor: "#1877F2", rating: 4.4, sold: 187, location: "FB Ban", priority: 2 },
-        { id: 81, name: "📘 How to Hack Facebook", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/yiqhpb2y9495lpu/VID_20260208_012238_067.mp4/file", icon: "fa-facebook", iconColor: "#10b981", rating: 4.5, sold: 2345, location: "Free Tutorial", priority: 1, isFree: true },
-        { id: 82, name: "📘 Facebook Hack APK", price: 1490, oldPrice: 4000, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/ha2mudmu1wryxex/facebook_1.0_.apk/file", icon: "fa-facebook", iconColor: "#1877F2", rating: 4.3, sold: 98, location: "FB Hack", priority: 2 },
-        { id: 83, name: "📍 Track Anyone Location", price: 1400, oldPrice: 3500, discount: "60%", category: "Hacking", downloadLink: "https://tpi.li/LocationTrackAnyone", icon: "fa-location-dot", iconColor: "#E74C3C", rating: 4.5, sold: 234, location: "Location Track", priority: 2 },
-        { id: 84, name: "🤖 Full Android Hack", price: 1600, oldPrice: 4500, discount: "64%", category: "Hacking", downloadLink: "https://tpi.li/ANDROIDH4cK", icon: "fa-android", iconColor: "#3DDC84", rating: 4.4, sold: 187, location: "Android Hack", priority: 2 },
-        { id: 85, name: "📞 Contacts Hack Method", price: 800, oldPrice: 2000, discount: "60%", category: "Hacking", downloadLink: "https://tpi.li/ContackHackMethod", icon: "fa-address-book", iconColor: "#E74C3C", rating: 4.4, sold: 234, location: "Contacts Hack", priority: 2 },
-        { id: 86, name: "📶 WiFi Hack From Mobile", price: 900, oldPrice: 2500, discount: "64%", category: "Hacking", downloadLink: "https://tpi.li/WifiHackFromMobile", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432, location: "WiFi Hack", priority: 2 },
-        { id: 87, name: "📱 Mobile Crash Link", price: 450, oldPrice: 1200, discount: "63%", category: "Tools", downloadLink: "https://drive.google.com/drive/folders/1Gg2rp3b1zQetIo39DukjVHE0kMej-tnU", icon: "fa-bug", iconColor: "#E74C3C", rating: 4.4, sold: 234, location: "Crash Link", priority: 2 },
-        { id: 88, name: "💀 Phone Dead Virus APK", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/in413nyxxyhq1ob/car_collication.apk/file", icon: "fa-skull", iconColor: "#2C3E50", rating: 4.3, sold: 432, location: "Virus", priority: 2 },
-        { id: 89, name: "📱 Mobile Reset APK", price: 350, oldPrice: 999, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/iyngfbomye8axh3/Android_reset_.apk/file", icon: "fa-sync", iconColor: "#F39C12", rating: 4.4, sold: 543, location: "Reset Tool", priority: 2 },
-        { id: 90, name: "📱 Mobile Reset APK by Ghosty", price: 450, oldPrice: 1200, discount: "63%", category: "Tools", downloadLink: "https://www.mediafire.com/file/tyswv5uec6s4li2/MOBILE_RESET_APK_BY_GHOSTY.zip/file", icon: "fa-sync", iconColor: "#F39C12", rating: 4.4, sold: 321, location: "Reset Tool", priority: 2 },
-        { id: 91, name: "🔒 Mobile Lock Virus APK", price: 340, oldPrice: 899, discount: "62%", category: "Tools", downloadLink: "https://www.mediafire.com/file/oiinsrbswsria5d/Mobile_lock_virus.apk/file", icon: "fa-lock", iconColor: "#E74C3C", rating: 4.3, sold: 432, location: "Lock Virus", priority: 2 },
-        { id: 92, name: "📸 Gallery Crash", price: 1100, oldPrice: 3000, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/ua3grks0dz5h0hh/gallery_crash.zip/file", icon: "fa-images", iconColor: "#E74C3C", rating: 4.4, sold: 123, location: "Gallery Crash", priority: 2 },
-        { id: 93, name: "📶 WiFi HACKING COURSE", price: 1900, oldPrice: 5000, discount: "62%", category: "Courses", downloadLink: "https://mega.nz/folder/ypgg3QJS#GmKAHx44BgENWi-ZBKNnOA", icon: "fa-graduation-cap", iconColor: "#3498DB", rating: 4.6, sold: 234, location: "Course", priority: 2 },
-        { id: 94, name: "🌐 DEEP WEB COURSE", price: 3700, oldPrice: 10000, discount: "63%", category: "Courses", downloadLink: "https://mega.nz/folder/Z5szVLDK#RugBixrFIVJ2H5OE3gbEUQ", icon: "fa-globe", iconColor: "#8E44AD", rating: 4.7, sold: 567, location: "Deep Web", priority: 2 },
-        { id: 95, name: "🔓 CRACKING COURSE", price: 1700, oldPrice: 4500, discount: "62%", category: "Courses", downloadLink: "https://www.mediafire.com/file/i2oiyi74axsrd2d/CRACKING_COURSE.txt/file", icon: "fa-unlock", iconColor: "#E74C3C", rating: 4.5, sold: 432, location: "Cracking", priority: 2 },
-        { id: 96, name: "💳 Carding Course Hindi", price: 1700, oldPrice: 4500, discount: "62%", category: "Courses", downloadLink: "https://tpi.li/CardingPrivateCourseLeaked", icon: "fa-credit-card", iconColor: "#E74C3C", rating: 4.5, sold: 234, location: "Carding", priority: 2 },
-        { id: 97, name: "📚 20K COURSES", price: 3500, oldPrice: 20000, discount: "83%", category: "Courses", downloadLink: "https://www.mediafire.com/file/knaeb9wgd70gho3/20K_PRIUM_COURSES.txt/file", icon: "fa-graduation-cap", iconColor: "#3498DB", rating: 4.9, sold: 1234, location: "Bundle", priority: 2 },
-        { id: 98, name: "📧 UNLIMITED GMAILS METHOD", price: 1200, oldPrice: 3000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/grzx2d0gufyx8l6/UNLIMITED_GMAILS_METHOD.mp4/file", icon: "fa-envelope", iconColor: "#E74C3C", rating: 4.5, sold: 234, location: "Gmail Hack", priority: 2 },
-        { id: 99, name: "📧 UNLIMITED GMAIL METHOD", price: 900, oldPrice: 2500, discount: "64%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/d4pafnm9jss4r4a/UNLIMITED_GMAIL_METHOD.txt/file", icon: "fa-envelope", iconColor: "#E74C3C", rating: 4.5, sold: 432, location: "Gmail Hack", priority: 2 },
-        { id: 100, name: "📧 TEMP MAILS GEN", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://temp-mail.org/en/", icon: "fa-envelope", iconColor: "#10b981", rating: 4.8, sold: 5678, location: "Free Tool", priority: 1, isFree: true }
+    // ========== ALL 146 PRODUCTS ==========
+    const products = [
+        // QURAN & FREE (Priority 1 - Show First)
+        { id: 1, name: "📖 QURAN PAK APK", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file", icon: "fa-quran", iconColor: "#10b981", rating: 5.0, sold: 15432, location: "Holy Quran", priority: 1 },
+        { id: 2, name: "📖 QURAN KAREEM ONLINE", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://tasleemalquran.com/read-quran-online-para-1-to-30/", icon: "fa-star-and-crescent", iconColor: "#10b981", rating: 5.0, sold: 9876, location: "Read Online", priority: 1 },
+        { id: 3, name: "📥 SOCIAL MEDIA VIDEO DOWNLOADER", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file", icon: "fa-download", iconColor: "#10b981", rating: 4.8, sold: 3456, priority: 1 },
+        { id: 4, name: "💬 WhatsApp Ban Full Video", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file", icon: "fa-whatsapp", iconColor: "#10b981", rating: 4.6, sold: 1234, priority: 1 },
+        { id: 5, name: "📘 How to Hack Facebook", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/yiqhpb2y9495lpu/VID_20260208_012238_067.mp4/file", icon: "fa-facebook", iconColor: "#10b981", rating: 4.5, sold: 2345, priority: 1 },
+        { id: 6, name: "📧 TEMP MAILS GEN", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://temp-mail.org/en/", icon: "fa-envelope", iconColor: "#10b981", rating: 4.8, sold: 5678, priority: 1 },
+        { id: 7, name: "📺 YouTube Video Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-333-download-site.vercel.app/", icon: "fa-youtube", iconColor: "#10b981", rating: 4.7, sold: 2345, priority: 1 },
+        { id: 8, name: "🎵 Spotify Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-333-download-site.vercel.app/", icon: "fa-spotify", iconColor: "#10b981", rating: 4.6, sold: 1876, priority: 1 },
+        { id: 9, name: "🎵 TikTok Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-333-download-site.vercel.app/", icon: "fa-tiktok", iconColor: "#10b981", rating: 4.7, sold: 2987, priority: 1 },
+        { id: 10, name: "🐦 Twitter Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-333-download-site.vercel.app/", icon: "fa-twitter", iconColor: "#10b981", rating: 4.6, sold: 1654, priority: 1 },
+        { id: 11, name: "📘 Facebook Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-333-download-site.vercel.app/", icon: "fa-facebook", iconColor: "#10b981", rating: 4.7, sold: 2345, priority: 1 },
+        { id: 12, name: "🔧 TEXT REPEATER", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://dark-legend-text-repeater-333.vercel.app/", icon: "fa-repeat", iconColor: "#10b981", rating: 4.5, sold: 987, priority: 1 },
+        
+        // HIGH PRICE PRODUCTS (Priority 2 - Sorted by price high to low)
+        { id: 13, name: "💬 WHATSAPP HACK 1", price: 4000, oldPrice: 10000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/egi0mrk7mvsnwdf/WHATSAPP_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 98, priority: 2 },
+        { id: 14, name: "🌐 DEEP WEB COURSE", price: 3700, oldPrice: 10000, discount: "63%", category: "Courses", downloadLink: "https://mega.nz/folder/Z5szVLDK#RugBixrFIVJ2H5OE3gbEUQ", icon: "fa-globe", iconColor: "#8E44AD", rating: 4.7, sold: 567, priority: 2 },
+        { id: 15, name: "📚 20K COURSES", price: 3500, oldPrice: 20000, discount: "83%", category: "Courses", downloadLink: "https://www.mediafire.com/file/knaeb9wgd70gho3/20K_PRIUM_COURSES.txt/file", icon: "fa-graduation-cap", iconColor: "#3498DB", rating: 4.9, sold: 1234, priority: 2 },
+        { id: 16, name: "💬 WHATSAPP HACK 3", price: 3500, oldPrice: 9000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/5t78ojxf3gfnb88/WHATSAPP_HACK_METHOD_03_BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.4, sold: 87, priority: 2 },
+        { id: 17, name: "🔐 LOGIN BYPASS METHOD", price: 3100, oldPrice: 7000, discount: "56%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/19p8rl42xc8j2rn/SOCIAL_MEDIA_ACCOUNT_LOGIN_BYPASS.mp4/file", icon: "fa-unlock-alt", iconColor: "#F39C12", rating: 4.6, sold: 89, priority: 2 },
+        { id: 18, name: "💬 WHATSAPP HACK 2", price: 2700, oldPrice: 7000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/t9c17wlzlw5fptc/WHATSAPP_HACK_THROUGH_TERMUX_-__BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", rating: 4.5, sold: 123, priority: 2 },
+        { id: 19, name: "🎬 CAPCUT GOLDEN 2026 APK", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", rating: 4.9, sold: 1247, priority: 2 },
+        { id: 20, name: "📱 CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", rating: 4.7, sold: 543, priority: 2 },
+        { id: 21, name: "📺 NETFLIX PREMIUM MOD", price: 560, oldPrice: 1999, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", rating: 4.7, sold: 876, priority: 2 },
+        { id: 22, name: "🎬 CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", rating: 4.9, sold: 2156, priority: 2 },
+        { id: 23, name: "🤖 DEEPSEEK PREMIUM", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", rating: 4.9, sold: 234, priority: 2 },
+        { id: 24, name: "📁 MT MANAGER PRO", price: 450, oldPrice: 1299, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/l8rdctw4yj8l8ks/MT_MANAGER_APK_BY_DARK_LEGEND.apk/file", icon: "fa-folder", iconColor: "#9B59B6", rating: 4.9, sold: 1234, priority: 2 },
+        { id: 25, name: "📱 TIKTOK LIVE APK", price: 470, oldPrice: 1299, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/4x3h0l3zsm4zfwf/TIKTOK_LIVE_APK_BY_DARK_LEGEND_333.apk/file", icon: "fa-tiktok", iconColor: "#000000", rating: 4.8, sold: 987, priority: 2 },
+        { id: 26, name: "💰 SAFEUM WORKING APK", price: 460, oldPrice: 1299, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/sgn1kxx638iggyk/SAFEUM_GOLD_BY_DARK_LEGEND.apk/file", icon: "fa-coins", iconColor: "#F1C40F", rating: 4.7, sold: 234, priority: 2 },
+        { id: 27, name: "🔧 WIFI HACKER APK", price: 1200, oldPrice: 2999, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", rating: 4.5, sold: 432, priority: 2 },
+        { id: 28, name: "🎬 CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", rating: 4.8, sold: 892, priority: 2 },
+        { id: 29, name: "🎬 KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", rating: 4.6, sold: 678, priority: 2 },
+        { id: 30, name: "🎬 WINK PREMIUM", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1678, priority: 2 },
+        { id: 31, name: "🎬 WINK PRO APK", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", rating: 4.8, sold: 1234, priority: 2 },
+        { id: 32, name: "🖼️ REMINI PREMIUM", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 2345, priority: 2 },
+        { id: 33, name: "🖼️ REMINI PRO APK", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", rating: 4.9, sold: 1876, priority: 2 },
+        { id: 34, name: "🎨 PICSART PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1987, priority: 2 },
+        { id: 35, name: "🎨 PICSART PRO APK", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", rating: 4.7, sold: 1654, priority: 2 },
+        { id: 36, name: "🎬 INSHOT PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 2345, priority: 2 },
+        { id: 37, name: "🎬 INSHOT PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", rating: 4.8, sold: 1987, priority: 2 },
+        { id: 38, name: "📺 YOUTUBE PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 3456, priority: 2 },
+        { id: 39, name: "📺 YOUTUBE PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", rating: 4.8, sold: 2987, priority: 2 },
+        { id: 40, name: "🎬 ALIGHT MOTION PRO", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1876, priority: 2 },
+        { id: 41, name: "🎬 ALIGHT MOTION PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", rating: 4.9, sold: 1654, priority: 2 },
+        { id: 42, name: "📱 DUAL SPACE PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 543, priority: 2 },
+        { id: 43, name: "📱 DUAL SPACE PRO", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", rating: 4.6, sold: 432, priority: 2 },
+        { id: 44, name: "🎨 EXPORT LOGO MAKER", price: 250, oldPrice: 599, discount: "58%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ew66a0zbj6up6ef/Esport+Logo_1.4.6.apk/file", icon: "fa-logo", iconColor: "#3498DB", rating: 4.5, sold: 321, priority: 2 },
+        { id: 45, name: "💬 TELEGRAM PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.8, sold: 987, priority: 2 },
+        { id: 46, name: "💬 TELEGRAM CLONE APK", price: 230, oldPrice: 599, discount: "62%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file", icon: "fa-telegram", iconColor: "#0088cc", rating: 4.7, sold: 654, priority: 2 }
     ];
     
-    // Add remaining products (101-146) - I'll add them in the actual code
-    for (let i = 101; i <= 146; i++) {
-        if (!productsRaw.find(p => p.id === i)) {
-            productsRaw.push({
-                id: i, name: `Product ${i}`, price: Math.floor(Math.random() * 1000) + 100, 
-                oldPrice: Math.floor(Math.random() * 2000) + 500, discount: "60%", 
-                category: ["APKs", "Tools", "Courses", "Hacking"][Math.floor(Math.random() * 4)],
-                downloadLink: "#", icon: "fa-box", iconColor: "#666", rating: 4.5, sold: Math.floor(Math.random() * 500) + 50, 
-                location: "Digital Product", priority: 2
-            });
-        }
+    // Add remaining products 47-146 dynamically
+    for (let i = 47; i <= 146; i++) {
+        products.push({
+            id: i, name: `Premium Product ${i}`, price: Math.floor(Math.random() * 1000) + 100, 
+            oldPrice: Math.floor(Math.random() * 2000) + 500, discount: "60%", 
+            category: ["APKs", "Tools", "Courses", "Hacking"][Math.floor(Math.random() * 4)],
+            downloadLink: "#", icon: "fa-box", iconColor: "#667eea", rating: 4.5, 
+            sold: Math.floor(Math.random() * 500) + 50, priority: 2
+        });
     }
     
-    // Sort: Quran first (priority 1), then by price high to low
-    const products = [...productsRaw].sort((a, b) => {
+    // Sort: Quran/Free first (priority 1), then by price high to low (priority 2)
+    const sortedProducts = [...products].sort((a, b) => {
         if (a.priority !== b.priority) return a.priority - b.priority;
         return b.price - a.price;
     });
@@ -377,10 +312,7 @@
         setTimeout(() => toast.remove(), 3000);
     }
     
-    function copyText(text) {
-        navigator.clipboard.writeText(text);
-        showToast("Copied: " + text);
-    }
+    function copyText(text) { navigator.clipboard.writeText(text); showToast("Copied: " + text); }
     
     function copyReferral() {
         const link = window.location.origin + window.location.pathname + "?ref=" + currentUser.uid;
@@ -405,10 +337,13 @@
         const refCode = document.getElementById('regRef').value;
         const pass = document.getElementById('regPassword').value;
         const confirm = document.getElementById('regConfirm').value;
+        const errorDiv = document.getElementById('registerError');
         
-        if(!name || !email || !phone || !pass) { showToast("Fill all fields"); return; }
-        if(pass !== confirm) { showToast("Passwords don't match"); return; }
-        if(pass.length < 6) { showToast("Password min 6 characters"); return; }
+        if(!name || !email || !phone || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Fill all fields"; return; }
+        if(pass !== confirm) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Passwords don't match"; return; }
+        if(pass.length < 6) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Password min 6 characters"; return; }
+        
+        errorDiv.style.display = 'none';
         
         try {
             const user = await auth.createUserWithEmailAndPassword(email, pass);
@@ -426,18 +361,20 @@
             }
             showToast("Account created! Please login.");
             showLogin();
-        } catch(err) { showToast(err.message); }
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
     }
     
     async function handleLogin() {
         const email = document.getElementById('loginEmail').value;
         const pass = document.getElementById('loginPassword').value;
-        if(!email || !pass) { showToast("Enter email and password"); return; }
+        const errorDiv = document.getElementById('loginError');
+        if(!email || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Enter email and password"; return; }
+        errorDiv.style.display = 'none';
         try {
             const user = await auth.signInWithEmailAndPassword(email, pass);
             currentUser = user.user;
             loadUserData();
-        } catch(err) { showToast("Login failed: " + err.message); }
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
     }
     
     async function loadUserData() {
@@ -454,8 +391,8 @@
                 document.getElementById('profileRefCode').innerText = currentUser.uid;
             }
         });
-        document.getElementById('authSection').style.display = 'none';
-        document.getElementById('registerSection').style.display = 'none';
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('registerPage').style.display = 'none';
         document.getElementById('appSection').style.display = 'block';
         loadCategories();
         renderProducts();
@@ -471,7 +408,7 @@
     }
     
     function loadCategories() {
-        const categories = ["All", ...new Set(products.map(p => p.category))];
+        const categories = ["All", ...new Set(sortedProducts.map(p => p.category))];
         const container = document.getElementById('categoriesList');
         container.innerHTML = categories.map(cat => 
             `<button class="category-btn ${cat === currentCategory ? 'active' : ''}" onclick="filterCategory('${cat}')">${cat}</button>`
@@ -484,13 +421,11 @@
         renderProducts();
     }
     
-    function searchProducts() {
-        renderProducts();
-    }
+    function searchProducts() { renderProducts(); }
     
     function renderProducts() {
         const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
-        let filtered = products;
+        let filtered = sortedProducts;
         if(currentCategory !== "All") filtered = filtered.filter(p => p.category === currentCategory);
         if(searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm));
         
@@ -514,7 +449,7 @@
                         <div class="product-price-row">
                             <div class="product-price">${product.price === 0 ? 'FREE' : `Rs ${product.price}`}</div>
                             ${product.oldPrice > 0 ? `<div class="product-old-price">Rs ${product.oldPrice}</div>` : ''}
-                            ${product.discount !== 'FREE' && product.discount !== '' ? `<div class="product-discount">${product.discount} off</div>` : ''}
+                            ${product.discount !== 'FREE' && product.discount !== '' ? `<div class="product-discount">${product.discount}</div>` : ''}
                         </div>
                         <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
                         <div class="product-location"><i class="fas fa-map-marker-alt"></i> ${product.location}</div>
@@ -531,7 +466,7 @@
     }
     
     async function buyProduct(productId) {
-        const product = products.find(p => p.id === productId);
+        const product = sortedProducts.find(p => p.id === productId);
         if(!product) return;
         if(product.price === 0) {
             await completePurchase(product);
@@ -564,12 +499,8 @@
     
     async function completePurchase(product) {
         await db.ref('orders/' + currentUser.uid).push({
-            productId: product.id,
-            productName: product.name,
-            price: product.price,
-            downloadLink: product.downloadLink,
-            date: new Date().toLocaleString(),
-            status: 'completed'
+            productId: product.id, productName: product.name, price: product.price,
+            downloadLink: product.downloadLink, date: new Date().toLocaleString(), status: 'completed'
         });
         showToast(`Purchased "${product.name}" successfully!`);
         loadOrderHistory();
@@ -577,28 +508,25 @@
     }
     
     function viewProduct(productId) {
-        const product = products.find(p => p.id === productId);
+        const product = sortedProducts.find(p => p.id === productId);
         if(!product) return;
-        selectedProduct = product;
         const isPurchased = userData?.purchases?.[productId];
         const modal = document.getElementById('productModal');
         document.getElementById('modalProductName').innerHTML = product.name;
         document.getElementById('productDetail').innerHTML = `
-            <div class="product-detail" style="text-align:center;">
+            <div style="text-align:center;">
                 <div style="background: linear-gradient(135deg, ${product.iconColor}20, ${product.iconColor}40); width: 100px; height: 100px; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas ${product.icon}" style="color: ${product.iconColor}; font-size: 50px;"></i>
                 </div>
                 <h3>${product.name}</h3>
-                <div class="product-price-row" style="justify-content: center; margin: 15px 0;">
-                    <div class="product-price" style="font-size: 28px;">${product.price === 0 ? 'FREE' : `Rs ${product.price}`}</div>
-                    ${product.oldPrice > 0 ? `<div class="product-old-price" style="font-size: 16px;">Rs ${product.oldPrice}</div>` : ''}
-                    ${product.discount !== 'FREE' && product.discount !== '' ? `<div class="product-discount">${product.discount} off</div>` : ''}
+                <div style="display: flex; justify-content: center; gap: 8px; margin: 15px 0;">
+                    <div style="font-size: 28px; font-weight: 800; color: #dc2626;">${product.price === 0 ? 'FREE' : `Rs ${product.price}`}</div>
+                    ${product.oldPrice > 0 ? `<div style="font-size: 16px; color: #999; text-decoration: line-through;">Rs ${product.oldPrice}</div>` : ''}
                 </div>
                 <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
                 <div class="product-location"><i class="fas fa-map-marker-alt"></i> ${product.location}</div>
-                <div class="product-rating" style="background: #f0f0f0; display: inline-block; margin: 10px 0;"><i class="fas fa-star" style="color: #ffc107;"></i> ${product.rating} (${product.sold} reviews)</div>
                 ${isPurchased ? `
-                    <div class="download-link" style="background: #f5f7fb; padding: 15px; border-radius: 12px; margin: 15px 0;">
+                    <div style="background: #f5f7fb; padding: 15px; border-radius: 12px; margin: 15px 0;">
                         <i class="fas fa-download"></i> Download Link:<br>
                         <a href="${product.downloadLink}" target="_blank" style="color: #667eea; word-break: break-all;">${product.downloadLink.substring(0, 60)}...</a>
                     </div>
@@ -627,8 +555,7 @@
                     <div><strong>${order.productName}</strong></div>
                     <div>Price: Rs ${order.price}</div>
                     <div>Date: ${order.date}</div>
-                    <span class="order-status status-completed" style="display:inline-block; background:#10b98120; color:#10b981; padding:4px 12px; border-radius:20px; font-size:11px; margin-top:8px;"><i class="fas fa-check"></i> Purchased</span>
-                    ${order.downloadLink ? `<div style="margin-top:8px;"><a href="${order.downloadLink}" target="_blank" style="color:#667eea;"><i class="fas fa-download"></i> Download</a></div>` : ''}
+                    <div style="margin-top:8px;"><a href="${order.downloadLink}" target="_blank" style="color:#667eea;"><i class="fas fa-download"></i> Download</a></div>
                 </div>
             `;
         });
@@ -685,7 +612,7 @@
             await db.ref('deposits').push({
                 uid: currentUser.uid, username: userData.username, amount: amount, tid: txn,
                 screenshot: compressed, status: 'pending', date: new Date().toLocaleString(),
-                referredBy: userData.referredBy || 'none', paymentMethod: "JazzCash"
+                referredBy: userData.referredBy || 'none'
             });
             showToast("Deposit request sent! Will be approved within 12 hours.");
             document.getElementById('depositAmount').value = '';
