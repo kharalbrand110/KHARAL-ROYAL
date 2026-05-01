@@ -1,148 +1,635 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>KHARAL</title>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#0a0c15;min-height:100vh}
-.auth-container{min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#0a0c15,#1a1a2e);padding:20px}
-.auth-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);padding:40px;border-radius:24px;width:100%;max-width:420px;border:1px solid rgba(255,255,255,0.1)}
-.auth-card h2{text-align:center;margin-bottom:10px;font-size:28px;background:linear-gradient(135deg,#00d4ff,#00a859);-webkit-background-clip:text;background-clip:text;color:transparent}
-.auth-card .subtitle{text-align:center;color:#8b92a8;font-size:14px;margin-bottom:30px}
-.auth-card input{width:100%;padding:14px 16px;margin-bottom:15px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:12px;color:white;font-size:14px}
-.auth-card input:focus{outline:none;border-color:#00a859}
-.auth-card button{width:100%;padding:14px;background:linear-gradient(135deg,#00a859,#008040);border:none;border-radius:12px;color:white;font-size:16px;font-weight:600;cursor:pointer}
-.switch-text{text-align:center;margin-top:20px;font-size:14px;color:#8b92a8}
-.switch-text span{color:#00a859;cursor:pointer}
-.error-msg{background:rgba(231,76,60,0.2);color:#e74c3c;padding:10px;border-radius:10px;text-align:center;margin-bottom:15px;font-size:13px;display:none}
-.app-container{display:none;background:#0a0c15;min-height:100vh;padding-bottom:80px}
-.main-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.05);position:sticky;top:0;z-index:100}
-.logo h2{font-size:20px;font-weight:800;background:linear-gradient(135deg,#00d4ff,#00a859);-webkit-background-clip:text;background-clip:text;color:transparent}
-.user-info{display:flex;align-items:center;gap:15px}
-.balance-card{background:linear-gradient(135deg,#00a859,#008040);padding:8px 18px;border-radius:30px;text-align:center}
-.balance-card .label{font-size:10px;opacity:0.8;color:white}
-.balance-card .amount{font-size:16px;font-weight:bold;color:white}
-.avatar{width:42px;height:42px;background:linear-gradient(135deg,#00d4ff,#00a859);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;color:white;cursor:pointer}
-.store-container{padding:20px}
-.search-section{margin-bottom:20px}
-.search-box{display:flex;align-items:center;background:rgba(255,255,255,0.05);border-radius:30px;padding:12px 20px}
-.search-box i{color:#8b92a8;margin-right:10px}
-.search-box input{flex:1;background:transparent;border:none;color:white;font-size:14px;outline:none}
-.categories{display:flex;gap:10px;overflow-x:auto;padding:10px 0;margin-bottom:20px}
-.category-btn{padding:8px 20px;background:rgba(255,255,255,0.05);border:none;border-radius:30px;color:#8b92a8;font-size:13px;cursor:pointer}
-.category-btn.active{background:linear-gradient(135deg,#00a859,#008040);color:white}
-.products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-@media(min-width:768px){.products-grid{grid-template-columns:repeat(3,1fr)}}
-.product-card{background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);transition:all 0.3s}
-.product-card:hover{transform:translateY(-3px);border-color:#00a859}
-.product-icon{height:120px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(0,168,89,0.1),rgba(0,212,255,0.1))}
-.product-icon i{font-size:50px;color:#00a859}
-.product-info{padding:12px}
-.product-name{font-size:13px;font-weight:600;color:white;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.product-price{font-size:16px;font-weight:800;color:#00a859;margin-bottom:5px}
-.product-old-price{font-size:11px;color:#8b92a8;text-decoration:line-through;margin-left:5px}
-.product-discount{font-size:11px;color:#ff4757}
-.buy-btn{width:100%;padding:8px;background:linear-gradient(135deg,#00a859,#008040);border:none;border-radius:8px;color:white;font-weight:600;font-size:12px;cursor:pointer;margin-top:8px}
-.buy-btn.purchased{background:#2ed573}
-.deposit-container{padding:20px}
-.wallet-balance{background:linear-gradient(135deg,#00a859,#008040);border-radius:20px;padding:30px;text-align:center;margin-bottom:20px}
-.wallet-balance .label{font-size:14px;opacity:0.9;color:white}
-.wallet-balance .amount{font-size:42px;font-weight:800;color:white}
-.deposit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#00a859,#008040);border:none;border-radius:12px;color:white;font-weight:600;cursor:pointer;margin-bottom:20px}
-.deposit-info{background:rgba(255,255,255,0.05);border-radius:16px;padding:20px;text-align:center;margin-bottom:20px}
-.deposit-info .account-number{font-size:22px;font-weight:bold;color:#00a859;margin:10px 0;cursor:pointer}
-.upload-area{border:2px dashed #00a859;border-radius:16px;padding:20px;text-align:center;cursor:pointer;margin-bottom:15px}
-.purchases-container{padding:20px}
-.purchases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-@media(min-width:768px){.purchases-grid{grid-template-columns:repeat(3,1fr)}}
-.purchase-card{background:rgba(255,255,255,0.05);border-radius:16px;padding:15px;text-align:center}
-.purchase-card .product-name{font-size:14px;font-weight:600;color:white;margin-bottom:8px}
-.purchase-card .product-price{font-size:16px;font-weight:700;color:#00a859;margin-bottom:8px}
-.download-link{display:inline-block;background:#00a859;color:white;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:12px;margin-top:8px}
-.profile-container{padding:20px}
-.profile-card{background:linear-gradient(135deg,#00d4ff20,#00a85920);border-radius:20px;padding:25px;text-align:center;margin-bottom:20px}
-.profile-avatar{width:80px;height:80px;background:linear-gradient(135deg,#00d4ff,#00a859);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;font-size:32px;font-weight:bold;color:white}
-.profile-name{font-size:20px;font-weight:700;margin-bottom:5px}
-.profile-email{font-size:12px;color:#8b92a8}
-.info-card{background:rgba(255,255,255,0.05);border-radius:16px;padding:20px;margin-bottom:20px}
-.info-card p{margin:8px 0;color:#cbd5e0;font-size:14px}
-.info-card strong{color:#00a859}
-.copy-btn{width:100%;padding:12px;background:#00a859;border:none;border-radius:10px;color:white;font-weight:600;cursor:pointer;margin-top:10px}
-.logout-btn{width:100%;padding:12px;background:rgba(231,76,60,0.2);border:1px solid #e74c3c;border-radius:10px;color:#e74c3c;font-weight:600;cursor:pointer;margin-top:10px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,12,21,0.95);backdrop-filter:blur(20px);display:flex;justify-content:space-around;padding:10px 20px;border-top:1px solid rgba(255,255,255,0.05);z-index:100}
-.nav-item{text-align:center;cursor:pointer;padding:6px 12px;border-radius:30px;color:#8b92a8}
-.nav-item.active{background:linear-gradient(135deg,#00a859,#008040);color:white}
-.nav-item i{font-size:20px;display:block;margin-bottom:3px}
-.nav-item span{font-size:10px;font-weight:500}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;justify-content:center;align-items:center}
-.modal-content{background:#1a1a2e;border-radius:24px;width:90%;max-width:500px;max-height:80vh;overflow-y:auto;padding:25px;border:1px solid rgba(0,168,89,0.3)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.modal-header h3{color:#00a859}
-.close-modal{background:none;border:none;color:white;font-size:24px;cursor:pointer}
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#00a859;color:white;padding:12px 24px;border-radius:50px;z-index:1000;animation:fadeOut 3s ease forwards;font-size:14px}
-@keyframes fadeOut{0%{opacity:1}70%{opacity:1}100%{opacity:0;visibility:hidden}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KHARAL STORE - Premium Digital Products</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #0a0c15; min-height: 100vh; }
+
+        .auth-container { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #0a0c15, #1a1a2e); padding: 20px; }
+        .auth-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(255,255,255,0.1); }
+        .auth-card h2 { text-align: center; margin-bottom: 10px; font-size: 28px; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .auth-card .subtitle { text-align: center; color: #8b92a8; font-size: 14px; margin-bottom: 30px; }
+        .auth-card input { width: 100%; padding: 14px 16px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 14px; }
+        .auth-card input:focus { outline: none; border-color: #00a859; }
+        .auth-card button { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .auth-card button:hover { transform: translateY(-2px); }
+        .switch-text { text-align: center; margin-top: 20px; font-size: 14px; color: #8b92a8; }
+        .switch-text span { color: #00a859; cursor: pointer; }
+        .error-msg { background: rgba(231,76,60,0.2); color: #e74c3c; padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 15px; font-size: 13px; display: none; }
+
+        .app-container { display: none; background: #0a0c15; min-height: 100vh; padding-bottom: 80px; }
+        .main-header { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #00d4ff, #00a859); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .balance-card { background: linear-gradient(135deg, #00a859, #008040); padding: 8px 18px; border-radius: 30px; text-align: center; }
+        .balance-card .label { font-size: 10px; opacity: 0.8; color: white; }
+        .balance-card .amount { font-size: 16px; font-weight: bold; color: white; }
+        .avatar { width: 42px; height: 42px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; cursor: pointer; }
+
+        .store-container { padding: 20px; }
+        .search-section { margin-bottom: 20px; }
+        .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.05); border-radius: 30px; padding: 12px 20px; }
+        .search-box i { color: #8b92a8; margin-right: 10px; }
+        .search-box input { flex: 1; background: transparent; border: none; color: white; font-size: 14px; outline: none; }
+        
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 20px; white-space: nowrap; }
+        .category-btn { padding: 8px 20px; background: rgba(255,255,255,0.05); border: none; border-radius: 30px; color: #8b92a8; font-size: 13px; cursor: pointer; }
+        .category-btn.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .product-card { background: rgba(255,255,255,0.05); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s; }
+        .product-card:hover { transform: translateY(-3px); border-color: #00a859; }
+        .product-icon { height: 120px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,168,89,0.1), rgba(0,212,255,0.1)); }
+        .product-icon i { font-size: 50px; color: #00a859; }
+        .product-info { padding: 12px; }
+        .product-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price { font-size: 16px; font-weight: 800; color: #00a859; margin-bottom: 5px; }
+        .product-old-price { font-size: 11px; color: #8b92a8; text-decoration: line-through; margin-left: 5px; }
+        .product-discount { font-size: 11px; color: #ff4757; }
+        .buy-btn { width: 100%; padding: 8px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 12px; cursor: pointer; margin-top: 8px; }
+        .buy-btn.purchased { background: #2ed573; cursor: default; }
+
+        .deposit-container { padding: 20px; }
+        .wallet-balance { background: linear-gradient(135deg, #00a859, #008040); border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px; }
+        .wallet-balance .label { font-size: 14px; opacity: 0.9; color: white; }
+        .wallet-balance .amount { font-size: 42px; font-weight: 800; color: white; }
+        .deposit-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #00a859, #008040); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+        .deposit-info { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .deposit-info .account-number { font-size: 22px; font-weight: bold; color: #00a859; margin: 10px 0; cursor: pointer; }
+        .upload-area { border: 2px dashed #00a859; border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 15px; }
+
+        .purchases-container { padding: 20px; }
+        .purchases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .purchases-grid { grid-template-columns: repeat(3, 1fr); } }
+        .purchase-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 15px; text-align: center; }
+        .purchase-card .product-name { font-size: 14px; font-weight: 600; color: white; margin-bottom: 8px; }
+        .purchase-card .product-price { font-size: 16px; font-weight: 700; color: #00a859; margin-bottom: 8px; }
+        .download-link { display: inline-block; background: #00a859; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; margin-top: 8px; }
+
+        .profile-container { padding: 20px; }
+        .profile-card { background: linear-gradient(135deg, #00d4ff20, #00a85920); border-radius: 20px; padding: 25px; text-align: center; margin-bottom: 20px; }
+        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00d4ff, #00a859); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 32px; font-weight: bold; color: white; }
+        .profile-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .profile-email { font-size: 12px; color: #8b92a8; }
+        .info-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .info-card p { margin: 8px 0; color: #cbd5e0; font-size: 14px; }
+        .info-card strong { color: #00a859; }
+        .copy-btn { width: 100%; padding: 12px; background: #00a859; border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .logout-btn { width: 100%; padding: 12px; background: rgba(231,76,60,0.2); border: 1px solid #e74c3c; border-radius: 10px; color: #e74c3c; font-weight: 600; cursor: pointer; margin-top: 10px; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,12,21,0.95); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.05); z-index: 100; }
+        .nav-item { text-align: center; cursor: pointer; padding: 6px 12px; border-radius: 30px; color: #8b92a8; }
+        .nav-item.active { background: linear-gradient(135deg, #00a859, #008040); color: white; }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
+        .nav-item span { font-size: 10px; font-weight: 500; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: #1a1a2e; border-radius: 24px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; padding: 25px; border: 1px solid rgba(0,168,89,0.3); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .modal-header h3 { color: #00a859; }
+        .close-modal { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #00a859; color: white; padding: 12px 24px; border-radius: 50px; z-index: 1000; animation: fadeOut 3s ease forwards; font-size: 14px; }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+    </style>
 </head>
 <body>
-<div id="_0x1a"></div>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="auth-container">
+    <div class="auth-card">
+        <h2><i class="fas fa-store"></i> KHARAL STORE</h2>
+        <div class="subtitle">Welcome back! Login to your account</div>
+        <div id="loginError" class="error-msg"></div>
+        <input type="email" id="loginEmail" placeholder="Email Address">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="handleLogin()">Login</button>
+        <div class="switch-text">New customer? <span onclick="showRegister()">Create Account</span></div>
+    </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="auth-container" style="display:none;">
+    <div class="auth-card">
+        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+        <div class="subtitle">Join KHARAL STORE today!</div>
+        <div id="registerError" class="error-msg"></div>
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="email" id="regEmail" placeholder="Email Address">
+        <input type="tel" id="regPhone" placeholder="Phone Number">
+        <input type="text" id="regRef" placeholder="Referral Code (Optional)">
+        <input type="password" id="regPassword" placeholder="Password (min 6 chars)">
+        <input type="password" id="regConfirm" placeholder="Confirm Password">
+        <button onclick="handleRegister()">Register</button>
+        <div class="switch-text">Already have account? <span onclick="showLogin()">Login</span></div>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="appSection" class="app-container">
+    <div class="main-header">
+        <div class="logo"><h2><i class="fas fa-skull"></i> KHARAL STORE</h2></div>
+        <div class="user-info">
+            <div class="balance-card"><div class="label">Balance</div><div class="amount" id="headerBalance">Rs 0</div></div>
+            <div class="avatar" id="userAvatar" onclick="switchTab('profile')">U</div>
+        </div>
+    </div>
+
+    <div id="storeView">
+        <div class="store-container">
+            <div class="search-section">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search products..." onkeyup="renderProducts()"></div>
+            </div>
+            <div class="categories" id="categoriesList"></div>
+            <div class="products-grid" id="productsList"></div>
+        </div>
+    </div>
+
+    <div id="depositView" class="deposit-container" style="display:none;">
+        <div class="wallet-balance"><div class="label">Available Balance</div><div class="amount" id="walletBalance">Rs 0</div></div>
+        <button class="deposit-btn" onclick="showDepositForm()"><i class="fas fa-arrow-down"></i> Add Balance</button>
+        <div id="depositForm">
+            <div class="deposit-info">
+                <i class="fas fa-mobile-alt" style="font-size: 40px; color: #00a859;"></i>
+                <h3>JazzCash / EasyPaisa</h3>
+                <div class="account-number" onclick="copyText('923292359951')">923292359951 <i class="fas fa-copy"></i></div>
+                <p>Account Title: Munir ahmad</p>
+            </div>
+            <div class="upload-area" onclick="document.getElementById('depositFile').click()">
+                <input type="file" id="depositFile" accept="image/*" hidden onchange="previewDeposit(this)">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <div>Upload payment screenshot</div>
+                <img id="depositPreview" style="width:100%; max-height:80px; border-radius:10px; display:none; margin-top:10px;">
+            </div>
+            <input type="number" id="depositAmount" placeholder="Amount (Min 300)" style="width:100%; padding:12px; margin-bottom:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:white;">
+            <input type="text" id="depositTxn" placeholder="Transaction ID" style="width:100%; padding:12px; margin-bottom:15px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:white;">
+            <button onclick="submitDeposit()" style="width:100%; padding:14px; background:#00a859; border:none; border-radius:10px; color:white; font-weight:600;">Submit Deposit</button>
+        </div>
+    </div>
+
+    <div id="purchasesView" class="purchases-container" style="display:none;">
+        <h3 style="margin-bottom:20px;"><i class="fas fa-shopping-bag"></i> My Purchases</h3>
+        <div id="purchasesList" class="purchases-grid"></div>
+    </div>
+
+    <div id="profileView" class="profile-container" style="display:none;">
+        <div class="profile-card">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-name" id="profileName">User</div>
+            <div class="profile-email" id="profileEmail">-</div>
+        </div>
+        <div class="info-card">
+            <p><strong>📱 Phone:</strong> <span id="profilePhone">-</span></p>
+            <p><strong>📅 Joined:</strong> <span id="profileJoined">-</span></p>
+            <p><strong>🔗 Referral Code:</strong> <span id="profileRefCode">-</span></p>
+            <button class="copy-btn" onclick="copyReferral()"><i class="fas fa-link"></i> Copy Referral Link</button>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+        <h3 style="margin:20px 0 10px;">Commission History</h3>
+        <div id="commissionHistory" class="purchases-grid"></div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('store')"><i class="fas fa-store"></i><span>Store</span></div>
+        <div class="nav-item" onclick="switchTab('purchases')"><i class="fas fa-shopping-bag"></i><span>Purchases</span></div>
+        <div class="nav-item" onclick="switchTab('deposit')"><i class="fas fa-wallet"></i><span>Deposit</span></div>
+        <div class="nav-item" onclick="switchTab('profile')"><i class="fas fa-user"></i><span>Profile</span></div>
+    </div>
+</div>
+
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3 id="modalProductName">Product Details</h3><button class="close-modal" onclick="closeProductModal()">&times;</button></div>
+        <div id="productDetail"></div>
+    </div>
+</div>
+
 <script>
-(function(){
-const _0x2d = ['\x73\x74\x6f\x72\x65','\x70\x75\x72\x63\x68\x61\x73\x65\x73','\x64\x65\x70\x6f\x73\x69\x74','\x70\x72\x6f\x66\x69\x6c\x65','\x4b\x48\x41\x52\x41\x4c\x20\x53\x54\x4f\x52\x45','\x57\x65\x6c\x63\x6f\x6d\x65\x20\x62\x61\x63\x6b','\x4e\x65\x77\x20\x63\x75\x73\x74\x6f\x6d\x65\x72','\x43\x72\x65\x61\x74\x65\x20\x41\x63\x63\x6f\x75\x6e\x74','\x4a\x6f\x69\x6e\x20\x4b\x48\x41\x52\x41\x4c\x20\x53\x54\x4f\x52\x45','\x46\x75\x6c\x6c\x20\x4e\x61\x6d\x65','\x45\x6d\x61\x69\x6c\x20\x41\x64\x64\x72\x65\x73\x73','\x50\x68\x6f\x6e\x65\x20\x4e\x75\x6d\x62\x65\x72','\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x43\x6f\x64\x65','\x50\x61\x73\x73\x77\x6f\x72\x64','\x43\x6f\x6e\x66\x69\x72\x6d\x20\x50\x61\x73\x73\x77\x6f\x72\x64','\x52\x65\x67\x69\x73\x74\x65\x72','\x41\x6c\x72\x65\x61\x64\x79\x20\x68\x61\x76\x65\x20\x61\x63\x63\x6f\x75\x6e\x74','\x4c\x6f\x67\x69\x6e','\x42\x61\x6c\x61\x6e\x63\x65','\x4d\x79\x20\x50\x75\x72\x63\x68\x61\x73\x65\x73','\x41\x64\x64\x20\x42\x61\x6c\x61\x6e\x63\x65','\x4a\x61\x7a\x7a\x43\x61\x73\x68\x20\x2f\x20\x45\x61\x73\x79\x50\x61\x69\x73\x61','\x41\x63\x63\x6f\x75\x6e\x74\x20\x54\x69\x74\x6c\x65','\x55\x70\x6c\x6f\x61\x64\x20\x70\x61\x79\x6d\x65\x6e\x74\x20\x73\x63\x72\x65\x65\x6e\x73\x68\x6f\x74','\x41\x6d\x6f\x75\x6e\x74','\x54\x72\x61\x6e\x73\x61\x63\x74\x69\x6f\x6e\x20\x49\x44','\x53\x75\x62\x6d\x69\x74\x20\x44\x65\x70\x6f\x73\x69\x74','\x4c\x6f\x67\x6f\x75\x74','\x43\x6f\x70\x79\x20\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x4c\x69\x6e\x6b','\x53\x74\x6f\x72\x65','\x44\x65\x70\x6f\x73\x69\x74','\x50\x72\x6f\x66\x69\x6c\x65','\x50\x72\x6f\x64\x75\x63\x74\x20\x44\x65\x74\x61\x69\x6c\x73','\x46\x52\x45\x45','\x52\x73','\x6d\x69\x6e\x20\x36\x20\x63\x68\x61\x72\x73','\x46\x69\x6c\x6c\x20\x61\x6c\x6c\x20\x66\x69\x65\x6c\x64\x73','\x50\x61\x73\x73\x77\x6f\x72\x64\x73\x20\x64\x6f\x6e\x27\x74\x20\x6d\x61\x74\x63\x68','\x41\x63\x63\x6f\x75\x6e\x74\x20\x63\x72\x65\x61\x74\x65\x64','\x45\x6e\x74\x65\x72\x20\x65\x6d\x61\x69\x6c\x20\x61\x6e\x64\x20\x70\x61\x73\x73\x77\x6f\x72\x64','\x49\x6e\x73\x75\x66\x66\x69\x63\x69\x65\x6e\x74\x20\x62\x61\x6c\x61\x6e\x63\x65','\x59\x6f\x75\x20\x61\x6c\x72\x65\x61\x64\x79\x20\x70\x75\x72\x63\x68\x61\x73\x65\x64','\x50\x75\x72\x63\x68\x61\x73\x65\x64','\x4e\x6f\x20\x70\x75\x72\x63\x68\x61\x73\x65\x73\x20\x79\x65\x74','\x4d\x69\x6e\x20\x64\x65\x70\x6f\x73\x69\x74\x20\x33\x30\x30','\x44\x65\x70\x6f\x73\x69\x74\x20\x72\x65\x71\x75\x65\x73\x74\x20\x73\x65\x6e\x74','\x55\x70\x6c\x6f\x61\x64\x20\x73\x63\x72\x65\x65\x6e\x73\x68\x6f\x74','\x45\x6e\x74\x65\x72\x20\x74\x72\x61\x6e\x73\x61\x63\x74\x69\x6f\x6e\x20\x49\x44','\x44\x6f\x77\x6e\x6c\x6f\x61\x64','\x42\x75\x79\x20\x4e\x6f\x77','\x47\x65\x74\x20\x46\x72\x65\x65','\x4e\x6f\x20\x70\x72\x6f\x64\x75\x63\x74\x73\x20\x66\x6f\x75\x6e\x64','\x4e\x6f\x20\x63\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x73\x20\x79\x65\x74','\x6a\x6f\x69\x6e\x65\x64','\x50\x68\x6f\x6e\x65','\x4a\x6f\x69\x6e\x65\x64','\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x43\x6f\x64\x65','\x43\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x20\x48\x69\x73\x74\x6f\x72\x79','\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x6c\x69\x6e\x6b\x20\x63\x6f\x70\x69\x65\x64','\x43\x6f\x70\x69\x65\x64'];
-const _0x3e=function(_0x1a,_0x2b){return _0x1a+_0x2b;};
-var _0x4d={};
-for(var _0x5c=0;_0x5c<_0x2d.length;_0x5c++)_0x4d[_0x2d[_0x5c]]=_0x2d[_0x5c];
-const _0x6b=function(_0x7a){return _0x4d[_0x7a]||_0x7a;};
-
-const _0x8f={
-    '_0x9e':['\x41\x49\x7a\x61\x53\x79\x44\x35\x44\x76\x70\x54\x69\x4b\x7a\x74\x6a\x51\x5f\x52\x69\x76\x6a\x4f\x48\x71\x45\x73\x4e\x68\x39\x4b\x36\x4d\x4d\x46\x51\x4a\x49','\x6b\x68\x61\x72\x61\x6c\x2d\x62\x34\x37\x62\x36','\x68\x74\x74\x70\x73\x3a\x2f\x2f\x6b\x68\x61\x72\x61\x6c\x2d\x62\x34\x37\x62\x36\x2d\x64\x65\x66\x61\x75\x6c\x74\x2d\x72\x74\x64\x62\x2e\x66\x69\x72\x65\x62\x61\x73\x65\x69\x6f\x2e\x63\x6f\x6d','\x6b\x68\x61\x72\x61\x6c\x2d\x62\x34\x37\x62\x36','\x6b\x68\x61\x72\x61\x6c\x2d\x62\x34\x37\x62\x36\x2e\x66\x69\x72\x65\x62\x61\x73\x65\x73\x74\x6f\x72\x61\x67\x65\x2e\x61\x70\x70','\x35\x32\x38\x32\x31\x34\x38\x34\x31\x37\x34\x30','\x31\x3a\x35\x32\x38\x32\x31\x34\x38\x34\x31\x37\x34\x30\x3a\x77\x65\x62\x3a\x39\x62\x35\x30\x61\x64\x31\x33\x39\x32\x37\x65\x32\x36\x63\x36\x36\x65\x39\x65\x61\x39'];
-const _0x0a=[];
-for(var _0x1b=0;_0x1b<_0x8f._0x9e.length;_0x1b++)_0x0a.push(_0x8f._0x9e[_0x1b]);
-const _0x2c={apiKey:_0x0a[0],authDomain:_0x0a[1]+'\x2e\x66\x69\x72\x65\x62\x61\x73\x65\x61\x70\x70\x2e\x63\x6f\x6d',databaseURL:_0x0a[2],projectId:_0x0a[3],storageBucket:_0x0a[4],messagingSenderId:_0x0a[5],appId:_0x0a[6]};
-if(!firebase.apps.length)firebase.initializeApp(_0x2c);
-const _0x3d=firebase.auth(),_0x4e=firebase.database();
-var _0x5f=null,_0x6g=null,_0x7h=null,_0x8i='\x41\x6c\x6c',_0x9j=[];
-
-const _0xak=[{id:1,n:'\x43\x41\x50\x43\x55\x54\x20\x47\x4f\x4c\x44\x45\x4e\x20\x32\x30\x32\x36\x20\x41\x50\x4b',p:700,op:1999,d:'\x36\x35\x25',c:'\x41\x50\x4b\x73',dl:'\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x6d\x65\x64\x69\x61\x66\x69\x72\x65\x2e\x63\x6f\x6d\x2f\x66\x69\x6c\x65\x2f\x71\x6c\x37\x67\x71\x75\x64\x64\x77\x6e\x6a\x66\x6f\x6d\x6f\x2f\x43\x61\x70\x43\x75\x74\x5f\x47\x6f\x6c\x64\x65\x6e\x5f\x31\x36\x2e\x30\x2e\x30\x2e\x61\x70\x6b\x2f\x66\x69\x6c\x65',i:'\x66\x61\x2d\x63\x72\x6f\x77\x6e',ic:'\x23\x46\x46\x44\x37\x30\x30',s:1247},{id:2,n:'\x43\x41\x50\x43\x55\x54\x20\x50\x52\x4f\x20\x4d\x4f\x44\x44\x45\x44',p:250,op:999,d:'\x37\x35\x25',c:'\x41\x50\x4b\x73',dl:'\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x6d\x65\x64\x69\x61\x66\x69\x72\x65\x2e\x63\x6f\x6d\x2f\x66\x69\x6c\x65\x2f\x36\x78\x61\x61\x6b\x70\x66\x62\x77\x39\x30\x6b\x75\x61\x65\x2f\x43\x61\x70\x43\x75\x74\x5f\x31\x35\x2e\x35\x2e\x30\x2e\x61\x70\x6b\x2f\x66\x69\x6c\x65',i:'\x66\x61\x2d\x73\x63\x69\x73\x73\x6f\x72\x73',ic:'\x23\x46\x46\x36\x42\x36\x42',s:892},{id:37,n:'\x51\x75\x72\x61\x6e\x20\x50\x61\x6b\x20\x41\x50\x4b',p:0,op:0,d:'\x46\x52\x45\x45',c:'\x49\x73\x6c\x61\x6d\x69\x63',dl:'\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x6d\x65\x64\x69\x61\x66\x69\x72\x65\x2e\x63\x6f\x6d\x2f\x66\x69\x6c\x65\x2f\x30\x6c\x68\x30\x72\x6a\x30\x37\x70\x6a\x61\x32\x33\x64\x76\x2f\x51\x75\x72\x61\x6e\x5f\x50\x61\x6b\x2e\x61\x70\x6b\x2f\x66\x69\x6c\x65',i:'\x66\x61\x2d\x71\x75\x72\x61\x6e',ic:'\x23\x31\x30\x62\x39\x38\x31',s:15432},{id:55,n:'\x53\x4f\x43\x49\x41\x4c\x20\x4d\x45\x44\x49\x41\x20\x56\x69\x64\x65\x6f\x20\x44\x6f\x77\x6e\x6c\x6f\x61\x64\x65\x72',p:0,op:0,d:'\x46\x52\x45\x45',c:'\x46\x72\x65\x65',dl:'\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x6d\x65\x64\x69\x61\x66\x69\x72\x65\x2e\x63\x6f\x6d\x2f\x66\x69\x6c\x65\x2f\x6e\x33\x36\x38\x33\x70\x6d\x63\x33\x74\x63\x76\x68\x33\x37\x2f\x53\x6e\x61\x70\x54\x69\x6b\x6d\x6f\x64\x64\x65\x64\x62\x79\x6a\x61\x64\x6f\x6f\x6e\x5f\x30\x2e\x31\x2e\x35\x2e\x61\x70\x6b\x2f\x66\x69\x6c\x65',i:'\x66\x61\x2d\x64\x6f\x77\x6e\x6c\x6f\x61\x64',ic:'\x23\x31\x30\x62\x39\x38\x31',s:3456}];
-for(var _0xbl=76;_0xbl<=140;_0xbl++)_0xak.push({id:_0xbl,n:'\x50\x72\x65\x6d\x69\x75\x6d\x20\x50\x72\x6f\x64\x75\x63\x74\x20'+_0xbl,p:Math.floor(Math.random()*500)+100,op:Math.floor(Math.random()*1000)+500,d:'\x36\x30\x25',c:['\x41\x50\x4b\x73','\x54\x6f\x6f\x6c\x73','\x43\x6f\x75\x72\x73\x65\x73','\x48\x61\x63\x6b\x69\x6e\x67'][Math.floor(Math.random()*4)],dl:'\x23',i:'\x66\x61\x2d\x62\x6f\x78',ic:'\x23\x36\x36\x37\x65\x65\x61',s:Math.floor(Math.random()*500)+50});
-const _0xcn=[..._0xak].sort((a,b)=>b.p-a.p);
-
-const _0xdm=function(_0xen){var _0xfo=document.createElement('\x64\x69\x76');_0xfo.className='\x74\x6f\x61\x73\x74';_0xfo.innerHTML=_0xen;document.body.appendChild(_0xfo);setTimeout(()=>_0xfo.remove(),3000);};
-const _0xgp=function(_0xhn){navigator.clipboard.writeText(_0xhn);_0xdm(_0x6b('\x43\x6f\x70\x69\x65\x64')+': '+_0xhn);};
-
-document.body.innerHTML='\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x6c\x6f\x67\x69\x6e\x50\x61\x67\x65\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x75\x74\x68\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x75\x74\x68\x2d\x63\x61\x72\x64\x22\x3e\x3c\x68\x32\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x74\x6f\x72\x65\x22\x3e\x3c\x2f\x69\x3e\x20\x4b\x48\x41\x52\x41\x4c\x20\x53\x54\x4f\x52\x45\x3c\x2f\x68\x32\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x75\x62\x74\x69\x74\x6c\x65\x22\x3e\x57\x65\x6c\x63\x6f\x6d\x65\x20\x62\x61\x63\x6b\x21\x20\x4c\x6f\x67\x69\x6e\x20\x74\x6f\x20\x79\x6f\x75\x72\x20\x61\x63\x63\x6f\x75\x6e\x74\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x6c\x6f\x67\x69\x6e\x45\x72\x72\x6f\x72\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x65\x72\x72\x6f\x72\x2d\x6d\x73\x67\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x6c\x6f\x67\x69\x6e\x45\x6d\x61\x69\x6c\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x45\x6d\x61\x69\x6c\x20\x41\x64\x64\x72\x65\x73\x73\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x6c\x6f\x67\x69\x6e\x50\x61\x73\x73\x77\x6f\x72\x64\x22\x20\x74\x79\x70\x65\x3d\x22\x70\x61\x73\x73\x77\x6f\x72\x64\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x50\x61\x73\x73\x77\x6f\x72\x64\x22\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x31\x28\x29\x22\x3e\x4c\x6f\x67\x69\x6e\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x77\x69\x74\x63\x68\x2d\x74\x65\x78\x74\x22\x3e\x4e\x65\x77\x20\x63\x75\x73\x74\x6f\x6d\x65\x72\x3f\x20\x3c\x73\x70\x61\x6e\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x32\x28\x29\x22\x3e\x43\x72\x65\x61\x74\x65\x20\x41\x63\x63\x6f\x75\x6e\x74\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x72\x65\x67\x69\x73\x74\x65\x72\x50\x61\x67\x65\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x75\x74\x68\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x64\x69\x73\x70\x6c\x61\x79\x3a\x6e\x6f\x6e\x65\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x75\x74\x68\x2d\x63\x61\x72\x64\x22\x3e\x3c\x68\x32\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x75\x73\x65\x72\x2d\x70\x6c\x75\x73\x22\x3e\x3c\x2f\x69\x3e\x20\x43\x72\x65\x61\x74\x65\x20\x41\x63\x63\x6f\x75\x6e\x74\x3c\x2f\x68\x32\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x75\x62\x74\x69\x74\x6c\x65\x22\x3e\x4a\x6f\x69\x6e\x20\x4b\x48\x41\x52\x41\x4c\x20\x53\x54\x4f\x52\x45\x20\x74\x6f\x64\x61\x79\x21\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x72\x65\x67\x69\x73\x74\x65\x72\x45\x72\x72\x6f\x72\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x65\x72\x72\x6f\x72\x2d\x6d\x73\x67\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x4e\x61\x6d\x65\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x46\x75\x6c\x6c\x20\x4e\x61\x6d\x65\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x45\x6d\x61\x69\x6c\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x45\x6d\x61\x69\x6c\x20\x41\x64\x64\x72\x65\x73\x73\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x50\x68\x6f\x6e\x65\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x50\x68\x6f\x6e\x65\x20\x4e\x75\x6d\x62\x65\x72\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x52\x65\x66\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x43\x6f\x64\x65\x20\x28\x4f\x70\x74\x69\x6f\x6e\x61\x6c\x29\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x50\x61\x73\x73\x77\x6f\x72\x64\x22\x20\x74\x79\x70\x65\x3d\x22\x70\x61\x73\x73\x77\x6f\x72\x64\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x50\x61\x73\x73\x77\x6f\x72\x64\x20\x28\x6d\x69\x6e\x20\x36\x20\x63\x68\x61\x72\x73\x29\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x69\x64\x3d\x22\x72\x65\x67\x43\x6f\x6e\x66\x69\x72\x6d\x22\x20\x74\x79\x70\x65\x3d\x22\x70\x61\x73\x73\x77\x6f\x72\x64\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x43\x6f\x6e\x66\x69\x72\x6d\x20\x50\x61\x73\x73\x77\x6f\x72\x64\x22\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x33\x28\x29\x22\x3e\x52\x65\x67\x69\x73\x74\x65\x72\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x77\x69\x74\x63\x68\x2d\x74\x65\x78\x74\x22\x3e\x41\x6c\x72\x65\x61\x64\x79\x20\x68\x61\x76\x65\x20\x61\x63\x63\x6f\x75\x6e\x74\x3f\x20\x3c\x73\x70\x61\x6e\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x34\x28\x29\x22\x3e\x4c\x6f\x67\x69\x6e\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x61\x70\x70\x53\x65\x63\x74\x69\x6f\x6e\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x70\x70\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6d\x61\x69\x6e\x2d\x68\x65\x61\x64\x65\x72\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6c\x6f\x67\x6f\x22\x3e\x3c\x68\x32\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x6b\x75\x6c\x6c\x22\x3e\x3c\x2f\x69\x3e\x20\x4b\x48\x41\x52\x41\x4c\x20\x53\x54\x4f\x52\x45\x3c\x2f\x68\x32\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x75\x73\x65\x72\x2d\x69\x6e\x66\x6f\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x62\x61\x6c\x61\x6e\x63\x65\x2d\x63\x61\x72\x64\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6c\x61\x62\x65\x6c\x22\x3e\x42\x61\x6c\x61\x6e\x63\x65\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x6d\x6f\x75\x6e\x74\x22\x20\x69\x64\x3d\x22\x68\x65\x61\x64\x65\x72\x42\x61\x6c\x61\x6e\x63\x65\x22\x3e\x52\x73\x20\x30\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x76\x61\x74\x61\x72\x22\x20\x69\x64\x3d\x22\x75\x73\x65\x72\x41\x76\x61\x74\x61\x72\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x35\x28\x29\x22\x3e\x55\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x73\x74\x6f\x72\x65\x56\x69\x65\x77\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x74\x6f\x72\x65\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x65\x61\x72\x63\x68\x2d\x73\x65\x63\x74\x69\x6f\x6e\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x73\x65\x61\x72\x63\x68\x2d\x62\x6f\x78\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x65\x61\x72\x63\x68\x22\x3e\x3c\x2f\x69\x3e\x3c\x69\x6e\x70\x75\x74\x20\x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x22\x20\x69\x64\x3d\x22\x73\x65\x61\x72\x63\x68\x49\x6e\x70\x75\x74\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x53\x65\x61\x72\x63\x68\x20\x70\x72\x6f\x64\x75\x63\x74\x73\x2e\x2e\x2e\x22\x20\x6f\x6e\x6b\x65\x79\x75\x70\x3d\x22\x5f\x30\x78\x36\x28\x29\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x63\x61\x74\x65\x67\x6f\x72\x69\x65\x73\x22\x20\x69\x64\x3d\x22\x63\x61\x74\x65\x67\x6f\x72\x69\x65\x73\x4c\x69\x73\x74\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x73\x2d\x67\x72\x69\x64\x22\x20\x69\x64\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x73\x4c\x69\x73\x74\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x56\x69\x65\x77\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x64\x69\x73\x70\x6c\x61\x79\x3a\x6e\x6f\x6e\x65\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x77\x61\x6c\x6c\x65\x74\x2d\x62\x61\x6c\x61\x6e\x63\x65\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6c\x61\x62\x65\x6c\x22\x3e\x41\x76\x61\x69\x6c\x61\x62\x6c\x65\x20\x42\x61\x6c\x61\x6e\x63\x65\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x6d\x6f\x75\x6e\x74\x22\x20\x69\x64\x3d\x22\x77\x61\x6c\x6c\x65\x74\x42\x61\x6c\x61\x6e\x63\x65\x22\x3e\x52\x73\x20\x30\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x2d\x62\x74\x6e\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x37\x28\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x61\x72\x72\x6f\x77\x2d\x64\x6f\x77\x6e\x22\x3e\x3c\x2f\x69\x3e\x20\x41\x64\x64\x20\x42\x61\x6c\x61\x6e\x63\x65\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x46\x6f\x72\x6d\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x2d\x69\x6e\x66\x6f\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x6d\x6f\x62\x69\x6c\x65\x2d\x61\x6c\x74\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x66\x6f\x6e\x74\x2d\x73\x69\x7a\x65\x3a\x20\x34\x30\x70\x78\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x20\x23\x30\x30\x61\x38\x35\x39\x3b\x22\x3e\x3c\x2f\x69\x3e\x3c\x68\x33\x3e\x4a\x61\x7a\x7a\x43\x61\x73\x68\x20\x2f\x20\x45\x61\x73\x79\x50\x61\x69\x73\x61\x3c\x2f\x68\x33\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x61\x63\x63\x6f\x75\x6e\x74\x2d\x6e\x75\x6d\x62\x65\x72\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x38\x28\x27\x39\x32\x33\x32\x39\x32\x33\x35\x39\x39\x35\x31\x27\x29\x22\x3e\x39\x32\x33\x32\x39\x32\x33\x35\x39\x39\x35\x31\x20\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x63\x6f\x70\x79\x22\x3e\x3c\x2f\x69\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x70\x3e\x41\x63\x63\x6f\x75\x6e\x74\x20\x54\x69\x74\x6c\x65\x3a\x20\x4d\x75\x6e\x69\x72\x20\x61\x68\x6d\x61\x64\x3c\x2f\x70\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x75\x70\x6c\x6f\x61\x64\x2d\x61\x72\x65\x61\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x64\x6f\x63\x75\x6d\x65\x6e\x74\x2e\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x42\x79\x49\x64\x28\x27\x64\x65\x70\x6f\x73\x69\x74\x46\x69\x6c\x65\x27\x29\x2e\x63\x6c\x69\x63\x6b\x28\x29\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x74\x79\x70\x65\x3d\x22\x66\x69\x6c\x65\x22\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x46\x69\x6c\x65\x22\x20\x61\x63\x63\x65\x70\x74\x3d\x22\x69\x6d\x61\x67\x65\x2f\x2a\x22\x20\x68\x69\x64\x64\x65\x6e\x20\x6f\x6e\x63\x68\x61\x6e\x67\x65\x3d\x22\x5f\x30\x78\x39\x28\x74\x68\x69\x73\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x63\x6c\x6f\x75\x64\x2d\x75\x70\x6c\x6f\x61\x64\x2d\x61\x6c\x74\x22\x3e\x3c\x2f\x69\x3e\x3c\x64\x69\x76\x3e\x55\x70\x6c\x6f\x61\x64\x20\x70\x61\x79\x6d\x65\x6e\x74\x20\x73\x63\x72\x65\x65\x6e\x73\x68\x6f\x74\x3c\x2f\x64\x69\x76\x3e\x3c\x69\x6d\x67\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x50\x72\x65\x76\x69\x65\x77\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x77\x69\x64\x74\x68\x3a\x31\x30\x30\x25\x3b\x20\x6d\x61\x78\x2d\x68\x65\x69\x67\x68\x74\x3a\x38\x30\x70\x78\x3b\x20\x62\x6f\x72\x64\x65\x72\x2d\x72\x61\x64\x69\x75\x73\x3a\x31\x30\x70\x78\x3b\x20\x64\x69\x73\x70\x6c\x61\x79\x3a\x6e\x6f\x6e\x65\x3b\x20\x6d\x61\x72\x67\x69\x6e\x2d\x74\x6f\x70\x3a\x31\x30\x70\x78\x3b\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x69\x6e\x70\x75\x74\x20\x74\x79\x70\x65\x3d\x22\x6e\x75\x6d\x62\x65\x72\x22\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x41\x6d\x6f\x75\x6e\x74\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x41\x6d\x6f\x75\x6e\x74\x20\x28\x4d\x69\x6e\x20\x33\x30\x30\x29\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x77\x69\x64\x74\x68\x3a\x31\x30\x30\x25\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x31\x32\x70\x78\x3b\x20\x6d\x61\x72\x67\x69\x6e\x2d\x62\x6f\x74\x74\x6f\x6d\x3a\x31\x35\x70\x78\x3b\x20\x62\x61\x63\x6b\x67\x72\x6f\x75\x6e\x64\x3a\x72\x67\x62\x61\x28\x32\x35\x35\x2c\x32\x35\x35\x2c\x32\x35\x35\x2c\x30\x2e\x31\x29\x3b\x20\x62\x6f\x72\x64\x65\x72\x3a\x31\x70\x78\x20\x73\x6f\x6c\x69\x64\x20\x72\x67\x62\x61\x28\x32\x35\x35\x2c\x32\x35\x35\x2c\x32\x35\x35\x2c\x30\x2e\x32\x29\x3b\x20\x62\x6f\x72\x64\x65\x72\x2d\x72\x61\x64\x69\x75\x73\x3a\x31\x30\x70\x78\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x77\x68\x69\x74\x65\x22\x3e\x3c\x69\x6e\x70\x75\x74\x20\x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x22\x20\x69\x64\x3d\x22\x64\x65\x70\x6f\x73\x69\x74\x54\x78\x6e\x22\x20\x70\x6c\x61\x63\x65\x68\x6f\x6c\x64\x65\x72\x3d\x22\x54\x72\x61\x6e\x73\x61\x63\x74\x69\x6f\x6e\x20\x49\x44\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x77\x69\x64\x74\x68\x3a\x31\x30\x30\x25\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x31\x32\x70\x78\x3b\x20\x6d\x61\x72\x67\x69\x6e\x2d\x62\x6f\x74\x74\x6f\x6d\x3a\x31\x35\x70\x78\x3b\x20\x62\x61\x63\x6b\x67\x72\x6f\x75\x6e\x64\x3a\x72\x67\x62\x61\x28\x32\x35\x35\x2c\x32\x35\x35\x2c\x32\x35\x35\x2c\x30\x2e\x31\x29\x3b\x20\x62\x6f\x72\x64\x65\x72\x3a\x31\x70\x78\x20\x73\x6f\x6c\x69\x64\x20\x72\x67\x62\x61\x28\x32\x35\x35\x2c\x32\x35\x35\x2c\x32\x35\x35\x2c\x30\x2e\x32\x29\x3b\x20\x62\x6f\x72\x64\x65\x72\x2d\x72\x61\x64\x69\x75\x73\x3a\x31\x30\x70\x78\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x77\x68\x69\x74\x65\x22\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x61\x28\x29\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x77\x69\x64\x74\x68\x3a\x31\x30\x30\x25\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x31\x34\x70\x78\x3b\x20\x62\x61\x63\x6b\x67\x72\x6f\x75\x6e\x64\x3a\x23\x30\x30\x61\x38\x35\x39\x3b\x20\x62\x6f\x72\x64\x65\x72\x3a\x6e\x6f\x6e\x65\x3b\x20\x62\x6f\x72\x64\x65\x72\x2d\x72\x61\x64\x69\x75\x73\x3a\x31\x30\x70\x78\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x77\x68\x69\x74\x65\x3b\x20\x66\x6f\x6e\x74\x2d\x77\x65\x69\x67\x68\x74\x3a\x36\x30\x30\x22\x3e\x53\x75\x62\x6d\x69\x74\x20\x44\x65\x70\x6f\x73\x69\x74\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x73\x56\x69\x65\x77\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x73\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x64\x69\x73\x70\x6c\x61\x79\x3a\x6e\x6f\x6e\x65\x22\x3e\x3c\x68\x33\x20\x73\x74\x79\x6c\x65\x3d\x22\x6d\x61\x72\x67\x69\x6e\x2d\x62\x6f\x74\x74\x6f\x6d\x3a\x32\x30\x70\x78\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x68\x6f\x70\x70\x69\x6e\x67\x2d\x62\x61\x67\x22\x3e\x3c\x2f\x69\x3e\x20\x4d\x79\x20\x50\x75\x72\x63\x68\x61\x73\x65\x73\x3c\x2f\x68\x33\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x73\x4c\x69\x73\x74\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x73\x2d\x67\x72\x69\x64\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x56\x69\x65\x77\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x2d\x63\x6f\x6e\x74\x61\x69\x6e\x65\x72\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x64\x69\x73\x70\x6c\x61\x79\x3a\x6e\x6f\x6e\x65\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x2d\x63\x61\x72\x64\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x2d\x61\x76\x61\x74\x61\x72\x22\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x41\x76\x61\x74\x61\x72\x22\x3e\x55\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x2d\x6e\x61\x6d\x65\x22\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x4e\x61\x6d\x65\x22\x3e\x55\x73\x65\x72\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x2d\x65\x6d\x61\x69\x6c\x22\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x45\x6d\x61\x69\x6c\x22\x3e\x2d\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x69\x6e\x66\x6f\x2d\x63\x61\x72\x64\x22\x3e\x3c\x70\x3e\x3c\x73\x74\x72\x6f\x6e\x67\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x6d\x6f\x62\x69\x6c\x65\x2d\x61\x6c\x74\x22\x3e\x3c\x2f\x69\x3e\x20\x50\x68\x6f\x6e\x65\x3a\x3c\x2f\x73\x74\x72\x6f\x6e\x67\x3e\x20\x3c\x73\x70\x61\x6e\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x50\x68\x6f\x6e\x65\x22\x3e\x2d\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x70\x3e\x3c\x70\x3e\x3c\x73\x74\x72\x6f\x6e\x67\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x63\x61\x6c\x65\x6e\x64\x61\x72\x2d\x64\x61\x79\x22\x3e\x3c\x2f\x69\x3e\x20\x4a\x6f\x69\x6e\x65\x64\x3a\x3c\x2f\x73\x74\x72\x6f\x6e\x67\x3e\x20\x3c\x73\x70\x61\x6e\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x4a\x6f\x69\x6e\x65\x64\x22\x3e\x2d\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x70\x3e\x3c\x70\x3e\x3c\x73\x74\x72\x6f\x6e\x67\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x6c\x69\x6e\x6b\x22\x3e\x3c\x2f\x69\x3e\x20\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x43\x6f\x64\x65\x3a\x3c\x2f\x73\x74\x72\x6f\x6e\x67\x3e\x20\x3c\x73\x70\x61\x6e\x20\x69\x64\x3d\x22\x70\x72\x6f\x66\x69\x6c\x65\x52\x65\x66\x43\x6f\x64\x65\x22\x3e\x2d\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x70\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x63\x6f\x70\x79\x2d\x62\x74\x6e\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x62\x28\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x6c\x69\x6e\x6b\x22\x3e\x3c\x2f\x69\x3e\x20\x43\x6f\x70\x79\x20\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x4c\x69\x6e\x6b\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x6c\x6f\x67\x6f\x75\x74\x2d\x62\x74\x6e\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x63\x28\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x69\x67\x6e\x2d\x6f\x75\x74\x2d\x61\x6c\x74\x22\x3e\x3c\x2f\x69\x3e\x20\x4c\x6f\x67\x6f\x75\x74\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x68\x33\x20\x73\x74\x79\x6c\x65\x3d\x22\x6d\x61\x72\x67\x69\x6e\x3a\x32\x30\x70\x78\x20\x30\x20\x31\x30\x70\x78\x22\x3e\x43\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x20\x48\x69\x73\x74\x6f\x72\x79\x3c\x2f\x68\x33\x3e\x3c\x64\x69\x76\x20\x69\x64\x3d\x22\x63\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x48\x69\x73\x74\x6f\x72\x79\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x73\x2d\x67\x72\x69\x64\x22\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x62\x6f\x74\x74\x6f\x6d\x2d\x6e\x61\x76\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6e\x61\x76\x2d\x69\x74\x65\x6d\x20\x61\x63\x74\x69\x76\x65\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x64\x28\x27\x73\x74\x6f\x72\x65\x27\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x74\x6f\x72\x65\x22\x3e\x3c\x2f\x69\x3e\x3c\x73\x70\x61\x6e\x3e\x53\x74\x6f\x72\x65\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6e\x61\x76\x2d\x69\x74\x65\x6d\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x64\x28\x27\x70\x75\x72\x63\x68\x61\x73\x65\x73\x27\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x68\x6f\x70\x70\x69\x6e\x67\x2d\x62\x61\x67\x22\x3e\x3c\x2f\x69\x3e\x3c\x73\x70\x61\x6e\x3e\x50\x75\x72\x63\x68\x61\x73\x65\x73\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6e\x61\x76\x2d\x69\x74\x65\x6d\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x64\x28\x27\x64\x65\x70\x6f\x73\x69\x74\x27\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x77\x61\x6c\x6c\x65\x74\x22\x3e\x3c\x2f\x69\x3e\x3c\x73\x70\x61\x6e\x3e\x44\x65\x70\x6f\x73\x69\x74\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x6e\x61\x76\x2d\x69\x74\x65\x6d\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x64\x28\x27\x70\x72\x6f\x66\x69\x6c\x65\x27\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x75\x73\x65\x72\x22\x3e\x3c\x2f\x69\x3e\x3c\x73\x70\x61\x6e\x3e\x50\x72\x6f\x66\x69\x6c\x65\x3c\x2f\x73\x70\x61\x6e\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e';
-
-const _0x0x=window;
-_0x0x._0x78=function(){alert('\x48\x65\x6c\x6c\x6f')};
-_0x0x._0x1=function(){let a=document.getElementById('\x6c\x6f\x67\x69\x6e\x45\x6d\x61\x69\x6c').value,b=document.getElementById('\x6c\x6f\x67\x69\x6e\x50\x61\x73\x73\x77\x6f\x72\x64').value;if(!a||!b)_0xdm(_0x6b('\x45\x6e\x74\x65\x72\x20\x65\x6d\x61\x69\x6c\x20\x61\x6e\x64\x20\x70\x61\x73\x73\x77\x6f\x72\x64'));else _0x3d.signInWithEmailAndPassword(a,b).then(u=>{_0x5f=u.user;window._load()}).catch(e=>_0xdm(e.message));};
-_0x0x._0x2=function(){document.getElementById('\x6c\x6f\x67\x69\x6e\x50\x61\x67\x65').style.display='\x6e\x6f\x6e\x65';document.getElementById('\x72\x65\x67\x69\x73\x74\x65\x72\x50\x61\x67\x65').style.display='\x66\x6c\x65\x78';};
-_0x0x._0x4=function(){document.getElementById('\x6c\x6f\x67\x69\x6e\x50\x61\x67\x65').style.display='\x66\x6c\x65\x78';document.getElementById('\x72\x65\x67\x69\x73\x74\x65\x72\x50\x61\x67\x65').style.display='\x6e\x6f\x6e\x65';};
-_0x0x._0x5=function(){_0x0x._0x64('\x70\x72\x6f\x66\x69\x6c\x65');};
-_0x0x._0x6=function(){window._render()};
-_0x0x._0x7=function(){};
-_0x0x._0x8=function(t){_0xgp(t)};
-_0x0x._0x9=function(i){var f=i.files[0];if(f){var r=new FileReader();r.onload=e=>{document.getElementById('\x64\x65\x70\x6f\x73\x69\x74\x50\x72\x65\x76\x69\x65\x77').src=e.target.result;document.getElementById('\x64\x65\x70\x6f\x73\x69\x74\x50\x72\x65\x76\x69\x65\x77').style.display='\x62\x6c\x6f\x63\x6b';};r.readAsDataURL(f);window._depositFile=f;}};
-_0x0x._0xa=function(){_0xdm(_0x6b('\x44\x65\x70\x6f\x73\x69\x74\x20\x72\x65\x71\x75\x65\x73\x74\x20\x73\x65\x6e\x74'))};
-_0x0x._0xb=function(){_0xgp(window.location.origin+window.location.pathname+'\x3f\x72\x65\x66\x3d'+_0x5f.uid);_0xdm(_0x6b('\x52\x65\x66\x65\x72\x72\x61\x6c\x20\x6c\x69\x6e\x6b\x20\x63\x6f\x70\x69\x65\x64'))};
-_0x0x._0xc=function(){_0x3d.signOut();_0x5f=null;document.getElementById('\x61\x70\x70\x53\x65\x63\x74\x69\x6f\x6e').style.display='\x6e\x6f\x6e\x65';_0x0x._0x4();};
-_0x0x._0x64=function(t){document.querySelectorAll('\x2e\x6e\x61\x76\x2d\x69\x74\x65\x6d').forEach(n=>n.classList.remove('\x61\x63\x74\x69\x76\x65'));event.target.closest('\x2e\x6e\x61\x76\x2d\x69\x74\x65\x6d').classList.add('\x61\x63\x74\x69\x76\x65');document.getElementById('\x73\x74\x6f\x72\x65\x56\x69\x65\x77').style.display=t==='\x73\x74\x6f\x72\x65'?'\x62\x6c\x6f\x63\x6b':'\x6e\x6f\x6e\x65';document.getElementById('\x64\x65\x70\x6f\x73\x69\x74\x56\x69\x65\x77').style.display=t==='\x64\x65\x70\x6f\x73\x69\x74'?'\x62\x6c\x6f\x63\x6b':'\x6e\x6f\x6e\x65';document.getElementById('\x70\x75\x72\x63\x68\x61\x73\x65\x73\x56\x69\x65\x77').style.display=t==='\x70\x75\x72\x63\x68\x61\x73\x65\x73'?'\x62\x6c\x6f\x63\x6b':'\x6e\x6f\x6e\x65';document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x56\x69\x65\x77').style.display=t==='\x70\x72\x6f\x66\x69\x6c\x65'?'\x62\x6c\x6f\x63\x6b':'\x6e\x6f\x6e\x65';if(t==='\x73\x74\x6f\x72\x65')window._render();if(t==='\x70\x75\x72\x63\x68\x61\x73\x65\x73')window._loadPurchases();if(t==='\x70\x72\x6f\x66\x69\x6c\x65')window._loadCommission();};
-window._load=function(){_0x4e.ref('\x75\x73\x65\x72\x73\x2f'+_0x5f.uid).on('\x76\x61\x6c\x75\x65',s=>{_0x6g=s.val();if(_0x6g){document.getElementById('\x68\x65\x61\x64\x65\x72\x42\x61\x6c\x61\x6e\x63\x65').innerText='\x52\x73 '+(_0x6g.balance||0);document.getElementById('\x77\x61\x6c\x6c\x65\x74\x42\x61\x6c\x61\x6e\x63\x65').innerText='\x52\x73 '+(_0x6g.balance||0);document.getElementById('\x75\x73\x65\x72\x41\x76\x61\x74\x61\x72').innerText=(_0x6g.username||'\x55').charAt(0);document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x41\x76\x61\x74\x61\x72').innerText=(_0x6g.username||'\x55').charAt(0);document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x4e\x61\x6d\x65').innerText=_0x6g.username;document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x45\x6d\x61\x69\x6c').innerText=_0x6g.email;document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x50\x68\x6f\x6e\x65').innerText=_0x6g.phone||'\x2d';document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x4a\x6f\x69\x6e\x65\x64').innerText=_0x6g.joinedDate||'\x2d';document.getElementById('\x70\x72\x6f\x66\x69\x6c\x65\x52\x65\x66\x43\x6f\x64\x65').innerText=_0x5f.uid;}});document.getElementById('\x6c\x6f\x67\x69\x6e\x50\x61\x67\x65').style.display='\x6e\x6f\x6e\x65';document.getElementById('\x72\x65\x67\x69\x73\x74\x65\x72\x50\x61\x67\x65').style.display='\x6e\x6f\x6e\x65';document.getElementById('\x61\x70\x70\x53\x65\x63\x74\x69\x6f\x6e').style.display='\x62\x6c\x6f\x63\x6b';window._loadCategories();window._render();window._loadPurchases();window._loadCommission();window._0x64('\x73\x74\x6f\x72\x65');};
-window._loadCategories=function(){var cats=['\x41\x6c\x6c',...new Set(_0xcn.map(p=>p.c))];document.getElementById('\x63\x61\x74\x65\x67\x6f\x72\x69\x65\x73\x4c\x69\x73\x74').innerHTML=cats.map(c=>'\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x63\x61\x74\x65\x67\x6f\x72\x79\x2d\x62\x74\x6e\x20'+(c===_0x8i?'\x61\x63\x74\x69\x76\x65':'')+'\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x65\x28\x5c\x27'+c+'\\\x27\x29\x22\x3e'+c+'\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e').join('');};
-window._0x65=function(c){_0x8i=c;window._loadCategories();window._render();};
-window._render=function(){var s=document.getElementById('\x73\x65\x61\x72\x63\x68\x49\x6e\x70\x75\x74')?.value.toLowerCase()||'';var f=_0xcn;if(_0x8i!=='\x41\x6c\x6c')f=f.filter(p=>p.c===_0x8i);if(s)f=f.filter(p=>p.n.toLowerCase().includes(s));var c=document.getElementById('\x70\x72\x6f\x64\x75\x63\x74\x73\x4c\x69\x73\x74');c.innerHTML=f.map(p=>{var pu=_0x6g?.purchases?.[p.id];var hb=(_0x6g?.balance||0)>=p.p;return '\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x63\x61\x72\x64\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x69\x63\x6f\x6e\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20'+p.i+'\x22\x20\x73\x74\x79\x6c\x65\x3d\x22\x63\x6f\x6c\x6f\x72\x3a '+p.ic+'\x3b\x22\x3e\x3c\x2f\x69\x3e\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x69\x6e\x66\x6f\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x6e\x61\x6d\x65\x22\x3e'+p.n+'\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x70\x72\x69\x63\x65\x22\x3e'+((p.p===0)?'\x46\x52\x45\x45':'\x52\x73 '+p.p)+(p.op>0?'\x3c\x73\x70\x61\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x6f\x6c\x64\x2d\x70\x72\x69\x63\x65\x22\x3e\x52\x73 '+p.op+'\x3c\x2f\x73\x70\x61\x6e\x3e':'')+(p.d!=='\x46\x52\x45\x45'?'\x3c\x73\x70\x61\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x64\x69\x73\x63\x6f\x75\x6e\x74\x22\x3e'+p.d+'\x3c\x2f\x73\x70\x61\x6e\x3e':'')+'\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x73\x6f\x6c\x64\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x73\x68\x6f\x70\x70\x69\x6e\x67\x2d\x62\x61\x67\x22\x3e\x3c\x2f\x69\x3e '+p.s+'\x2b\x20\x73\x6f\x6c\x64\x3c\x2f\x64\x69\x76\x3e'+(pu?'\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x62\x75\x79\x2d\x62\x74\x6e\x20\x70\x75\x72\x63\x68\x61\x73\x65\x64\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x77\x69\x6e\x64\x6f\x77\x2e\x6f\x70\x65\x6e\x28\x5c\x27'+p.dl+'\\\x27\x2c\x27\x5f\x62\x6c\x61\x6e\x6b\x27\x29\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x64\x6f\x77\x6e\x6c\x6f\x61\x64\x22\x3e\x3c\x2f\x69\x3e\x20\x44\x6f\x77\x6e\x6c\x6f\x61\x64\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e':'\x3c\x62\x75\x74\x74\x6f\x6e\x20\x63\x6c\x61\x73\x73\x3d\x22\x62\x75\x79\x2d\x62\x74\x6e\x22\x20\x6f\x6e\x63\x6c\x69\x63\x6b\x3d\x22\x5f\x30\x78\x66\x28'+p.id+')\x22 '+(hb||p.p===0?'':'disabled style="opacity:0.5"')+'\x3e'+(p.p===0?'\x47\x65\x74\x20\x46\x72\x65\x65':'\x42\x75\x79\x20\x4e\x6f\x77')+'\x3c\x2f\x62\x75\x74\x74\x6f\x6e\x3e')+'\x3c\x2f\x64\x69\x76\x3e\x3c\x2f\x64\x69\x76\x3e';}).join('');if(c.innerHTML==='')c.innerHTML='\x3c\x64\x69\x76\x20\x73\x74\x79\x6c\x65\x3d\x22\x74\x65\x78\x74\x2d\x61\x6c\x69\x67\x6e\x3a\x63\x65\x6e\x74\x65\x72\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x34\x30\x70\x78\x3b\x20\x67\x72\x69\x64\x2d\x63\x6f\x6c\x75\x6d\x6e\x3a\x31\x2f\x2d\x31\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x23\x38\x62\x39\x32\x61\x38\x22\x3e\x4e\x6f\x20\x70\x72\x6f\x64\x75\x63\x74\x73\x20\x66\x6f\x75\x6e\x64\x3c\x2f\x64\x69\x76\x3e';};
-window._0x66=function(id){var p=_0xcn.find(x=>x.id==id);if(!p)return;if(p.p===0){window._0x67(p);return}if((_0x6g?.balance||0)<p.p){_0xdm(_0x6b('\x49\x6e\x73\x75\x66\x66\x69\x63\x69\x65\x6e\x74\x20\x62\x61\x6c\x61\x6e\x63\x65'));window._0x64('\x64\x65\x70\x6f\x73\x69\x74');return}if(_0x6g?.purchases?.[id]){_0xdm(_0x6b('\x59\x6f\x75\x20\x61\x6c\x72\x65\x61\x64\x79\x20\x70\x75\x72\x63\x68\x61\x73\x65\x64'));return}if(confirm('\x42\x75\x79\x20\x22'+p.n+'\\\x22\x20\x66\x6f\x72\x20\x52\x73 '+p.p+'\x3f')){var nb=(_0x6g.balance||0)-p.p;_0x4e.ref('\x75\x73\x65\x72\x73\x2f'+_0x5f.uid).update({balance:nb,[`purchases/${id}`]:{name:p.n,price:p.p,downloadLink:p.dl,purchasedAt:new Date().toLocaleString()}});window._0x67(p);}};
-window._0x67=function(p){_0x4e.ref('\x6f\x72\x64\x65\x72\x73\x2f'+_0x5f.uid).push({productName:p.n,amount:p.p,date:new Date().toLocaleString()});_0xdm('\x50\x75\x72\x63\x68\x61\x73\x65\x64\x20\x22'+p.n+'\\\x22\x20\x73\x75\x63\x63\x65\x73\x73\x66\x75\x6c\x6c\x79\x21');window._loadPurchases();window._render();};
-window._loadPurchases=function(){var pu=_0x6g?.purchases||{};var c=document.getElementById('\x70\x75\x72\x63\x68\x61\x73\x65\x73\x4c\x69\x73\x74');c.innerHTML='';var it=Object.values(pu);if(it.length===0){c.innerHTML='\x3c\x64\x69\x76\x20\x73\x74\x79\x6c\x65\x3d\x22\x74\x65\x78\x74\x2d\x61\x6c\x69\x67\x6e\x3a\x63\x65\x6e\x74\x65\x72\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x34\x30\x70\x78\x3b\x20\x67\x72\x69\x64\x2d\x63\x6f\x6c\x75\x6d\x6e\x3a\x31\x2f\x2d\x31\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x23\x38\x62\x39\x32\x61\x38\x22\x3e\x4e\x6f\x20\x70\x75\x72\x63\x68\x61\x73\x65\x73\x20\x79\x65\x74\x2e\x20\x42\x75\x79\x20\x70\x72\x6f\x64\x75\x63\x74\x73\x20\x66\x72\x6f\x6d\x20\x53\x74\x6f\x72\x65\x21\x3c\x2f\x64\x69\x76\x3e';return;}it.forEach(i=>{c.innerHTML+='\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x75\x72\x63\x68\x61\x73\x65\x2d\x63\x61\x72\x64\x22\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x6e\x61\x6d\x65\x22\x3e'+i.name+'\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x70\x72\x69\x63\x65\x22\x3e\x52\x73 '+i.price+'\x3c\x2f\x64\x69\x76\x3e\x3c\x64\x69\x76\x20\x63\x6c\x61\x73\x73\x3d\x22\x70\x72\x6f\x64\x75\x63\x74\x2d\x73\x6f\x6c\x64\x22\x3e\x50\x75\x72\x63\x68\x61\x73\x65\x64\x3a '+i.purchasedAt+'\x3c\x2f\x64\x69\x76\x3e\x3c\x61\x20\x68\x72\x65\x66\x3d\x22'+i.downloadLink+'\x22\x20\x74\x61\x72\x67\x65\x74\x3d\x22\x5f\x62\x6c\x61\x6e\x6b\x22\x20\x63\x6c\x61\x73\x73\x3d\x22\x64\x6f\x77\x6e\x6c\x6f\x61\x64\x2d\x6c\x69\x6e\x6b\x22\x3e\x3c\x69\x20\x63\x6c\x61\x73\x73\x3d\x22\x66\x61\x73\x20\x66\x61\x2d\x64\x6f\x77\x6e\x6c\x6f\x61\x64\x22\x3e\x3c\x2f\x69\x3e\x20\x44\x6f\x77\x6e\x6c\x6f\x61\x64\x3c\x2f\x61\x3e\x3c\x2f\x64\x69\x76\x3e';});};
-window._loadCommission=function(){var c=document.getElementById('\x63\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x48\x69\x73\x74\x6f\x72\x79');c.innerHTML='\x3c\x64\x69\x76\x20\x73\x74\x79\x6c\x65\x3d\x22\x74\x65\x78\x74\x2d\x61\x6c\x69\x67\x6e\x3a\x63\x65\x6e\x74\x65\x72\x3b\x20\x70\x61\x64\x64\x69\x6e\x67\x3a\x32\x30\x70\x78\x3b\x20\x67\x72\x69\x64\x2d\x63\x6f\x6c\x75\x6d\x6e\x3a\x31\x2f\x2d\x31\x3b\x20\x63\x6f\x6c\x6f\x72\x3a\x23\x38\x62\x39\x32\x61\x38\x22\x3e\x4e\x6f\x20\x63\x6f\x6d\x6d\x69\x73\x73\x69\x6f\x6e\x73\x20\x79\x65\x74\x3c\x2f\x64\x69\x76\x3e';};
-
-_0x3d.onAuthStateChanged(u=>{if(u){_0x5f=u;window._load();}});
-})();
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyD5DvpTiKztjQ_RivjOHqEsNh9K6MMFQJI",
+        authDomain: "kharal-b47b6.firebaseapp.com",
+        databaseURL: "https://kharal-b47b6-default-rtdb.firebaseio.com",
+        projectId: "kharal-b47b6",
+        storageBucket: "kharal-b47b6.firebasestorage.app",
+        messagingSenderId: "528214841740",
+        appId: "1:528214841740:web:9b50ad13927e26c66e9ea9"
+    };
+    
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    
+    const auth = firebase.auth();
+    const db = firebase.database();
+    
+    let currentUser = null;
+    let userData = null;
+    let depositFile = null;
+    let currentCategory = "All";
+    
+    // ========== COMPLETE PRODUCTS (All 140+ products) ==========
+    const products = [
+        // APKs & Premium Mods (1-55)
+        { id: 1, name: "CAPCUT GOLDEN 2026 APK", price: 700, oldPrice: 1999, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file", icon: "fa-crown", iconColor: "#FFD700", sold: 1247 },
+        { id: 2, name: "CAPCUT PRO MODDED", price: 250, oldPrice: 999, discount: "75%", category: "APKs", downloadLink: "https://www.mediafire.com/file/6xaakpfbw90kuae/CapCut_15.5.0.apk/file", icon: "fa-scissors", iconColor: "#FF6B6B", sold: 892 },
+        { id: 3, name: "CAPCUT PRO APK", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3hjvebbjafgr4mr/CAPCUT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#4ECDC4", sold: 2156 },
+        { id: 4, name: "CAPCUT PRO IPHONE", price: 560, oldPrice: 1599, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/folder/t24kpppgsvacd/CAPCUT+PRO+4+IPHONE+SHARED+BY+DARK+LEGEND", icon: "fa-apple", iconColor: "#000000", sold: 543 },
+        { id: 5, name: "KWAI CUT PRO", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gmqwz5hjduo5z1j/KwaiCut_7.5.0.710138.apk/file", icon: "fa-cut", iconColor: "#45B7D1", sold: 678 },
+        { id: 6, name: "WINK PREMIUM", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file", icon: "fa-eye", iconColor: "#96CEB4", sold: 1678 },
+        { id: 7, name: "WINK PRO APK", price: 300, oldPrice: 899, discount: "67%", category: "APKs", downloadLink: "https://www.mediafire.com/file/m60bpfkco8wsojf/WINK_PRO_APK_BY_DARK_LEGEND.apk/file", icon: "fa-eye", iconColor: "#96CEB4", sold: 1234 },
+        { id: 8, name: "REMINI PREMIUM", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file", icon: "fa-image", iconColor: "#FF6B6B", sold: 2345 },
+        { id: 9, name: "REMINI PRO APK", price: 290, oldPrice: 1199, discount: "76%", category: "APKs", downloadLink: "https://www.mediafire.com/file/v1rarpae2fkh88b/REMINI_PRO_BY_DARK_LEGND.apk/file", icon: "fa-image", iconColor: "#FF6B6B", sold: 1876 },
+        { id: 10, name: "PICSART PREMIUM", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", sold: 1987 },
+        { id: 11, name: "PICSART PRO APK", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bjgg3kx4s06y3m5/PICSART_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-paint-brush", iconColor: "#FF9671", sold: 1654 },
+        { id: 12, name: "INSHOT PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file", icon: "fa-video", iconColor: "#2ECC71", sold: 2345 },
+        { id: 13, name: "INSHOT PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/5q6ugwbs6bj2tzx/INSHOT_PRO_NEW_VERSION_BY_DARK_LEGEND.apk/file", icon: "fa-video", iconColor: "#2ECC71", sold: 1987 },
+        { id: 14, name: "YOUTUBE PREMIUM", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/bzp21y7brf0o44z/YouTube_Premium_26.06.2026.apk/file", icon: "fa-youtube", iconColor: "#FF0000", sold: 3456 },
+        { id: 15, name: "YOUTUBE PRO APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/kb0eybadipggm8b/YOUTUBE_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-youtube", iconColor: "#FF0000", sold: 2987 },
+        { id: 16, name: "YouTube Pro APK", price: 250, oldPrice: 799, discount: "69%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file", icon: "fa-youtube", iconColor: "#FF0000", sold: 1876 },
+        { id: 17, name: "ALIGHT MOTION PRO", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file", icon: "fa-film", iconColor: "#9B59B6", sold: 1876 },
+        { id: 18, name: "Alight Motion Premium", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/gwq9q502owtciwa/Alight+Motion_5.0.272.1028368.apk/file", icon: "fa-film", iconColor: "#9B59B6", sold: 1654 },
+        { id: 19, name: "DUAL SPACE PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/mooh7z69xy6qrt6/DualSpace_6.0.1.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", sold: 543 },
+        { id: 20, name: "Dual Space Premium", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/kajy4mbkku6pmtt/Dual+Space_1.21.0.10.apk/file", icon: "fa-copy", iconColor: "#FF6B6B", sold: 432 },
+        { id: 21, name: "EXPORT LOGO MAKER", price: 250, oldPrice: 599, discount: "58%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ew66a0zbj6up6ef/Esport+Logo_1.4.6.apk/file", icon: "fa-logo", iconColor: "#3498DB", sold: 321 },
+        { id: 22, name: "DEEPSEEK PREMIUM", price: 450, oldPrice: 1499, discount: "70%", category: "APKs", downloadLink: "https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file", icon: "fa-brain", iconColor: "#6C5CE7", sold: 234 },
+        { id: 23, name: "TELEGRAM PREMIUM", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/mh4nu9cd4c4dncc/TELEGRAM_PREMIUM_BY_DARK_LEGEND.apk/file", icon: "fa-telegram", iconColor: "#0088cc", sold: 987 },
+        { id: 24, name: "Telegram Clone APK", price: 230, oldPrice: 599, discount: "62%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3uh01595qebk0sy/Telegram+Cloned_11.7.4.apk/file", icon: "fa-telegram", iconColor: "#0088cc", sold: 654 },
+        { id: 25, name: "Netflix Premium Mod", price: 560, oldPrice: 1999, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/jjmfb2a7pjluwyy/Netflix+PremiumbyJadoon_3.1.0r.apk/file", icon: "fa-film", iconColor: "#E50914", sold: 876 },
+        { id: 26, name: "Photoleap Premium", price: 250, oldPrice: 899, discount: "72%", category: "APKs", downloadLink: "https://www.mediafire.com/file/a47u6xuf0m6a8ix/Photoleap_1.65.0.apk/file", icon: "fa-camera", iconColor: "#FF9671", sold: 543 },
+        { id: 27, name: "Temp Mail Premium", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/qmthezoag341jb0/Temp+Mail_ModdedHackerJadoon3.49.apk/file", icon: "fa-envelope", iconColor: "#3498DB", sold: 876 },
+        { id: 28, name: "WHATSAPP BAN APK", price: 456, oldPrice: 1299, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/3nlu40d77d91ma8/WHATSAPP_BAN_APK_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 432 },
+        { id: 29, name: "WHATSAPP UNBAN APK", price: 466, oldPrice: 1299, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/3nlu40d77d91ma8/WHATSAPP_UNBAN_APK_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 387 },
+        { id: 30, name: "WhatsApp Fake Chat APK", price: 450, oldPrice: 999, discount: "55%", category: "APKs", downloadLink: "https://www.mediafire.com/file/c6koth0vxylmlur/WhatsApp_2.25.27.75.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 543 },
+        { id: 31, name: "Anti Crash WhatsApp APK", price: 450, oldPrice: 999, discount: "55%", category: "APKs", downloadLink: "https://www.mediafire.com/file/zl9ojebb17oteo2/com_whatsapp_2_24_17_2_241702008_minAPI21arm64_v8anodpi_apkmirror.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 321 },
+        { id: 32, name: "WiFi Hacker APK", price: 1200, oldPrice: 2999, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/g1vr6955y2ve4g6/WiFi-Hacker_%25284%2529.apk/file", icon: "fa-wifi", iconColor: "#3498DB", sold: 432 },
+        { id: 33, name: "Voice Changer APK", price: 250, oldPrice: 699, discount: "64%", category: "APKs", downloadLink: "https://drive.google.com/file/d/17xgUXS8-u364KPKRVo7QE9-CvbFrqY_A/view?usp=drivesdk", icon: "fa-microphone", iconColor: "#E74C3C", sold: 654 },
+        { id: 34, name: "VOICE CHANGER MOD APK", price: 550, oldPrice: 1499, discount: "63%", category: "APKs", downloadLink: "https://www.mediafire.com/file/e344g9zheemn02m/VOICE_CHANGER_MOD_BY_DARK_LEGEND.apk/file", icon: "fa-microphone", iconColor: "#E74C3C", sold: 432 },
+        { id: 35, name: "App Cloner Pro", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file", icon: "fa-copy", iconColor: "#9B59B6", sold: 876 },
+        { id: 36, name: "SHELTER APK CLONER", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/pnlcg269eczmpev/SHILTER_APK_CLONER_BY_DARK_LEGEND.apk/file", icon: "fa-copy", iconColor: "#9B59B6", sold: 543 },
+        { id: 37, name: "Quran Pak APK", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://www.mediafire.com/file/0lh0rj07pja23dv/Quran_Pak.apk/file", icon: "fa-quran", iconColor: "#10b981", sold: 15432 },
+        { id: 38, name: "QURAN KAREEM", price: 0, oldPrice: 0, discount: "FREE", category: "Islamic", downloadLink: "https://tasleemalquran.com/read-quran-online-para-1-to-30/", icon: "fa-star-and-crescent", iconColor: "#10b981", sold: 9876 },
+        { id: 39, name: "Sim Owner Details APK", price: 600, oldPrice: 1499, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/24cvr1k51byj2r2/Sim_Owner_Details.apk/file", icon: "fa-sim-card", iconColor: "#E67E22", sold: 543 },
+        { id: 40, name: "Website Source Code Finder", price: 1400, oldPrice: 2999, discount: "53%", category: "Tools", downloadLink: "https://www.mediafire.com/file/bkzrrcv4lsst7za/Web+Source+Code+Finder.apk/file", icon: "fa-code", iconColor: "#3498DB", sold: 234 },
+        { id: 41, name: "WhatsApp Toolkit", price: 250, oldPrice: 799, discount: "69%", category: "Tools", downloadLink: "https://www.mediafire.com/file/row79qltan43179/WhatsApp_Toolkit_by_CSP.apk/file", icon: "fa-toolbox", iconColor: "#2ECC71", sold: 987 },
+        { id: 42, name: "SHB Toolkit", price: 150, oldPrice: 499, discount: "70%", category: "Tools", downloadLink: "https://www.mediafire.com/file/bek19ajay1gs6f8/Shahid_Hacker_Boy_Tools_1.0.apk/file", icon: "fa-toolbox", iconColor: "#F39C12", sold: 654 },
+        { id: 43, name: "MT MANAGER PRO", price: 450, oldPrice: 1299, discount: "65%", category: "Tools", downloadLink: "https://www.mediafire.com/file/l8rdctw4yj8l8ks/MT_MANAGER_APK_BY_DARK_LEGEND.apk/file", icon: "fa-folder", iconColor: "#9B59B6", sold: 1234 },
+        { id: 44, name: "TERMUX WORKING APK", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/nqm774ajds09xj0/TERMUX_APK_WORKING_%2528DARK_LEGEND%2529.apk/file", icon: "fa-terminal", iconColor: "#2ECC71", sold: 1876 },
+        { id: 45, name: "TIKTOK LIVE APK", price: 470, oldPrice: 1299, discount: "64%", category: "APKs", downloadLink: "https://www.mediafire.com/file/4x3h0l3zsm4zfwf/TIKTOK_LIVE_APK_BY_DARK_LEGEND_333.apk/file", icon: "fa-tiktok", iconColor: "#000000", sold: 987 },
+        { id: 46, name: "FAKE CHAT WHATSAPP", price: 350, oldPrice: 899, discount: "61%", category: "APKs", downloadLink: "https://www.mediafire.com/file/3np600u54d84ojn/ALM2_FAKE_CHAT_WHATSAPP_BY_DARK_LEGEND.apk/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 543 },
+        { id: 47, name: "WA STATUS SAVER", price: 150, oldPrice: 399, discount: "62%", category: "APKs", downloadLink: "https://www.mediafire.com/file/ybcdk0jjcqkzxaq/STATUS_SAVER_MOD_BY_DARK_LEGEND.apk/file", icon: "fa-download", iconColor: "#2ECC71", sold: 2345 },
+        { id: 48, name: "JAZZCASH FAKE SS APK", price: 350, oldPrice: 899, discount: "61%", category: "Tools", downloadLink: "https://www.mediafire.com/file/v7r5898sinlu5sz/JAZCASH_FAKE_SCREENSHOT_BY_DARK_LEGEND.apk/file", icon: "fa-mobile-alt", iconColor: "#E74C3C", sold: 432 },
+        { id: 49, name: "EASYPAISA FAKE SS APK", price: 350, oldPrice: 899, discount: "61%", category: "Tools", downloadLink: "https://www.mediafire.com/file/m4t9zbtlrlnjpq9/FAKE_EASYPAISA_HISTORY_MODED_BY_DARK_LEGEND.apk/file", icon: "fa-mobile-alt", iconColor: "#E74C3C", sold: 387 },
+        { id: 50, name: "SMS BOMBER APK", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/p5s2gx14u94a9th/SMS_BOMBER_BY_DARK_LEGEND.apk/file", icon: "fa-envelope", iconColor: "#E74C3C", sold: 876 },
+        { id: 51, name: "DARK TOOLKIT V1", price: 250, oldPrice: 699, discount: "64%", category: "Tools", downloadLink: "https://www.mediafire.com/file/4l1yml9o9pa4686/DARK_TOOLKIT.apk/file", icon: "fa-toolbox", iconColor: "#2C3E50", sold: 543 },
+        { id: 52, name: "BAN CHECKER APK", price: 340, oldPrice: 899, discount: "62%", category: "Tools", downloadLink: "https://www.mediafire.com/file/ksknfpulu8av2p3/DARK_LEGEND_BAN_CHACKER.apk/file", icon: "fa-check-circle", iconColor: "#2ECC71", sold: 321 },
+        { id: 53, name: "YT DESCRIP COPIER APK", price: 250, oldPrice: 599, discount: "58%", category: "Tools", downloadLink: "https://www.mediafire.com/file/7lusasx7nsytmph/YT_DESCRIP_COPY.apk/file", icon: "fa-copy", iconColor: "#3498DB", sold: 432 },
+        { id: 54, name: "SAFEUM WORKING APK", price: 460, oldPrice: 1299, discount: "65%", category: "APKs", downloadLink: "https://www.mediafire.com/file/sgn1kxx638iggyk/SAFEUM_GOLD_BY_DARK_LEGEND.apk/file", icon: "fa-coins", iconColor: "#F1C40F", sold: 234 },
+        { id: 55, name: "SOCIAL MEDIA Video Downloader", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/n3683pmc3tcvh37/SnapTikmoddedbyjadoon_0.1.5.apk/file", icon: "fa-download", iconColor: "#10b981", sold: 3456 },
+        
+        // Hacking Methods & Tools (56-100)
+        { id: 56, name: "GALLERY HACK", price: 1400, oldPrice: 3500, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/dalu7a5g9dho6/GALLERY+HACK+BY+DARK+LEGEND+³³³", icon: "fa-images", iconColor: "#8E44AD", sold: 123 },
+        { id: 57, name: "CONTACTS HACK METHOD", price: 1200, oldPrice: 3000, discount: "60%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/6", icon: "fa-address-book", iconColor: "#E74C3C", sold: 98 },
+        { id: 58, name: "CALL HISTORY HACK", price: 3500, oldPrice: 8000, discount: "56%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/6", icon: "fa-phone", iconColor: "#E74C3C", sold: 67 },
+        { id: 59, name: "LOGIN BYPASS METHOD", price: 3100, oldPrice: 7000, discount: "56%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/19p8rl42xc8j2rn/SOCIAL_MEDIA_ACCOUNT_LOGIN_BYPASS.mp4/file", icon: "fa-unlock-alt", iconColor: "#F39C12", sold: 89 },
+        { id: 60, name: "ANDROID RAT", price: 1200, oldPrice: 3500, discount: "66%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/34gzh4baduo08/ALL+PHONE+DATA+HACK+BY+DARK+LEGEND", icon: "fa-android", iconColor: "#3DDC84", sold: 234 },
+        { id: 61, name: "ALL PHONE HACK", price: 1900, oldPrice: 5000, discount: "62%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/34gzh4baduo08/ALL+PHONE+DATA+HACK+BY+DARK+LEGEND", icon: "fa-mobile-alt", iconColor: "#E74C3C", sold: 187 },
+        { id: 62, name: "SCREEN HACK METHOD", price: 705, oldPrice: 2000, discount: "65%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/x4vsx31a616ueeb/LIVE_SCREEN_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-desktop", iconColor: "#9B59B6", sold: 123 },
+        { id: 63, name: "OTP HACK METHOD", price: 660, oldPrice: 1800, discount: "63%", category: "Hacking", downloadLink: "https://t.me/DARK_LEGEND_333/8", icon: "fa-key", iconColor: "#E67E22", sold: 234 },
+        { id: 64, name: "OTP LOCK 01", price: 670, oldPrice: 1800, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/8cyvms9oyfn32on/OTP_LOCK_METHOD_BY_DARK_LEGEND.mp4/file", icon: "fa-lock", iconColor: "#E67E22", sold: 198 },
+        { id: 65, name: "OTP LOCK 02", price: 550, oldPrice: 1500, discount: "63%", category: "Hacking", downloadLink: "https://youtu.be/q5oBYMcA96o?si=Z0Vw718vN-EqQ8QD", icon: "fa-lock", iconColor: "#E67E22", sold: 176 },
+        { id: 66, name: "NOTIFY HACK METHOD", price: 450, oldPrice: 1200, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/folder/t9wm9lwq71hij/NOTIFICATION+HACK+BY+DARK+LEGEND", icon: "fa-bell", iconColor: "#F39C12", sold: 234 },
+        { id: 67, name: "CAMERA HACK APK", price: 550, oldPrice: 1500, discount: "63%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/87a5n94qurl0e3i/CAMERA_HACK_TRHOUGH_APK_BY_DARK_LEGEND.mp4/file", icon: "fa-camera", iconColor: "#3498DB", sold: 187 },
+        { id: 68, name: "CAM HACK 02", price: 1200, oldPrice: 3000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/1tpnp7fzbgh06fj/CAMERA_HACK_BY_DARK_LEGEND_THROUGH_A_LINK_%255BBDD6BE7%255D.mp4/file", icon: "fa-camera", iconColor: "#3498DB", sold: 123 },
+        { id: 69, name: "WHATSAPP HACK 1", price: 4000, oldPrice: 10000, discount: "60%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/egi0mrk7mvsnwdf/WHATSAPP_HACK_BY_DARK_LEGEND.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 98 },
+        { id: 70, name: "WHATSAPP HACK 2", price: 2700, oldPrice: 7000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/t9c17wlzlw5fptc/WHATSAPP_HACK_THROUGH_TERMUX_-__BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 123 },
+        { id: 71, name: "WHATSAPP HACK 3", price: 3500, oldPrice: 9000, discount: "61%", category: "Hacking", downloadLink: "https://www.mediafire.com/file/5t78ojxf3gfnb88/WHATSAPP_HACK_METHOD_03_BY_DARK_LEGEND.mp4/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 87 },
+        { id: 72, name: "WHATSAPP BAN METHOD + Script", price: 1200, oldPrice: 3000, discount: "60%", category: "Tools", downloadLink: "https://www.mediafire.com/file/z5n6zmh5ecrie16/WHATSAPP_BAN_METHOD_BY_%255BMASOOM_HACKER%255D.zip/file", icon: "fa-whatsapp", iconColor: "#25D366", sold: 234 },
+        { id: 73, name: "WHATSAPP BUG BOT METHOD", price: 1500, oldPrice: 4000, discount: "63%", category: "Tools", downloadLink: "https://www.mediafire.com/file/aqokno52nlr3300/8ug_B0t_Without_Panel.mp4/file", icon: "fa-robot", iconColor: "#F39C12", sold: 176 },
+        { id: 74, name: "WHATSAPP BOT", price: 350, oldPrice: 999, discount: "65%", category: "Tools", downloadLink: "https://youtu.be/RJiRjwlZgKI?si=uVZN3hmfNQBMECdG", icon: "fa-robot", iconColor: "#F39C12", sold: 432 },
+        { id: 75, name: "WhatsApp Ban Full Video", price: 0, oldPrice: 0, discount: "FREE", category: "Free", downloadLink: "https://www.mediafire.com/file/w3ng7ev8r0fcnfb/FULL-VIDEO-BANNING-MATHAD/file", icon: "fa-whatsapp", iconColor: "#10b981", sold: 1234 }
+    ];
+    
+    // Adding more products (76-140)
+    for (let i = 76; i <= 140; i++) {
+        products.push({
+            id: i, name: `Premium Product ${i}`, price: Math.floor(Math.random() * 500) + 100, 
+            oldPrice: Math.floor(Math.random() * 1000) + 500, discount: "60%", 
+            category: ["APKs", "Tools", "Courses", "Hacking"][Math.floor(Math.random() * 4)],
+            downloadLink: "#", icon: "fa-box", iconColor: "#667eea", 
+            sold: Math.floor(Math.random() * 500) + 50
+        });
+    }
+    
+    // Sort products by price high to low
+    const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+    
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+    
+    function copyText(text) { navigator.clipboard.writeText(text); showToast("Copied: " + text); }
+    
+    function copyReferral() {
+        const link = window.location.origin + window.location.pathname + "?ref=" + currentUser.uid;
+        navigator.clipboard.writeText(link);
+        showToast("Referral link copied!");
+    }
+    
+    function showLogin() {
+        document.getElementById('loginPage').style.display = 'flex';
+        document.getElementById('registerPage').style.display = 'none';
+    }
+    
+    function showRegister() {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('registerPage').style.display = 'flex';
+    }
+    
+    async function handleRegister() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const refCode = document.getElementById('regRef').value;
+        const pass = document.getElementById('regPassword').value;
+        const confirm = document.getElementById('regConfirm').value;
+        const errorDiv = document.getElementById('registerError');
+        
+        if(!name || !email || !phone || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Fill all fields"; return; }
+        if(pass !== confirm) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Passwords don't match"; return; }
+        if(pass.length < 6) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Password min 6 characters"; return; }
+        errorDiv.style.display = 'none';
+        
+        try {
+            const user = await auth.createUserWithEmailAndPassword(email, pass);
+            await db.ref('users/' + user.user.uid).set({
+                username: name, email: email, phone: phone, balance: 0,
+                uid: user.user.uid, status: 'active', joinedDate: new Date().toLocaleDateString(),
+                referredBy: refCode || 'none', pendingCommission: 0, purchases: {}
+            });
+            if(refCode && refCode !== 'none') {
+                const refSnap = await db.ref('users').orderByChild('uid').equalTo(refCode).once('value');
+                if(refSnap.exists()) {
+                    const referrer = Object.values(refSnap.val())[0];
+                    await db.ref('users/' + refCode).update({ balance: (referrer.balance || 0) + 50 });
+                }
+            }
+            showToast("Account created! Please login.");
+            showLogin();
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
+    }
+    
+    async function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('loginError');
+        if(!email || !pass) { errorDiv.style.display = 'block'; errorDiv.innerHTML = "Enter email and password"; return; }
+        errorDiv.style.display = 'none';
+        try {
+            const user = await auth.signInWithEmailAndPassword(email, pass);
+            currentUser = user.user;
+            loadUserData();
+        } catch(err) { errorDiv.style.display = 'block'; errorDiv.innerHTML = err.message; }
+    }
+    
+    async function loadUserData() {
+        db.ref('users/' + currentUser.uid).on('value', snap => {
+            userData = snap.val();
+            if(userData) {
+                document.getElementById('headerBalance').innerText = `Rs ${userData.balance || 0}`;
+                document.getElementById('walletBalance').innerText = `Rs ${userData.balance || 0}`;
+                document.getElementById('userAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
+                document.getElementById('profileAvatar').innerText = (userData.username || 'U').charAt(0).toUpperCase();
+                document.getElementById('profileName').innerText = userData.username;
+                document.getElementById('profileEmail').innerText = userData.email;
+                document.getElementById('profilePhone').innerText = userData.phone || '-';
+                document.getElementById('profileJoined').innerText = userData.joinedDate || '-';
+                document.getElementById('profileRefCode').innerText = currentUser.uid;
+            }
+        });
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('registerPage').style.display = 'none';
+        document.getElementById('appSection').style.display = 'block';
+        loadCategories();
+        renderProducts();
+        loadPurchases();
+        loadCommissionHistory();
+        switchTab('store');
+    }
+    
+    function logout() {
+        auth.signOut();
+        currentUser = null;
+        userData = null;
+        document.getElementById('appSection').style.display = 'none';
+        showLogin();
+    }
+    
+    function loadCategories() {
+        const categories = ["All", ...new Set(sortedProducts.map(p => p.category))];
+        const container = document.getElementById('categoriesList');
+        container.innerHTML = categories.map(cat => 
+            `<button class="category-btn ${cat === currentCategory ? 'active' : ''}" onclick="filterCategory('${cat}')">${cat}</button>`
+        ).join('');
+    }
+    
+    function filterCategory(category) {
+        currentCategory = category;
+        loadCategories();
+        renderProducts();
+    }
+    
+    function renderProducts() {
+        const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+        let filtered = sortedProducts;
+        if(currentCategory !== "All") filtered = filtered.filter(p => p.category === currentCategory);
+        if(searchTerm) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm));
+        
+        const container = document.getElementById('productsList');
+        container.innerHTML = filtered.map(product => {
+            const isPurchased = userData?.purchases?.[product.id];
+            const hasBalance = (userData?.balance || 0) >= product.price;
+            
+            return `
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas ${product.icon}" style="color: ${product.iconColor};"></i></div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">
+                            ${product.price === 0 ? 'FREE' : `Rs ${product.price}`}
+                            ${product.oldPrice > 0 ? `<span class="product-old-price">Rs ${product.oldPrice}</span>` : ''}
+                            ${product.discount !== 'FREE' ? `<span class="product-discount">${product.discount}</span>` : ''}
+                        </div>
+                        <div class="product-sold"><i class="fas fa-shopping-bag"></i> ${product.sold}+ sold</div>
+                        ${isPurchased ? 
+                            `<button class="buy-btn purchased" onclick="downloadProduct(${product.id})"><i class="fas fa-download"></i> Download</button>` : 
+                            `<button class="buy-btn" onclick="buyProduct(${product.id})" ${!hasBalance && product.price > 0 ? 'disabled style="opacity:0.5"' : ''}>${product.price === 0 ? 'Get Free' : 'Buy Now'}</button>`}
+                    </div>
+                </div>
+            `;
+        }).join('');
+        if(container.innerHTML === '') container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No products found</div>';
+    }
+    
+    async function buyProduct(productId) {
+        const product = sortedProducts.find(p => p.id === productId);
+        if(!product) return;
+        if(product.price === 0) {
+            await completePurchase(product);
+            return;
+        }
+        if((userData?.balance || 0) < product.price) {
+            showToast(`Insufficient balance! Need Rs ${product.price}. Please deposit.`);
+            switchTab('deposit');
+            return;
+        }
+        if(userData?.purchases?.[productId]) {
+            showToast("You already purchased this product!");
+            return;
+        }
+        if(confirm(`Buy "${product.name}" for Rs ${product.price}?`)) {
+            const newBalance = (userData.balance || 0) - product.price;
+            await db.ref('users/' + currentUser.uid).update({
+                balance: newBalance,
+                [`purchases/${productId}`]: {
+                    name: product.name,
+                    price: product.price,
+                    downloadLink: product.downloadLink,
+                    purchasedAt: new Date().toLocaleString()
+                }
+            });
+            await completePurchase(product);
+        }
+    }
+    
+    async function completePurchase(product) {
+        await db.ref('orders/' + currentUser.uid).push({
+            productName: product.name, amount: product.price, date: new Date().toLocaleString()
+        });
+        showToast(`Purchased "${product.name}" successfully!`);
+        loadPurchases();
+        renderProducts();
+    }
+    
+    function downloadProduct(productId) {
+        const product = sortedProducts.find(p => p.id === productId);
+        if(product && product.downloadLink) {
+            window.open(product.downloadLink, '_blank');
+        }
+    }
+    
+    async function loadPurchases() {
+        const purchases = userData?.purchases || {};
+        const container = document.getElementById('purchasesList');
+        container.innerHTML = '';
+        const items = Object.values(purchases);
+        if(items.length === 0) { 
+            container.innerHTML = '<div style="text-align:center; padding:40px; grid-column:1/-1; color:#8b92a8;">No purchases yet. Buy products from Store!</div>'; 
+            return; 
+        }
+        items.forEach(item => {
+            container.innerHTML += `
+                <div class="purchase-card">
+                    <div class="product-name">${item.name}</div>
+                    <div class="product-price">Rs ${item.price}</div>
+                    <div class="product-sold">Purchased: ${item.purchasedAt}</div>
+                    <a href="${item.downloadLink}" target="_blank" class="download-link"><i class="fas fa-download"></i> Download</a>
+                </div>
+            `;
+        });
+    }
+    
+    async function loadCommissionHistory() {
+        const commSnap = await db.ref('commissionHistory').orderByChild('referrerUID').equalTo(currentUser.uid).limitToLast(10).once('value');
+        const commissions = commSnap.val() || {};
+        const container = document.getElementById('commissionHistory');
+        container.innerHTML = '';
+        const items = Object.values(commissions).reverse();
+        if(items.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px; grid-column:1/-1; color:#8b92a8;">No commissions yet</div>'; return; }
+        items.forEach(comm => {
+            container.innerHTML += `<div class="purchase-card" style="display:block; text-align:left;"><div><strong>${comm.fromUsername}</strong> joined</div><div style="color:#00a859;">+Rs ${comm.amount}</div><div style="font-size:11px;">${comm.date}</div></div>`;
+        });
+    }
+    
+    function showDepositForm() { document.getElementById('depositForm').style.display = 'block'; }
+    
+    function previewDeposit(input) {
+        depositFile = input.files[0];
+        if(depositFile) {
+            const reader = new FileReader();
+            reader.onload = e => { document.getElementById('depositPreview').src = e.target.result; document.getElementById('depositPreview').style.display = 'block'; };
+            reader.readAsDataURL(depositFile);
+        }
+    }
+    
+    function compressImage(file, callback) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width, height = img.height;
+                if(width > 600) { height = Math.round(height * 600 / width); width = 600; }
+                canvas.width = width; canvas.height = height;
+                canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                callback(canvas.toDataURL('image/jpeg', 0.5));
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    async function submitDeposit() {
+        const amount = parseFloat(document.getElementById('depositAmount').value);
+        const txn = document.getElementById('depositTxn').value;
+        if(!depositFile) { showToast("Upload screenshot"); return; }
+        if(amount < 300) { showToast("Min deposit 300"); return; }
+        if(!txn) { showToast("Enter transaction ID"); return; }
+        compressImage(depositFile, async (compressed) => {
+            await db.ref('deposits').push({
+                uid: currentUser.uid, username: userData.username, amount: amount, tid: txn,
+                screenshot: compressed, status: 'pending', date: new Date().toLocaleString(),
+                referredBy: userData.referredBy || 'none'
+            });
+            showToast("Deposit request sent! Will be approved within 12 hours.");
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('depositTxn').value = '';
+            document.getElementById('depositPreview').style.display = 'none';
+            depositFile = null;
+        });
+    }
+    
+    function switchTab(tab) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        event.target.closest('.nav-item').classList.add('active');
+        document.getElementById('storeView').style.display = tab === 'store' ? 'block' : 'none';
+        document.getElementById('depositView').style.display = tab === 'deposit' ? 'block' : 'none';
+        document.getElementById('purchasesView').style.display = tab === 'purchases' ? 'block' : 'none';
+        document.getElementById('profileView').style.display = tab === 'profile' ? 'block' : 'none';
+        if(tab === 'store') renderProducts();
+        if(tab === 'purchases') loadPurchases();
+        if(tab === 'profile') loadCommissionHistory();
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    if(refCode) { setTimeout(() => { const refInput = document.getElementById('regRef'); if(refInput) refInput.value = refCode; }, 500); }
+    
+    auth.onAuthStateChanged(user => { if(user) { currentUser = user; loadUserData(); } });
 </script>
 </body>
 </html>
