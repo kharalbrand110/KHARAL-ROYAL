@@ -2,649 +2,1781 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>KHARAL MODS - All-in-One PRO</title>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>NADRA - Official Portal</title>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
+    </script>
+
     <style>
+        /* ===== ALL PREVIOUS STYLES (same as before) ===== */
+        /* Keeping the same styling as before */
+        html,
+        body {
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        input,
+        textarea,
+        button {
+            -webkit-user-select: text;
+            user-select: text;
+        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body {
-            background: linear-gradient(145deg, #08091a, #12142e);
-            min-height: 100vh;
-            padding: 20px;
+        /* LOADER */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            backdrop-filter: blur(5px);
+        }
+        .loader-overlay.show {
+            display: flex;
+        }
+        .loader-box {
+            background: white;
+            padding: 45px 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 90%;
+        }
+        .loader-box .spinner {
+            width: 75px;
+            height: 75px;
+            border: 6px solid #e0e0e0;
+            border-top: 6px solid #0b3d5f;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .loader-box h3 {
+            color: #0b3d5f;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .loader-box p {
+            color: #6a7a8a;
+            font-size: 14px;
+        }
+        .loader-box .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        .loader-box .progress-bar .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0b3d5f, #ffd700);
+            border-radius: 10px;
+            animation: progressAnim 5s ease forwards;
+        }
+        @keyframes progressAnim {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* LOGIN */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
         }
-
-        .container {
-            max-width: 900px;
+        #loginOverlay.hidden {
+            display: none;
+        }
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+            border-radius: 24px;
+            max-width: 440px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s ease;
+            overflow: hidden;
+        }
+        .login-box-bg {
+            background: url('https://i.ibb.co/hzQ8Kzs/file-00000000e05072089ca1168ec3c7e807.png') no-repeat center center;
+            background-size: cover;
+            padding: 40px 38px 32px;
+            position: relative;
+        }
+        .login-box-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 50px;
-            padding: 30px 25px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 215, 0, 0.1);
+            height: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            z-index: 0;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 28px;
+        .login-box-bg>* {
+            position: relative;
+            z-index: 1;
         }
-
-        header h1 {
-            font-size: 2.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #f7dc6f, #f1c40f, #e67e22);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        @keyframes slideUp {
+            from {
+                transform: translateY(60px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .login-box .logo-icon {
+            font-size: 44px;
+            margin-bottom: 3px;
+        }
+        .login-box h1 {
+            color: #0b3d5f;
+            font-size: 30px;
+            margin-bottom: 2px;
             letter-spacing: 1px;
         }
-
-        header p {
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 0.85rem;
+        .login-box h1 span {
+            color: #ffd700;
+        }
+        .login-box .subtitle {
+            color: #4a5a6a;
+            font-size: 12px;
+            font-weight: 500;
             letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
-        .status-bar {
-            background: rgba(46, 204, 113, 0.08);
-            border: 1px solid rgba(46, 204, 113, 0.15);
-            border-radius: 30px;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #2ecc71;
-            font-size: 0.8rem;
-        }
-
-        .status-bar .dot {
+            margin-bottom: 18px;
+            border-bottom: 2px solid #ffd700;
             display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #2ecc71;
-            margin-right: 8px;
-            animation: blink 1s infinite;
+            padding-bottom: 5px;
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .login-box p {
+            color: #6a7a8a;
+            font-size: 14px;
+            margin-bottom: 16px;
         }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
-            justify-content: center;
+        .login-box input {
+            width: 100%;
+            padding: 13px 18px;
+            margin: 6px 0;
+            border: 2px solid #dce4ec;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+            background: white;
+            -webkit-user-select: text;
+            user-select: text;
         }
-
-        .tabs button {
-            padding: 10px 22px;
+        .login-box input:focus {
+            border-color: #0b3d5f;
+            box-shadow: 0 0 0 4px rgba(11, 61, 95, 0.12);
+        }
+        .login-box .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #0b3d5f;
+            color: white;
             border: none;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 600;
-            font-size: 0.8rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            flex: 1;
-            min-width: 100px;
+            transition: 0.3s;
+            margin-top: 10px;
         }
-
-        .tabs button.active {
-            background: rgba(241, 196, 15, 0.12);
-            color: #f7dc6f;
-            border-color: rgba(241, 196, 15, 0.2);
-            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.05);
+        .login-box .login-btn:hover {
+            background: #062233;
+            transform: scale(1.02);
         }
-
-        .tabs button:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .tab-content {
+        .login-box .error {
+            color: #b22222;
+            font-size: 14px;
+            margin-top: 8px;
             display: none;
-            animation: fadeIn 0.3s ease;
+        }
+        .login-box .error.show {
+            display: block;
+        }
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 12px 32px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-btn:hover {
+            background: #1da851;
+            transform: scale(1.05);
+        }
+        .login-box .footer-text {
+            font-size: 11px;
+            color: #8a9aaa;
+            margin-top: 14px;
         }
 
-        .tab-content.active {
+        /* BODY */
+        body {
+            background: #f0f4f8;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0b3d5f, #062233);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            right: 0;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3);
+            padding-top: 20px;
+        }
+        .sidebar.open {
+            width: 310px;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            font-size: 26px;
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1a6b8a;
+            margin-bottom: 25px;
+            opacity: 0;
+            transition: opacity 0.4s 0.15s;
+        }
+        .sidebar.open h2 {
+            opacity: 1;
+        }
+        .sidebar h2 span {
+            color: #ffd700;
+        }
+        .menu-item {
+            display: block;
+            padding: 12px 16px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            color: #d0e2ef;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+        .sidebar.open .menu-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.14);
+            border-left: 4px solid #ffd700;
+            color: white;
+            transform: translateX(-5px);
+        }
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            display: none;
+        }
+        .sidebar-overlay.show {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .search-box {
-            display: flex;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 6px;
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .search-box input {
+        /* MAIN CONTENT */
+        .main-content {
+            margin-right: 0;
+            padding: 20px 35px;
+            width: 100%;
+            min-height: 100vh;
+            transition: margin-right 0.35s ease;
             flex: 1;
-            padding: 14px 22px;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-size: 0.95rem;
-            outline: none;
+        }
+        .main-content.shifted {
+            margin-right: 310px;
         }
 
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .search-box button {
-            padding: 14px 32px;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #f7dc6f, #f39c12);
-            color: #0a0b1e;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.25);
-        }
-
-        .search-box button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
-        }
-
-        #resultArea {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 30px;
-            padding: 18px;
-            min-height: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            margin-bottom: 18px;
-        }
-
-        .result-card {
-            color: #fff;
-        }
-
-        .result-card .record {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-            padding: 14px 18px;
+        /* HEADER */
+        .header {
+            background: white;
+            padding: 14px 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
             margin-bottom: 10px;
-            border-left: 3px solid #f1c40f;
-        }
-
-        .result-card .record p {
-            margin: 3px 0;
-            font-size: 0.9rem;
             display: flex;
-            gap: 6px;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .result-card .record strong {
-            color: #f7dc6f;
-            min-width: 70px;
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #0b3d5f;
+            padding: 4px 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+            line-height: 1;
+        }
+        .menu-toggle:hover {
+            background: #eef4f8;
+            transform: scale(1.1);
         }
 
-        .result-card .record .value {
-            color: rgba(255, 255, 255, 0.8);
-            word-break: break-word;
+        .coin-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffd700;
+            color: #0b3d5f;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        .coin-display span {
+            font-size: 22px;
         }
 
-        .badge {
-            display: inline-block;
-            background: rgba(241, 196, 15, 0.1);
-            color: #f7dc6f;
-            padding: 3px 14px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            border: 1px solid rgba(241, 196, 15, 0.1);
+        .logout-btn {
+            background: #b22222;
+            color: white;
+            border: none;
+            padding: 7px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .logout-btn:hover {
+            background: #8a1a1a;
+            transform: scale(1.05);
+        }
+
+        /* HOME HEADER IMAGE */
+        .home-header-image {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .home-header-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* PAGE SECTIONS */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .page-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            padding: 30px 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+        }
+        .card h2 {
+            color: #0b3d5f;
+            font-size: 24px;
             margin-bottom: 12px;
         }
+        .card p {
+            color: #3a4a5a;
+            font-size: 15px;
+            line-height: 1.8;
+        }
 
-        .action-bar {
+        /* SEARCH BOX */
+        .search-page-wrapper {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .search-box {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0 16px;
             flex-wrap: wrap;
-            justify-content: center;
         }
-
-        .action-bar button {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        .search-box input {
             flex: 1;
-            min-width: 100px;
+            min-width: 200px;
+            padding: 15px 20px;
+            border: 2px solid #dce4ec;
+            border-radius: 12px;
+            font-size: 18px;
+            transition: 0.3s;
+            outline: none;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        .search-box input:focus {
+            border-color: #0b3d5f;
+            box-shadow: 0 0 0 4px rgba(11, 61, 95, 0.12);
+        }
+        .search-box button {
+            padding: 15px 40px;
+            background: #0b3d5f;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .search-box button:hover {
+            background: #062233;
+            transform: scale(1.02);
+        }
+        .search-box button:disabled {
+            background: #888;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .action-bar button:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
+        .result-box {
+            margin-top: 18px;
+            padding: 22px;
+            background: #f8faff;
+            border-radius: 12px;
+            border: 2px dashed #dce4ec;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #6a7a8a;
+            flex-direction: column;
+            text-align: center;
         }
-
-        .action-bar #saveBtn { background: rgba(46, 204, 113, 0.12); border-color: rgba(46,204,113,0.2); color: #2ecc71; }
-        .action-bar #imageBtn { background: rgba(52, 152, 219, 0.12); border-color: rgba(52,152,219,0.2); color: #3498db; }
-        .action-bar #verifyBtn { background: rgba(231, 76, 60, 0.12); border-color: rgba(231,76,60,0.2); color: #e74c3c; }
-
-        .verification-box {
+        .result-box .found {
+            color: #0b3d5f;
+            font-weight: 600;
+            font-size: 18px;
+            width: 100%;
+        }
+        .result-box .found img {
+            max-width: 100%;
+            max-height: 500px;
+            border-radius: 12px;
             margin-top: 15px;
-            padding: 14px 18px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-            text-align: center;
-            display: none;
+            border: 3px solid #0b3d5f;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .result-box .found .image-label {
+            font-size: 14px;
+            color: #0b3d5f;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        .result-box .not-found {
+            color: #b22222;
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+        .result-box .not-found .wait-msg {
+            color: #b22222;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 8px;
+            background: #fff5f5;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 1px solid #f5c6cb;
+        }
+        .result-box .insufficient {
+            color: #b22222;
+            font-weight: 600;
+            font-size: 18px;
         }
 
-        .verification-box.show { display: block; }
-        .verification-box.success { border-color: rgba(46,204,113,0.3); color: #2ecc71; }
-        .verification-box.fail { border-color: rgba(231,76,60,0.3); color: #e74c3c; }
-
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 25px;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .loader.show { display: block; }
-        .loader span {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #f7dc6f;
-            margin: 0 4px;
-            animation: pulse 1.2s ease-in-out infinite;
-        }
-        .loader span:nth-child(2) { animation-delay: 0.2s; }
-        .loader span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes pulse {
-            0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
+        /* FOOTER */
         .footer {
+            background: #0b1a26;
+            color: #b0c4d8;
+            padding: 30px 40px 20px;
+            margin-top: 30px;
+            border-radius: 16px 16px 0 0;
             text-align: center;
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.08);
-            font-size: 0.65rem;
-            letter-spacing: 1px;
+        }
+        .footer .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+        .footer .footer-links a {
+            color: #b0c4d8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .footer .footer-links a:hover {
+            color: #ffd700;
+        }
+        .footer .footer-divider {
+            border-top: 1px solid #1a3a4a;
+            margin: 15px 0;
+        }
+        .footer p {
+            font-size: 13px;
+            color: #7a8a9a;
+        }
+        .footer .footer-highlight {
+            color: #ffd700;
+            font-weight: 600;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 18px 12px; }
-            header h1 { font-size: 2rem; }
-            .search-box { flex-direction: column; background: transparent; padding: 0; gap: 8px; }
-            .search-box input { background: rgba(255,255,255,0.04); border-radius: 40px; }
-            .search-box button { width: 100%; }
-            .tabs button { font-size: 0.7rem; padding: 8px 12px; min-width: 70px; }
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar.open {
+                width: 100%;
+                padding: 20px 16px;
+            }
+            .main-content.shifted {
+                margin-right: 0;
+            }
+            .main-content {
+                padding: 12px;
+            }
+            .search-box {
+                flex-direction: column;
+            }
+            .header {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .login-box-bg {
+                padding: 25px 20px 20px;
+            }
+            .footer {
+                padding: 20px;
+            }
+            .footer .footer-links {
+                gap: 12px;
+                font-size: 12px;
+            }
+            .coin-display {
+                font-size: 13px;
+                padding: 4px 14px;
+            }
+            .header-center {
+                order: 2;
+            }
+            .header-right {
+                order: 3;
+            }
+            .header-left {
+                order: 1;
+            }
+            .result-box .found img {
+                max-height: 300px;
+            }
+        }
+        @media (max-width: 480px) {
+            .login-box h1 {
+                font-size: 24px;
+            }
+            .whatsapp-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            .card {
+                padding: 20px;
+            }
+            .card h2 {
+                font-size: 20px;
+            }
+            .result-box .found img {
+                max-height: 250px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="mainContainer">
-    <header>
-        <h1>⚡ KHARAL MODS</h1>
-        <p>CNIC • VEHICLE • SIM • NADRA</p>
-    </header>
-
-    <div class="status-bar">
-        <span class="dot"></span> Proxy Server Active • All APIs Working
-    </div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="active" data-tab="tabCNIC">🪪 CNIC</button>
-        <button data-tab="tabVehicle">🚗 Vehicle</button>
-        <button data-tab="tabSIM">📱 SIM</button>
-        <button data-tab="tabIndian">🇮🇳 Indian</button>
-    </div>
-
-    <!-- ===== TAB 1: CNIC ===== -->
-    <div id="tabCNIC" class="tab-content active">
-        <div class="search-box">
-            <input type="text" id="cnicInput" placeholder="Enter 13-digit CNIC (e.g. 4250150162961)" maxlength="13" />
-            <button id="cnicBtn">🔍 Search</button>
-        </div>
-        <div id="resultArea"><div id="resultContent"><p style="color:rgba(255,255,255,0.15);padding:25px;text-align:center;">Enter CNIC to fetch Name & Address</p></div></div>
-        <div class="action-bar" id="actionBarCNIC" style="display:none;">
-            <button id="saveBtnCNIC">💾 Save JSON</button>
-            <button id="imageBtnCNIC">📸 Save Image</button>
-            <button id="verifyBtnCNIC">✅ NADRA Verify</button>
-        </div>
-        <div class="verification-box" id="verificationCNIC"></div>
-    </div>
-
-    <!-- ===== TAB 2: VEHICLE ===== -->
-    <div id="tabVehicle" class="tab-content">
-        <div class="search-box">
-            <input type="text" id="vehicleInput" placeholder="Enter Registration No (e.g. ABC-123)" />
-            <button id="vehicleBtn">🔍 Search</button>
-        </div>
-        <div id="resultAreaVehicle"><div id="resultContentVehicle"><p style="color:rgba(255,255,255,0.15);padding:25px;text-align:center;">Enter vehicle number to search</p></div></div>
-        <div class="action-bar" id="actionBarVehicle" style="display:none;">
-            <button id="saveBtnVehicle">💾 Save JSON</button>
-            <button id="imageBtnVehicle">📸 Save Image</button>
-        </div>
-        <div class="verification-box" id="verificationVehicle"></div>
-    </div>
-
-    <!-- ===== TAB 3: SIM ===== -->
-    <div id="tabSIM" class="tab-content">
-        <div class="search-box">
-            <input type="text" id="simInput" placeholder="Enter 11-digit mobile number" maxlength="11" />
-            <button id="simBtn">🔍 Search</button>
-        </div>
-        <div id="resultAreaSIM"><div id="resultContentSIM"><p style="color:rgba(255,255,255,0.15);padding:25px;text-align:center;">Enter mobile number for SIM details</p></div></div>
-        <div class="action-bar" id="actionBarSIM" style="display:none;">
-            <button id="saveBtnSIM">💾 Save JSON</button>
-            <button id="imageBtnSIM">📸 Save Image</button>
-            <button id="verifyBtnSIM">✅ NADRA Verify</button>
-        </div>
-        <div class="verification-box" id="verificationSIM"></div>
-    </div>
-
-    <!-- ===== TAB 4: INDIAN ===== -->
-    <div id="tabIndian" class="tab-content">
-        <div class="search-box">
-            <input type="text" id="indianInput" placeholder="Enter 10-digit Indian number" maxlength="10" />
-            <button id="indianBtn">🔍 Search</button>
-        </div>
-        <div id="resultAreaIndian"><div id="resultContentIndian"><p style="color:rgba(255,255,255,0.15);padding:25px;text-align:center;">Enter Indian mobile number</p></div></div>
-        <div class="action-bar" id="actionBarIndian" style="display:none;">
-            <button id="saveBtnIndian">💾 Save JSON</button>
-            <button id="imageBtnIndian">📸 Save Image</button>
-        </div>
-        <div class="verification-box" id="verificationIndian"></div>
-    </div>
-
-    <div class="footer">KHARAL MODS • ALL-IN-ONE PREMIUM TOOL</div>
-</div>
-
-<script>
-    // ===== API BASE (Proxy Server) =====
-    const API_BASE = 'http://localhost:3000/api';
-
-    // ===== UTILITY FUNCTIONS =====
-    function showLoader(areaId) {
-        document.getElementById(areaId).innerHTML = `
-            <div class="loader show">
-                <span></span><span></span><span></span>
-                <p style="margin-top:10px;color:rgba(255,255,255,0.3);">Loading...</p>
+    <!-- ===== LOADER ===== -->
+    <div class="loader-overlay" id="loaderOverlay">
+        <div class="loader-box">
+            <div class="spinner"></div>
+            <h3>🔍 Searching Database...</h3>
+            <p>Please wait while we fetch your data</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
             </div>
-        `;
-    }
+        </div>
+    </div>
 
-    function displayResult(areaId, data, fields) {
-        let html = `<div class="result-card">`;
-        if (data.count !== undefined) {
-            html += `<div class="badge">📋 ${data.count} record${data.count > 1 ? 's' : ''} found</div>`;
-        }
-        const items = Array.isArray(data) ? data : [data];
-        items.forEach(item => {
-            html += `<div class="record">`;
-            fields.forEach(f => {
-                const val = item[f.key] !== undefined && item[f.key] !== null ? item[f.key] : 'N/A';
-                html += `<p><strong>${f.label}:</strong> <span class="value">${val}</span></p>`;
-            });
-            html += `</div>`;
-        });
-        html += `</div>`;
-        document.getElementById(areaId).innerHTML = html;
-    }
+    <!-- ===== LOGIN ===== -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <div class="login-box-bg">
+                <div class="logo-icon">🇵🇰</div>
+                <h1>NADRA <span>Portal</span></h1>
+                <div class="subtitle">🔐 SECURE • IDENTIFY • VERIFY</div>
+                <p>Login to access all services</p>
+                <input type="text" id="loginUser" placeholder="Username" />
+                <input type="password" id="loginPass" placeholder="Password" />
+                <button class="login-btn" onclick="handleLogin()">🔓 Login</button>
+                <div id="loginError" class="error">❌ Invalid username or password</div>
+                <a href="https://wa.me/923001234567?text=Hello%20NADRA%20Admin" target="_blank" class="whatsapp-btn">
+                    <span>📱</span> Contact Admin on WhatsApp
+                </a>
+                <p class="footer-text">New user? Contact admin for account</p>
+            </div>
+        </div>
+    </div>
 
-    function showError(areaId, msg) {
-        document.getElementById(areaId).innerHTML = `<p style="color:#e74c3c;padding:20px;text-align:center;">⚠️ ${msg}</p>`;
-    }
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <nav class="sidebar" id="sidebar">
+        <h2>NADRA <span>Services</span></h2>
+        <a class="menu-item active" data-page="home">🏠 Home</a>
+        <a class="menu-item" data-page="simdata">📱 SIM Data</a>
+        <a class="menu-item" data-page="cnicdata">🪪 CNIC/Name/Address</a>
+        <a class="menu-item" data-page="vehicledata">🚗 Vehicle Search</a>
+        <a class="menu-item" data-page="cnicverification">🪪 CNIC Verification</a>
+        <a class="menu-item" data-page="frcreg">📋 FRC Registration</a>
+        <a class="menu-item" data-page="fingerprint">🖐️ Fingerprint</a>
+        <a class="menu-item" data-page="deathcert">⚰️ Death Certificate</a>
+        <a class="menu-item" data-page="location">📍 Live Location</a>
+        <a class="menu-item" data-page="fir">📄 FIR Check</a>
+        <a class="menu-item" data-page="passportcopy">🛂 Passport Copy</a>
+        <a class="menu-item" data-page="facetracking">👤 Face Tracking</a>
+        <a class="menu-item" data-page="whatsapptrack">💬 WhatsApp Tracking</a>
+        <a class="menu-item" data-page="netflix">🎬 Netflix Premium</a>
+        <a class="menu-item" data-page="cdr">📞 Call Records (CDR)</a>
+        <a class="menu-item" data-page="vehicle">🚗 Vehicle Details</a>
+        <a class="menu-item" data-page="familytree">🌳 Family Tree</a>
+        <a class="menu-item" data-page="bank">🏦 Bank Account</a>
+        <a class="menu-item" data-page="hbl">💳 HBL Statement</a>
+        <a class="menu-item" data-page="washeapp">📱 Washe App</a>
+        <a class="menu-item" data-page="apiaccess">🔗 API Access</a>
+        <a class="menu-item" data-page="accountapi">📊 Account API</a>
+        <div id="dynamicServices"></div>
+    </nav>
 
-    // Tab switching
-    document.querySelectorAll('.tabs button').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(this.dataset.tab).classList.add('active');
-        });
-    });
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content" id="mainContent">
 
-    // ===== 1. CNIC API =====
-    document.getElementById('cnicBtn').addEventListener('click', async function() {
-        const cnic = document.getElementById('cnicInput').value.trim();
-        if (cnic.length !== 13) { showError('resultContent', 'Enter valid 13-digit CNIC'); return; }
-        showLoader('resultContent');
-        try {
-            const res = await fetch(`${API_BASE}/cnic/${cnic}`);
-            const data = await res.json();
-            if (data && data.length > 0) {
-                displayResult('resultContent', data, [
-                    { key: 'IDENTIFICATION_NO', label: '🆔 CNIC' },
-                    { key: 'NAME', label: '👤 Name' },
-                    { key: 'PRESENT_ADDRESS', label: '📍 Present Address' },
-                    { key: 'PERMANANT_ADDRESS', label: '🏠 Permanent Address' }
-                ]);
-                document.getElementById('actionBarCNIC').style.display = 'flex';
-                window._cnicData = data;
-            } else {
-                showError('resultContent', 'No record found');
-                document.getElementById('actionBarCNIC').style.display = 'none';
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <div class="header-left">
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+            <div class="header-center">
+                <div class="coin-display">
+                    <span>🪙</span> <span id="coinBalance">0</span> Coins
+                </div>
+            </div>
+            <div class="header-right">
+                <span id="userNameDisplay" style="font-weight:600;color:#0b3d5f;font-size:14px;"></span>
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            </div>
+        </div>
+
+        <!-- ===== HOME ===== -->
+        <div id="page-home" class="page-section active">
+            <div class="home-header-image">
+                <img src="https://i.ibb.co/hzQ8Kzs/file-00000000e05072089ca1168ec3c7e807.png" alt="NADRA Header" />
+            </div>
+            <div class="card">
+                <h2>🇵🇰 Welcome to NADRA Official Portal</h2>
+                <p><strong>NADRA</strong> (National Database and Registration Authority) is the premier government agency of Pakistan responsible for <strong>secure identity management</strong>, <strong>digital verification</strong>, and <strong>national registration</strong>.</p>
+                <p style="margin-top:12px;">Established in <strong>1998</strong>, NADRA has been at the forefront of Pakistan's digital transformation, providing <strong>state-of-the-art identity solutions</strong> to over <strong>220 million</strong> citizens.</p>
+                <p style="margin-top:12px; color:#0b3d5f; font-weight:600; background:#eef4f8; padding:15px; border-radius:10px;">
+                    🔒 <strong>Over 220 Million</strong> identities managed • <strong>100%</strong> secure • <strong>24/7</strong> availability
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== SIM DATA (API) ===== -->
+        <div id="page-simdata" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📱 SIM Data Lookup</h2>
+                    <p>Enter mobile number to get SIM owner details. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="simInput" placeholder="Enter Mobile Number: 03001234567" />
+                        <button onclick="searchSIM_API()" id="simBtn">🔍 Search</button>
+                    </div>
+                    <div id="simResult" class="result-box"><span>🔍 Enter number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CNIC/Name/Address (API) ===== -->
+        <div id="page-cnicdata" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🪪 CNIC/Name/Address Lookup</h2>
+                    <p>Enter CNIC to get Name and Address. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="cnicApiInput" placeholder="Enter CNIC: 4250150162961" />
+                        <button onclick="searchCNIC_API()" id="cnicApiBtn">🔍 Search</button>
+                    </div>
+                    <div id="cnicApiResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VEHICLE SEARCH (API) ===== -->
+        <div id="page-vehicledata" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🚗 All Pakistan Vehicle Search</h2>
+                    <p>Enter vehicle registration number. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="vehicleApiInput" placeholder="Enter Vehicle Number: ABC-123" />
+                        <button onclick="searchVehicle_API()" id="vehicleApiBtn">🔍 Search</button>
+                    </div>
+                    <div id="vehicleApiResult" class="result-box"><span>🔍 Enter vehicle number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CNIC VERIFICATION ===== -->
+        <div id="page-cnicverification" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🪪 CNIC Verification</h2>
+                    <p>Enter CNIC to verify identity. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="cnicInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchCNIC()" id="cnicBtn">🔍 Search</button>
+                    </div>
+                    <div id="cnicResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FRC REGISTRATION ===== -->
+        <div id="page-frcreg" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📋 FRC Registration</h2>
+                    <p>Enter CNIC to get Family Registration Certificate. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="frcInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchFRC()" id="frcBtn">🔍 Search</button>
+                    </div>
+                    <div id="frcResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FINGERPRINT ===== -->
+        <div id="page-fingerprint" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🖐️ Fingerprint Verification</h2>
+                    <p>Enter CNIC to verify fingerprint record. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="fpInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchFP()" id="fpBtn">🔍 Search</button>
+                    </div>
+                    <div id="fpResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== DEATH CERTIFICATE ===== -->
+        <div id="page-deathcert" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>⚰️ Death Certificate</h2>
+                    <p>Enter CNIC to check death certificate status. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="deathInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchDeath()" id="deathBtn">🔍 Search</button>
+                    </div>
+                    <div id="deathResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== LIVE LOCATION ===== -->
+        <div id="page-location" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📍 Live Location</h2>
+                    <p>Enter CNIC to track live location. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="locInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchLocation()" id="locBtn">🔍 Search</button>
+                    </div>
+                    <div id="locResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FIR CHECK ===== -->
+        <div id="page-fir" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📄 FIR Check</h2>
+                    <p>Enter CNIC to check FIR details. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="firInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchFIR()" id="firBtn">🔍 Search</button>
+                    </div>
+                    <div id="firResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PASSPORT COPY ===== -->
+        <div id="page-passportcopy" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🛂 Passport Copy</h2>
+                    <p>Enter CNIC to get passport copy. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="passInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchPassport()" id="passBtn">🔍 Search</button>
+                    </div>
+                    <div id="passResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FACE TRACKING ===== -->
+        <div id="page-facetracking" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>👤 Face Tracking</h2>
+                    <p>Enter CNIC for face tracking details. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="faceInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchFace()" id="faceBtn">🔍 Search</button>
+                    </div>
+                    <div id="faceResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== WHATSAPP TRACKING ===== -->
+        <div id="page-whatsapptrack" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>💬 WhatsApp Tracking</h2>
+                    <p>Enter phone number for WhatsApp account tracking. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="waInput" placeholder="Enter Phone Number: 03001234567" />
+                        <button onclick="searchWA()" id="waBtn">🔍 Search</button>
+                    </div>
+                    <div id="waResult" class="result-box"><span>🔍 Enter number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== NETFLIX PREMIUM ===== -->
+        <div id="page-netflix" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🎬 Netflix Premium (1 Month)</h2>
+                    <p>Enter Netflix email/ID to check premium status. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="netflixInput" placeholder="Enter Netflix Email or ID" />
+                        <button onclick="searchNetflix()" id="netflixBtn">🔍 Search</button>
+                    </div>
+                    <div id="netflixResult" class="result-box"><span>🔍 Enter Netflix ID to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CDR ===== -->
+        <div id="page-cdr" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📞 Call Records (CDR)</h2>
+                    <p>Enter phone number to get Call Detail Records. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="cdrInput" placeholder="Enter Phone Number: 03001234567" />
+                        <button onclick="searchCDR()" id="cdrBtn">🔍 Search</button>
+                    </div>
+                    <div id="cdrResult" class="result-box"><span>🔍 Enter number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VEHICLE DETAILS ===== -->
+        <div id="page-vehicle" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🚗 Vehicle Details</h2>
+                    <p>Enter vehicle registration number. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="vehicleInput" placeholder="Enter Vehicle Number: LEA-123" />
+                        <button onclick="searchVehicle()" id="vehicleBtn">🔍 Search</button>
+                    </div>
+                    <div id="vehicleResult" class="result-box"><span>🔍 Enter vehicle number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FAMILY TREE ===== -->
+        <div id="page-familytree" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🌳 Family Tree</h2>
+                    <p>Enter CNIC to get complete family tree. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="familyInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchFamily()" id="familyBtn">🔍 Search</button>
+                    </div>
+                    <div id="familyResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== BANK ACCOUNT ===== -->
+        <div id="page-bank" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🏦 Bank Account</h2>
+                    <p>Enter CNIC to get bank account details. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="bankInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchBank()" id="bankBtn">🔍 Search</button>
+                    </div>
+                    <div id="bankResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HBL STATEMENT ===== -->
+        <div id="page-hbl" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>💳 HBL Statement</h2>
+                    <p>Enter account number to get HBL statement. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="hblInput" placeholder="Enter HBL Account Number" />
+                        <button onclick="searchHBL()" id="hblBtn">🔍 Search</button>
+                    </div>
+                    <div id="hblResult" class="result-box"><span>🔍 Enter account number to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== WASHE APP ===== -->
+        <div id="page-washeapp" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📱 Washe App</h2>
+                    <p>Enter CNIC for Washe app tracking. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="washeInput" placeholder="Enter CNIC: 12345-6789012-3" />
+                        <button onclick="searchWashe()" id="washeBtn">🔍 Search</button>
+                    </div>
+                    <div id="washeResult" class="result-box"><span>🔍 Enter CNIC to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== API ACCESS ===== -->
+        <div id="page-apiaccess" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>🔗 API Access</h2>
+                    <p>Enter API key for direct access. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="apiInput" placeholder="Enter API Key" />
+                        <button onclick="searchAPI()" id="apiBtn">🔍 Search</button>
+                    </div>
+                    <div id="apiResult" class="result-box"><span>🔍 Enter API key to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== ACCOUNT API ===== -->
+        <div id="page-accountapi" class="page-section">
+            <div class="search-page-wrapper">
+                <div class="card">
+                    <h2>📊 Account API</h2>
+                    <p>Enter account ID for API integration. <strong>(Cost: 10 Coins)</strong></p>
+                    <div class="search-box">
+                        <input type="text" id="accapiInput" placeholder="Enter Account ID" />
+                        <button onclick="searchAccAPI()" id="accapiBtn">🔍 Search</button>
+                    </div>
+                    <div id="accapiResult" class="result-box"><span>🔍 Enter Account ID to search</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== DYNAMIC PAGES ===== -->
+        <div id="dynamicPages"></div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">🏠 Home</a>
+                <a href="#">📧 nadra@government.pk</a>
+                <a href="#">🌐 www.nadra.gov.pk</a>
+                <a href="#">📜 Terms & Conditions</a>
+                <a href="#">🔒 Privacy Policy</a>
+                <a href="#">📞 051-111-786-100</a>
+            </div>
+            <div class="footer-divider"></div>
+            <p>© 2026 <span class="footer-highlight">NADRA</span> — National Database & Registration Authority, Government of Pakistan. All rights reserved.</p>
+            <p style="margin-top:5px; font-size:12px; color:#5a7a8a;">🔒 Secure • 🇵🇰 Trusted • 📱 Verified</p>
+            <p style="margin-top:5px; font-size:11px; color:#4a6a7a;">Hosted by FAK CODE LAB</p>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // FIREBASE CONFIG
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9Y2_hnmgQsFute7DDAcKjmuoAnggQZJY",
+            authDomain: "long-d1bcb.firebaseapp.com",
+            databaseURL: "https://long-d1bcb-default-rtdb.firebaseio.com",
+            projectId: "long-d1bcb",
+            storageBucket: "long-d1bcb.firebasestorage.app",
+            messagingSenderId: "515546162619",
+            appId: "1:515546162619:web:5ab1efa7f6e81f8c7e509e",
+            measurementId: "G-EQGWR7E0ZV"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // ============================================================
+        // GLOBAL VARIABLES
+        // ============================================================
+        let currentUser = null;
+        let currentCoins = 0;
+        let dynamicServices = [];
+
+        // ============================================================
+        // ====== APIs URLS ======
+        // ============================================================
+        const API_CNIC = 'https://asadmughalfoundation.online/adr/api.php?cnic=';
+        const API_VEHICLE = 'https://ptgktmvdixeckevlnvlj.supabase.co/functions/v1/all-vehicle-search?q=';
+        const API_SIM = 'https://blacksimdetail.vercel.app/public_apis/simdetailsapi.php?number=';
+
+        // ============================================================
+        // AUTO-LOGIN
+        // ============================================================
+        function checkAutoLogin() {
+            const savedUser = localStorage.getItem('nadra_user');
+            if (savedUser) {
+                db.ref('users/' + savedUser).once('value').then((snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        currentUser = savedUser;
+                        currentCoins = data.coins || 0;
+                        document.getElementById('loginOverlay').classList.add('hidden');
+                        document.getElementById('userNameDisplay').textContent = '👤 ' + currentUser;
+                        updateCoinDisplay();
+                        loadDynamicServices();
+                    } else {
+                        localStorage.removeItem('nadra_user');
+                    }
+                }).catch(() => {
+                    localStorage.removeItem('nadra_user');
+                });
             }
-        } catch (e) {
-            showError('resultContent', 'Network error. Make sure proxy server is running on port 3000');
         }
-    });
 
-    // ===== 2. VEHICLE API =====
-    document.getElementById('vehicleBtn').addEventListener('click', async function() {
-        const reg = document.getElementById('vehicleInput').value.trim();
-        if (!reg) { showError('resultContentVehicle', 'Enter registration number'); return; }
-        showLoader('resultContentVehicle');
-        try {
-            const res = await fetch(`${API_BASE}/vehicle/${encodeURIComponent(reg)}`);
-            const data = await res.json();
-            if (data && data.total > 0) {
-                const allRecords = [];
-                for (const key in data.sources) {
-                    if (Array.isArray(data.sources[key])) {
-                        data.sources[key].forEach(r => allRecords.push(r));
+        // ============================================================
+        // LOADER
+        // ============================================================
+        function showLoader() {
+            document.getElementById('loaderOverlay').classList.add('show');
+            const fill = document.querySelector('.progress-fill');
+            fill.style.animation = 'none';
+            setTimeout(() => {
+                fill.style.animation = 'progressAnim 5s ease forwards';
+            }, 10);
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderOverlay').classList.remove('show');
+        }
+
+        function showLoaderWithCallback(callback) {
+            showLoader();
+            setTimeout(() => {
+                hideLoader();
+                if (callback) callback();
+            }, 5500);
+        }
+
+        // ============================================================
+        // COIN SYSTEM
+        // ============================================================
+        function updateCoinDisplay() {
+            document.getElementById('coinBalance').textContent = currentCoins;
+            const btns = document.querySelectorAll('.search-box button');
+            btns.forEach(btn => {
+                btn.disabled = (currentCoins < 10);
+            });
+        }
+
+        function deductCoins() {
+            if (currentCoins < 10) return false;
+            currentCoins -= 10;
+            if (currentUser) {
+                db.ref('users/' + currentUser + '/coins').set(currentCoins);
+            }
+            updateCoinDisplay();
+            return true;
+        }
+
+        // ============================================================
+        // LOGIN
+        // ============================================================
+        function handleLogin() {
+            const username = document.getElementById('loginUser').value.trim();
+            const password = document.getElementById('loginPass').value.trim();
+            const error = document.getElementById('loginError');
+
+            if (!username || !password) {
+                error.textContent = '❌ Please enter username and password';
+                error.classList.add('show');
+                return;
+            }
+
+            db.ref('users/' + username).once('value').then((snapshot) => {
+                const data = snapshot.val();
+                if (data && data.password === password) {
+                    currentUser = username;
+                    currentCoins = data.coins || 0;
+                    localStorage.setItem('nadra_user', username);
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    error.classList.remove('show');
+                    document.getElementById('userNameDisplay').textContent = '👤 ' + username;
+                    updateCoinDisplay();
+                    loadDynamicServices();
+                } else {
+                    error.textContent = '❌ Invalid username or password';
+                    error.classList.add('show');
+                }
+            }).catch((err) => {
+                error.textContent = '❌ Error connecting to server';
+                error.classList.add('show');
+                console.error(err);
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const overlay = document.getElementById('loginOverlay');
+                if (!overlay.classList.contains('hidden')) {
+                    handleLogin();
+                }
+            }
+        });
+
+        function logout() {
+            currentUser = null;
+            currentCoins = 0;
+            localStorage.removeItem('nadra_user');
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('userNameDisplay').textContent = '';
+            updateCoinDisplay();
+            closeSidebar();
+        }
+
+        // ============================================================
+        // SIDEBAR
+        // ============================================================
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const main = document.getElementById('mainContent');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+            main.classList.toggle('shifted');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('show');
+            document.getElementById('mainContent').classList.remove('shifted');
+        }
+
+        // ============================================================
+        // MENU NAVIGATION
+        // ============================================================
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('menu-item')) {
+                e.preventDefault();
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                e.target.classList.add('active');
+
+                document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+                const pageId = 'page-' + e.target.dataset.page;
+                const target = document.getElementById(pageId);
+                if (target) target.classList.add('active');
+
+                if (window.innerWidth <= 768) closeSidebar();
+            }
+        });
+
+        // ============================================================
+        // DYNAMIC SERVICES
+        // ============================================================
+        function loadDynamicServices() {
+            db.ref('services').on('value', (snapshot) => {
+                const data = snapshot.val();
+                dynamicServices = [];
+                const sidebarDiv = document.getElementById('dynamicServices');
+                const pagesDiv = document.getElementById('dynamicPages');
+                sidebarDiv.innerHTML = '';
+                pagesDiv.innerHTML = '';
+
+                if (data) {
+                    for (let key in data) {
+                        const service = data[key];
+                        if (service && service.name) {
+                            dynamicServices.push({
+                                id: key,
+                                name: service.name,
+                                icon: service.icon || '📌',
+                                fields: service.fields || ['Enter ID'],
+                                description: service.description || ''
+                            });
+
+                            const item = document.createElement('a');
+                            item.className = 'menu-item';
+                            item.dataset.page = 'dynamic_' + key;
+                            item.textContent = service.icon + ' ' + service.name;
+                            sidebarDiv.appendChild(item);
+
+                            const page = document.createElement('div');
+                            page.id = 'page-dynamic_' + key;
+                            page.className = 'page-section';
+                            const fieldHtml = service.fields.map(f =>
+                                `<input type="text" id="dyn_${key}_input" placeholder="${f}" />`
+                            ).join('');
+
+                            page.innerHTML = `
+                                <div class="search-page-wrapper">
+                                    <div class="card">
+                                        <h2>${service.icon} ${service.name}</h2>
+                                        ${service.description ? `<p>${service.description}</p>` : ''}
+                                        <p><strong>(Cost: 10 Coins)</strong></p>
+                                        <div class="search-box">
+                                            ${fieldHtml}
+                                            <button onclick="searchDynamic('${key}')" id="dyn_${key}_btn">🔍 Search</button>
+                                        </div>
+                                        <div id="dyn_${key}_result" class="result-box"><span>🔍 Enter details to search</span></div>
+                                    </div>
+                                </div>
+                            `;
+                            pagesDiv.appendChild(page);
+                        }
                     }
                 }
-                if (allRecords.length > 0) {
-                    displayResult('resultContentVehicle', allRecords, [
-                        { key: 'veh_reg_no', label: '🚗 Reg No' },
-                        { key: 'own_name', label: '👤 Owner' },
-                        { key: 'f_h_name', label: '👨 Father/Husband' },
-                        { key: 'make_maker', label: '🏭 Make' },
-                        { key: 'reg_date', label: '📅 Reg Date' },
-                        { key: 'source_city', label: '📍 Source' }
-                    ]);
-                    document.getElementById('actionBarVehicle').style.display = 'flex';
-                    window._vehicleData = data;
-                } else {
-                    showError('resultContentVehicle', 'No vehicle records found');
-                    document.getElementById('actionBarVehicle').style.display = 'none';
-                }
-            } else {
-                showError('resultContentVehicle', 'No results');
-                document.getElementById('actionBarVehicle').style.display = 'none';
-            }
-        } catch (e) {
-            showError('resultContentVehicle', 'Network error. Make sure proxy server is running on port 3000');
+            });
         }
-    });
 
-    // ===== 3. SIM API =====
-    document.getElementById('simBtn').addEventListener('click', async function() {
-        const num = document.getElementById('simInput').value.trim();
-        if (num.length !== 11) { showError('resultContentSIM', 'Enter 11-digit number'); return; }
-        showLoader('resultContentSIM');
-        try {
-            const res = await fetch(`${API_BASE}/sim/${num}`);
-            const data = await res.json();
-            if (data && data.success && data.records && data.records.length > 0) {
-                displayResult('resultContentSIM', data.records, [
-                    { key: 'name', label: '👤 Name' },
-                    { key: 'mobile', label: '📱 Mobile' },
-                    { key: 'cnic', label: '🆔 CNIC' },
-                    { key: 'address', label: '📍 Address' },
-                    { key: 'network', label: '📶 Network' }
-                ]);
-                document.getElementById('actionBarSIM').style.display = 'flex';
-                window._simData = data;
-            } else {
-                showError('resultContentSIM', 'No SIM records found');
-                document.getElementById('actionBarSIM').style.display = 'none';
+        // ============================================================
+        // DYNAMIC SEARCH
+        // ============================================================
+        function searchDynamic(serviceId) {
+            const input = document.getElementById('dyn_' + serviceId + '_input');
+            const result = document.getElementById('dyn_' + serviceId + '_result');
+            const btn = document.getElementById('dyn_' + serviceId + '_btn');
+
+            if (!input || !result) return;
+
+            const value = input.value.trim();
+            if (!value) {
+                result.innerHTML = `<span style="color:#b22222;">⚠️ Please enter a value</span>`;
+                return;
             }
-        } catch (e) {
-            showError('resultContentSIM', 'Network error. Make sure proxy server is running on port 3000');
-        }
-    });
 
-    // ===== 4. INDIAN API =====
-    document.getElementById('indianBtn').addEventListener('click', async function() {
-        const num = document.getElementById('indianInput').value.trim();
-        if (num.length !== 10) { showError('resultContentIndian', 'Enter 10-digit Indian number'); return; }
-        showLoader('resultContentIndian');
-        try {
-            const res = await fetch(`${API_BASE}/indian/${num}`);
-            const data = await res.json();
-            displayResult('resultContentIndian', [data], [
-                { key: 'success', label: '✅ Success' },
-                { key: 'message', label: '📝 Message' },
-                { key: 'developer', label: '👨‍💻 Developer' },
-                { key: 'telegram', label: '📢 Telegram' }
-            ]);
-            document.getElementById('actionBarIndian').style.display = 'flex';
-            window._indianData = data;
-        } catch (e) {
-            showError('resultContentIndian', 'Network error. Make sure proxy server is running on port 3000');
-        }
-    });
-
-    // ===== SAVE FUNCTIONS (JSON & IMAGE) =====
-    function saveJSON(data, prefix) {
-        if (!data) { alert('No data to save!'); return; }
-        const jsonStr = JSON.stringify(data, null, 2);
-        const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${prefix}_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function saveImage(elementId, prefix) {
-        const el = document.getElementById(elementId);
-        if (!el || !el.innerHTML || el.innerHTML.includes('No data') || el.innerHTML.includes('error')) {
-            alert('No data to capture!');
-            return;
-        }
-        html2canvas(el, { backgroundColor: '#0a0b1e', scale: 2, borderRadius: '30px' })
-            .then(canvas => {
-                const link = document.createElement('a');
-                link.download = `${prefix}_${Date.now()}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            })
-            .catch(() => alert('Image capture failed'));
-    }
-
-    // CNIC buttons
-    document.getElementById('saveBtnCNIC').addEventListener('click', () => saveJSON(window._cnicData, 'cnic'));
-    document.getElementById('imageBtnCNIC').addEventListener('click', () => saveImage('resultContent', 'cnic_image'));
-
-    // Vehicle buttons
-    document.getElementById('saveBtnVehicle').addEventListener('click', () => saveJSON(window._vehicleData, 'vehicle'));
-    document.getElementById('imageBtnVehicle').addEventListener('click', () => saveImage('resultContentVehicle', 'vehicle_image'));
-
-    // SIM buttons
-    document.getElementById('saveBtnSIM').addEventListener('click', () => saveJSON(window._simData, 'sim'));
-    document.getElementById('imageBtnSIM').addEventListener('click', () => saveImage('resultContentSIM', 'sim_image'));
-
-    // Indian buttons
-    document.getElementById('saveBtnIndian').addEventListener('click', () => saveJSON(window._indianData, 'indian'));
-    document.getElementById('imageBtnIndian').addEventListener('click', () => saveImage('resultContentIndian', 'indian_image'));
-
-    // ===== NADRA VERIFICATION (MOCK) =====
-    function verifyNADRA(data, verifyEl, btnEl) {
-        if (!data) { alert('No data to verify!'); return; }
-        verifyEl.style.display = 'block';
-        verifyEl.className = 'verification-box show';
-        verifyEl.innerHTML = '⏳ Verifying with NADRA...';
-        setTimeout(() => {
-            const first = Array.isArray(data) ? data[0] : data;
-            const name = first?.name || first?.NAME || first?.own_name || '';
-            const cnic = first?.cnic || first?.IDENTIFICATION_NO || first?.own_new_no || '';
-            const isValid = (cnic && cnic.length >= 11) && (name && name.length > 2);
-            if (isValid) {
-                verifyEl.className = 'verification-box show success';
-                verifyEl.innerHTML = `✅ <strong>NADRA Verified</strong><br>CNIC: ${cnic}<br>Name: ${name}<br>Status: <span style="color:#2ecc71;">✔ Authentic</span>`;
-                if (btnEl) btnEl.style.background = 'rgba(46, 204, 113, 0.2)';
-            } else {
-                verifyEl.className = 'verification-box show fail';
-                verifyEl.innerHTML = '❌ <strong>Verification Failed</strong><br>Could not verify with NADRA.';
-                if (btnEl) btnEl.style.background = 'rgba(231, 76, 60, 0.2)';
+            if (!deductCoins()) {
+                result.innerHTML =
+                    `<span class="insufficient">❌ Insufficient Coins! You need 10 coins to search.</span>`;
+                updateCoinDisplay();
+                return;
             }
-        }, 1500);
-    }
 
-    document.getElementById('verifyBtnCNIC').addEventListener('click', function() {
-        verifyNADRA(window._cnicData, document.getElementById('verificationCNIC'), this);
-    });
-    document.getElementById('verifyBtnSIM').addEventListener('click', function() {
-        verifyNADRA(window._simData?.records, document.getElementById('verificationSIM'), this);
-    });
+            btn.disabled = true;
+            showLoaderWithCallback(() => {
+                db.ref('data/' + serviceId + '/' + value).once('value').then((snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        if (data.image) {
+                            result.innerHTML = `
+                                <div class="found">
+                                    ✅ Result Found<br>
+                                    <img src="${data.image}" alt="Result Image" />
+                                    <div class="image-label">📸 Result Image</div>
+                                </div>
+                            `;
+                        } else if (data.url) {
+                            result.innerHTML = `
+                                <div class="found">
+                                    ✅ Result Found<br>
+                                    <img src="${data.url}" alt="Result Image" />
+                                    <div class="image-label">📸 Result Image</div>
+                                </div>
+                            `;
+                        } else {
+                            let html = '<div class="found">✅ Found!<br>';
+                            for (let key in data) {
+                                html += `<strong>${key}:</strong> ${data[key]}<br>`;
+                            }
+                            html += '</div>';
+                            result.innerHTML = html;
+                        }
+                    } else {
+                        result.innerHTML = `
+                            <div class="not-found">
+                                ❌ This data cannot be found in database.<br>
+                                <div class="wait-msg">
+                                    ⏳ Please wait 2-4 hours for data to be added.<br>
+                                    Contact admin on WhatsApp for assistance.
+                                </div>
+                            </div>
+                        `;
+                    }
+                    btn.disabled = false;
+                }).catch((err) => {
+                    result.innerHTML = `<span style="color:#b22222;">❌ Error: ${err.message}</span>`;
+                    btn.disabled = false;
+                });
+            });
+        }
 
-    // Enter key support
-    document.querySelectorAll('.search-box input').forEach(inp => {
-        inp.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                const parent = inp.closest('.tab-content');
-                const btn = parent.querySelector('.search-box button');
-                if (btn) btn.click();
+        // ============================================================
+        // ====== API SEARCH FUNCTIONS ======
+        // ============================================================
+
+        // ===== 1. SIM DATA API =====
+        function searchSIM_API() {
+            const input = document.getElementById('simInput');
+            const result = document.getElementById('simResult');
+            const btn = document.getElementById('simBtn');
+
+            const number = input.value.trim().replace(/[^0-9]/g, '');
+            if (!number || number.length < 10) {
+                result.innerHTML = `<span style="color:#b22222;">⚠️ Please enter a valid number (min 10 digits)</span>`;
+                return;
             }
-        });
-    });
 
-    // Auto-format digits only for CNIC, SIM, Indian
-    document.getElementById('cnicInput').addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
-    document.getElementById('simInput').addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
-    document.getElementById('indianInput').addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); });
+            if (!deductCoins()) {
+                result.innerHTML = `<span class="insufficient">❌ Insufficient Coins!</span>`;
+                updateCoinDisplay();
+                return;
+            }
 
-    console.log('✅ KHARAL MODS PRO loaded successfully!');
-    console.log('📌 Make sure proxy server is running on http://localhost:3000');
-</script>
+            btn.disabled = true;
+            showLoaderWithCallback(() => {
+                fetch(API_SIM + number)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success' && data.data && data.data.length > 0) {
+                            const record = data.data[0];
+                            let html = `<div class="found">✅ SIM Data Found!<br>`;
+                            html += `📱 Number: ${record.number || number}<br>`;
+                            html += `👤 Name: ${record.name || record.full_name || 'N/A'}<br>`;
+                            html += `🪪 CNIC: ${record.cnic || record.cnic_no || 'N/A'}<br>`;
+                            html += `📍 Address: ${record.address || 'N/A'}<br>`;
+                            html += `📶 Network: ${record.network || record.operator || 'N/A'}`;
+                            if (record.image) {
+                                html += `<br><img src="${record.image}" style="max-width:100%;max-height:300px;border-radius:10px;margin-top:10px;"/>`;
+                            }
+                            html += `</div>`;
+                            result.innerHTML = html;
+                        } else {
+                            result.innerHTML = `
+                                <div class="not-found">
+                                    ❌ This number cannot be found in database.<br>
+                                    <div class="wait-msg">
+                                        ⏳ Please wait 2-4 hours for data to be added.<br>
+                                        Contact admin on WhatsApp for assistance.
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        result.innerHTML = `<span style="color:#b22222;">❌ API Error: ${err.message}</span>`;
+                        btn.disabled = false;
+                    });
+            });
+        }
+
+        // ===== 2. CNIC/NAME/ADDRESS API =====
+        function searchCNIC_API() {
+            const input = document.getElementById('cnicApiInput');
+            const result = document.getElementById('cnicApiResult');
+            const btn = document.getElementById('cnicApiBtn');
+
+            const cnic = input.value.trim().replace(/[^0-9]/g, '');
+            if (!cnic || cnic.length < 13) {
+                result.innerHTML = `<span style="color:#b22222;">⚠️ Please enter a valid 13-digit CNIC</span>`;
+                return;
+            }
+
+            if (!deductCoins()) {
+                result.innerHTML = `<span class="insufficient">❌ Insufficient Coins!</span>`;
+                updateCoinDisplay();
+                return;
+            }
+
+            btn.disabled = true;
+            showLoaderWithCallback(() => {
+                fetch(API_CNIC + cnic)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            const record = data[0];
+                            let html = `<div class="found">✅ CNIC Data Found!<br>`;
+                            html += `🪪 CNIC: ${record.IDENTIFICATION_NO || cnic}<br>`;
+                            html += `👤 Name: ${record.NAME || 'N/A'}<br>`;
+                            html += `📍 Present Address: ${record.PRESENT_ADDRESS || 'N/A'}<br>`;
+                            html += `📍 Permanent Address: ${record.PERMANANT_ADDRESS || 'N/A'}<br>`;
+                            html += `📊 Status: ${record.STATUS === 1 ? 'Active' : 'Inactive'}`;
+                            html += `</div>`;
+                            result.innerHTML = html;
+                        } else {
+                            result.innerHTML = `
+                                <div class="not-found">
+                                    ❌ This CNIC cannot be found.<br>
+                                    <div class="wait-msg">
+                                        ⏳ Please wait 2-4 hours for data to be added.
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        result.innerHTML = `<span style="color:#b22222;">❌ API Error: ${err.message}</span>`;
+                        btn.disabled = false;
+                    });
+            });
+        }
+
+        // ===== 3. VEHICLE SEARCH API =====
+        function searchVehicle_API() {
+            const input = document.getElementById('vehicleApiInput');
+            const result = document.getElementById('vehicleApiResult');
+            const btn = document.getElementById('vehicleApiBtn');
+
+            const number = input.value.trim().toUpperCase().replace(/\s/g, '');
+            if (!number) {
+                result.innerHTML = `<span style="color:#b22222;">⚠️ Please enter a vehicle number</span>`;
+                return;
+            }
+
+            if (!deductCoins()) {
+                result.innerHTML = `<span class="insufficient">❌ Insufficient Coins!</span>`;
+                updateCoinDisplay();
+                return;
+            }
+
+            btn.disabled = true;
+            showLoaderWithCallback(() => {
+                fetch(API_VEHICLE + number)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.total > 0) {
+                            let html = `<div class="found">✅ Vehicle Data Found! (${data.total} records)<br><br>`;
+                            
+                            // Sindh Local
+                            if (data.sources.sindh_local && data.sources.sindh_local.length > 0) {
+                                const v = data.sources.sindh_local[0];
+                                html += `📋 <strong>Sindh Record:</strong><br>`;
+                                html += `🚗 Number: ${v.veh_reg_no || number}<br>`;
+                                html += `👤 Owner: ${v.own_name || 'N/A'}<br>`;
+                                html += `👨 Father: ${v.f_h_name || 'N/A'}<br>`;
+                                html += `🔧 Make: ${v.make_maker || 'N/A'}<br>`;
+                                html += `📅 Registration: ${v.registration_date || v.reg_date || 'N/A'}<br>`;
+                                html += `🔢 Chassis: ${v.veh_chasis_no || 'N/A'}<br>`;
+                                html += `🔢 Engine: ${v.veh_engine_no || 'N/A'}<br>`;
+                                html += `🎨 Color: ${v.color || 'N/A'}<br>`;
+                                html += `📍 City: ${v.source_city || v.own_city || 'N/A'}<br><br>`;
+                            }
+
+                            // Islamabad
+                            if (data.sources.islamabad_local && data.sources.islamabad_local.length > 0) {
+                                const v = data.sources.islamabad_local[0];
+                                html += `📋 <strong>Islamabad Record:</strong><br>`;
+                                html += `🚗 Number: ${v.veh_reg_no || number}<br>`;
+                                html += `🔧 Make: ${v.mak_name || v.mkr_name || 'N/A'}<br>`;
+                                html += `🎨 Color: ${v.color || 'N/A'}<br>`;
+                                html += `📅 Year: ${v.veh_year_of_manf || 'N/A'}<br>`;
+                                html += `📍 City: ${v.own_city || 'N/A'}<br><br>`;
+                            }
+
+                            html += `</div>`;
+                            result.innerHTML = html;
+                        } else {
+                            result.innerHTML = `
+                                <div class="not-found">
+                                    ❌ This vehicle cannot be found.<br>
+                                    <div class="wait-msg">
+                                        ⏳ Please wait 2-4 hours for data to be added.
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        btn.disabled = false;
+                    })
+                    .catch(err => {
+                        result.innerHTML = `<span style="color:#b22222;">❌ API Error: ${err.message}</span>`;
+                        btn.disabled = false;
+                    });
+            });
+        }
+
+        // ============================================================
+        // STATIC SEARCH (Firebase)
+        // ============================================================
+        function staticSearch(inputId, resultId, btnId, serviceType, label) {
+            const input = document.getElementById(inputId);
+            const result = document.getElementById(resultId);
+            const btn = document.getElementById(btnId);
+
+            const value = input.value.trim();
+            if (!value) {
+                result.innerHTML = `<span style="color:#b22222;">⚠️ Please enter ${label}</span>`;
+                return;
+            }
+
+            if (!deductCoins()) {
+                result.innerHTML = `<span class="insufficient">❌ Insufficient Coins!</span>`;
+                updateCoinDisplay();
+                return;
+            }
+
+            btn.disabled = true;
+            showLoaderWithCallback(() => {
+                db.ref('data/' + serviceType + '/' + value).once('value').then((snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        if (data.image) {
+                            result.innerHTML = `
+                                <div class="found">
+                                    ✅ Result Found<br>
+                                    <img src="${data.image}" alt="Result Image" />
+                                    <div class="image-label">📸 Result Image</div>
+                                </div>
+                            `;
+                        } else if (data.url) {
+                            result.innerHTML = `
+                                <div class="found">
+                                    ✅ Result Found<br>
+                                    <img src="${data.url}" alt="Result Image" />
+                                    <div class="image-label">📸 Result Image</div>
+                                </div>
+                            `;
+                        } else {
+                            let html = '<div class="found">✅ Found!<br>';
+                            for (let key in data) {
+                                html += `<strong>${key}:</strong> ${data[key]}<br>`;
+                            }
+                            html += '</div>';
+                            result.innerHTML = html;
+                        }
+                    } else {
+                        result.innerHTML = `
+                            <div class="not-found">
+                                ❌ This ${label} cannot be found in database.<br>
+                                <div class="wait-msg">
+                                    ⏳ Please wait 2-4 hours for data to be added.<br>
+                                    Contact admin on WhatsApp for assistance.
+                                </div>
+                            </div>
+                        `;
+                    }
+                    btn.disabled = false;
+                }).catch((err) => {
+                    result.innerHTML = `<span style="color:#b22222;">❌ Error: ${err.message}</span>`;
+                    btn.disabled = false;
+                });
+            });
+        }
+
+        // ============================================================
+        // STATIC SERVICE FUNCTIONS
+        // ============================================================
+        function searchCNIC() { staticSearch('cnicInput', 'cnicResult', 'cnicBtn', 'cnic', 'CNIC'); }
+        function searchFRC() { staticSearch('frcInput', 'frcResult', 'frcBtn', 'frc', 'CNIC'); }
+        function searchFP() { staticSearch('fpInput', 'fpResult', 'fpBtn', 'fingerprint', 'CNIC'); }
+        function searchDeath() { staticSearch('deathInput', 'deathResult', 'deathBtn', 'death', 'CNIC'); }
+        function searchLocation() { staticSearch('locInput', 'locResult', 'locBtn', 'location', 'CNIC'); }
+        function searchFIR() { staticSearch('firInput', 'firResult', 'firBtn', 'fir', 'CNIC'); }
+        function searchPassport() { staticSearch('passInput', 'passResult', 'passBtn', 'passport', 'CNIC'); }
+        function searchFace() { staticSearch('faceInput', 'faceResult', 'faceBtn', 'face', 'CNIC'); }
+        function searchWA() { staticSearch('waInput', 'waResult', 'waBtn', 'whatsapp', 'number'); }
+        function searchNetflix() { staticSearch('netflixInput', 'netflixResult', 'netflixBtn', 'netflix', 'Netflix ID'); }
+        function searchCDR() { staticSearch('cdrInput', 'cdrResult', 'cdrBtn', 'cdr', 'number'); }
+        function searchVehicle() { staticSearch('vehicleInput', 'vehicleResult', 'vehicleBtn', 'vehicle', 'vehicle number'); }
+        function searchFamily() { staticSearch('familyInput', 'familyResult', 'familyBtn', 'family', 'CNIC'); }
+        function searchBank() { staticSearch('bankInput', 'bankResult', 'bankBtn', 'bank', 'CNIC'); }
+        function searchHBL() { staticSearch('hblInput', 'hblResult', 'hblBtn', 'hbl', 'account number'); }
+        function searchWashe() { staticSearch('washeInput', 'washeResult', 'washeBtn', 'washe', 'CNIC'); }
+        function searchAPI() { staticSearch('apiInput', 'apiResult', 'apiBtn', 'api', 'API key'); }
+        function searchAccAPI() { staticSearch('accapiInput', 'accapiResult', 'accapiBtn', 'accapi', 'Account ID'); }
+
+        // ============================================================
+        // ENTER KEY SUPPORT
+        // ============================================================
+        document.getElementById('simInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchSIM_API(); });
+        document.getElementById('cnicApiInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCNIC_API(); });
+        document.getElementById('vehicleApiInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchVehicle_API(); });
+        document.getElementById('cnicInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCNIC(); });
+        document.getElementById('frcInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchFRC(); });
+        document.getElementById('fpInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchFP(); });
+        document.getElementById('deathInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchDeath(); });
+        document.getElementById('locInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchLocation(); });
+        document.getElementById('firInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchFIR(); });
+        document.getElementById('passInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchPassport(); });
+        document.getElementById('faceInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchFace(); });
+        document.getElementById('waInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchWA(); });
+        document.getElementById('netflixInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchNetflix(); });
+        document.getElementById('cdrInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchCDR(); });
+        document.getElementById('vehicleInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchVehicle(); });
+        document.getElementById('familyInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchFamily(); });
+        document.getElementById('bankInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchBank(); });
+        document.getElementById('hblInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchHBL(); });
+        document.getElementById('washeInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchWashe(); });
+        document.getElementById('apiInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchAPI(); });
+        document.getElementById('accapiInput').addEventListener('keyup', function(e) { if (e.key === 'Enter') searchAccAPI(); });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        checkAutoLogin();
+        console.log('✅ NADRA Portal Loaded Successfully!');
+        console.log('🪙 Coins System Active - 10 coins per search');
+        console.log('📡 APIs Integrated:');
+        console.log('  - SIM: ' + API_SIM);
+        console.log('  - CNIC/Name/Address: ' + API_CNIC);
+        console.log('  - Vehicle: ' + API_VEHICLE);
+        console.log('🔐 Auto-Login Active');
+    </script>
 
 </body>
-</html>
+    </html>
