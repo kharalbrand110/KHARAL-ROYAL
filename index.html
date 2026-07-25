@@ -152,7 +152,7 @@
             <form id="search-form" class="flex flex-col gap-5">
                 <div class="relative">
                     <i class="bi bi-person-badge absolute left-4 top-1/2 -translate-y-1/2 text-chaudhary-500/70 text-xl"></i>
-                    <input type="text" id="search-input" autocomplete="off" placeholder="Enter CNIC (e.g. 4250150162961)" class="w-full bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-chaudhary-500 focus:border-transparent transition-all text-lg font-mono tracking-wider">
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Enter CNIC (e.g. 3022942606)" class="w-full bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-chaudhary-500 focus:border-transparent transition-all text-lg font-mono tracking-wider">
                 </div>
                 <button type="submit" id="searchBtn" class="btn-yellow w-full text-black font-extrabold text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(255,217,102,0.4)] transform hover:scale-[1.01] transition-all flex justify-center items-center gap-2">
                     <i class="bi bi-search-heart"></i> <span>SEARCH CITIZEN</span>
@@ -169,7 +169,7 @@
         </div>
     </div>
 
-    <!-- ========== MAIN.JS (OFFLINE DATA) ========== -->
+    <!-- ========== MAIN.JS (CSV DATA) ========== -->
     <script src="main.js"></script>
 
     <script>
@@ -189,10 +189,15 @@
         //  UPDATE STATS
         // ============================================================
         function updateStats() {
+            // Check if citizenDatabase exists (converted from CSV)
             if (typeof citizenDatabase !== 'undefined' && Array.isArray(citizenDatabase)) {
                 document.getElementById('totalRecords').textContent = citizenDatabase.length;
                 document.getElementById('footerRecords').textContent = citizenDatabase.length;
                 document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+                console.log('✅ Database loaded:', citizenDatabase.length, 'records');
+            } else {
+                console.warn('⚠️ Database not loaded yet');
+                setTimeout(updateStats, 500);
             }
         }
 
@@ -226,21 +231,34 @@
 
             try {
                 // Check if database is loaded
-                if (typeof citizenDatabase === 'undefined') {
+                if (typeof citizenDatabase === 'undefined' || !Array.isArray(citizenDatabase)) {
                     container.innerHTML = `
                         <div class="result-card text-center">
                             <i class="bi bi-database-exclamation text-4xl text-red-500 mb-2 block"></i>
                             <h3 class="font-bold text-red-500 text-sm">DATABASE NOT LOADED</h3>
                             <p class="text-gray-500 text-xs mt-1">Please check if main.js is properly linked</p>
+                            <p class="text-gray-400 text-xs mt-2">Expected: citizenDatabase array with records</p>
                         </div>
                     `;
                     showToast('Database not loaded', 'error');
                     return;
                 }
 
+                if (citizenDatabase.length === 0) {
+                    container.innerHTML = `
+                        <div class="result-card text-center">
+                            <i class="bi bi-database-exclamation text-4xl text-orange-500 mb-2 block"></i>
+                            <h3 class="font-bold text-orange-500 text-sm">EMPTY DATABASE</h3>
+                            <p class="text-gray-500 text-xs mt-1">No records found in database</p>
+                        </div>
+                    `;
+                    showToast('Database is empty', 'notfound');
+                    return;
+                }
+
                 // Search for the CNIC
                 const result = citizenDatabase.find(record => {
-                    const cnic = String(record.cnic || record.CNIC || record.ID || '').replace(/[^0-9]/g, '');
+                    const cnic = String(record.cnic || '').replace(/[^0-9]/g, '');
                     return cnic === query;
                 });
 
@@ -291,6 +309,7 @@
                         <i class="bi bi-exclamation-triangle-fill text-4xl text-red-500 mb-2 block"></i>
                         <h3 class="font-bold text-red-500 text-sm">ERROR</h3>
                         <p class="text-gray-500 text-xs mt-1">${err.message}</p>
+                        <p class="text-gray-400 text-xs mt-2">Check console for details</p>
                     </div>
                 `;
                 showToast('Search error', 'error');
@@ -333,13 +352,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if database is loaded
             setTimeout(() => {
-                if (typeof citizenDatabase !== 'undefined') {
+                if (typeof citizenDatabase !== 'undefined' && Array.isArray(citizenDatabase)) {
                     updateStats();
-                    console.log('✅ Database loaded:', citizenDatabase.length, 'records');
+                    console.log('✅ Database loaded successfully!');
+                    console.log('📊 Sample records:', citizenDatabase.slice(0, 3));
                 } else {
                     console.warn('⚠️ Database not loaded. Check main.js');
+                    document.getElementById('lastUpdated').textContent = 'Failed to load';
+                    showToast('Database failed to load', 'error');
                 }
-            }, 500);
+            }, 1000);
         });
 
         // Global functions
@@ -348,7 +370,7 @@
 
         console.log('🔍 KHARAL MODS Citizen Search loaded!');
         console.log('📱 Search CNIC to find citizens');
-        console.log('📊 Database will load from main.js');
+        console.log('📊 Database will load from main.js (CSV format)');
     </script>
 </body>
 </html>
