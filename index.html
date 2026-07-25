@@ -36,7 +36,7 @@
             animation: fadeIn 0.3s ease-out;
         }
         .result-card .label { color: #6b7280; font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .result-card .value { color: #000000; font-weight: 700; font-size: 16px; }
+        .result-card .value { color: #000000; font-weight: 700; font-size: 16px; word-break: break-word; }
         
         .btn-yellow {
             background: #FFD966 !important;
@@ -55,15 +55,6 @@
         }
         
         input, button, textarea { outline: none; }
-        
-        .coin-badge {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            font-weight: 700;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
         
         #toast-container {
             position: fixed;
@@ -98,22 +89,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .tab-btn-active {
-            background: #FFD966 !important;
-            color: #000 !important;
-            box-shadow: 0 0 20px rgba(255,217,102,0.3);
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 11px;
+            color: #a89870;
+            margin-top: 8px;
         }
-        .tab-btn-inactive {
-            background: transparent !important;
-            color: #a89870 !important;
-        }
-        .tab-btn-inactive:hover {
-            background: rgba(255,217,102,0.1) !important;
-            color: #FFD966 !important;
-        }
+        .status-bar span { display: flex; align-items: center; gap: 4px; }
         
         @media (max-width: 600px) {
             .result-card .value { font-size: 14px; }
+            .status-bar { font-size: 9px; gap: 10px; }
         }
     </style>
 </head>
@@ -126,50 +115,51 @@
     <div id="save-area" class="max-w-3xl mx-auto px-4 py-6 w-full">
         
         <!-- HEADER -->
-        <div class="flex flex-col items-center gap-4 mb-8 border-b border-chaudhary-500/30 pb-6">
+        <div class="flex flex-col items-center gap-3 mb-6 border-b border-chaudhary-500/30 pb-5">
             <div class="flex items-center gap-3">
                 <div class="w-14 h-14 rounded-full bg-chaudhary-600/20 flex items-center justify-center border border-chaudhary-500 shadow-[0_0_30px_rgba(255,217,102,0.3)]">
                     <i class="bi bi-shield-lock-fill text-chaudhary-500 text-3xl"></i>
                 </div>
-                <h1 class="text-3xl md:text-4xl font-black tracking-tighter bg-gradient-to-r from-chaudhary-500 to-amber-400 bg-clip-text text-transparent">KHARAL MODS</h1>
+                <h1 class="text-2xl md:text-3xl font-black tracking-tighter bg-gradient-to-r from-chaudhary-500 to-amber-400 bg-clip-text text-transparent">KHARAL MODS</h1>
             </div>
-            <p class="text-amber-500/60 text-sm font-mono">⚡ OFFLINE CITIZEN DATABASE</p>
-            <div class="flex items-center gap-4 text-xs text-amber-700">
+            <p class="text-amber-500/60 text-xs font-mono">⚡ OFFLINE CITIZEN DATABASE</p>
+            
+            <div class="status-bar">
                 <span><i class="bi bi-database"></i> <span id="totalRecords">0</span> Records</span>
                 <span><i class="bi bi-clock"></i> <span id="lastUpdated">Loading...</span></span>
             </div>
         </div>
 
         <!-- SEARCH SECTION -->
-        <div class="glass-panel rounded-2xl p-6 md:p-8 premium-border relative overflow-hidden">
+        <div class="glass-panel rounded-2xl p-5 md:p-7 premium-border relative overflow-hidden">
             <div class="absolute top-0 right-0 w-72 h-72 bg-chaudhary-500/5 rounded-full blur-3xl -mr-36 -mt-36 pointer-events-none"></div>
             
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex justify-between items-center mb-3">
                 <span class="text-amber-400/60 text-xs"><i class="bi bi-info-circle"></i> Offline Database</span>
                 <span class="text-amber-400/60 text-xs"><i class="bi bi-search"></i> CNIC Search</span>
             </div>
             
-            <form id="search-form" class="flex flex-col gap-5">
+            <form id="search-form" class="flex flex-col gap-4">
                 <div class="relative">
                     <i class="bi bi-person-badge absolute left-4 top-1/2 -translate-y-1/2 text-chaudhary-500/70 text-xl"></i>
-                    <input type="text" id="search-input" autocomplete="off" placeholder="Enter CNIC (e.g. 3022942606)" class="w-full bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl pl-12 pr-4 py-4 focus:ring-2 focus:ring-chaudhary-500 focus:border-transparent transition-all text-lg font-mono tracking-wider">
+                    <input type="text" id="search-input" autocomplete="off" placeholder="Enter CNIC (e.g. 3022942606)" class="w-full bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-chaudhary-500 focus:border-transparent transition-all text-base font-mono tracking-wider">
                 </div>
-                <button type="submit" id="searchBtn" class="btn-yellow w-full text-black font-extrabold text-lg py-4 rounded-xl shadow-[0_0_20px_rgba(255,217,102,0.4)] transform hover:scale-[1.01] transition-all flex justify-center items-center gap-2">
+                <button type="submit" id="searchBtn" class="btn-yellow w-full text-black font-extrabold text-base py-3.5 rounded-xl shadow-[0_0_20px_rgba(255,217,102,0.4)] transform hover:scale-[1.01] transition-all flex justify-center items-center gap-2">
                     <i class="bi bi-search-heart"></i> <span>SEARCH CITIZEN</span>
                 </button>
             </form>
         </div>
 
         <!-- RESULTS -->
-        <div id="results-container" class="mt-6 hidden"></div>
+        <div id="results-container" class="mt-5 hidden"></div>
 
         <!-- FOOTER -->
-        <div class="text-center text-[10px] text-amber-800/50 mt-8 border-t border-chaudhary-500/10 pt-4">
+        <div class="text-center text-[9px] text-amber-800/50 mt-8 border-t border-chaudhary-500/10 pt-4">
             KHARAL MODS • OFFLINE CITIZEN DATABASE • <span id="footerRecords">0</span> RECORDS
         </div>
     </div>
 
-    <!-- ========== MAIN.JS (CSV DATA) ========== -->
+    <!-- ========== MAIN.JS (Aapki CSV Data File) ========== -->
     <script src="main.js"></script>
 
     <script>
@@ -189,22 +179,21 @@
         //  UPDATE STATS
         // ============================================================
         function updateStats() {
-            // Check if citizenDatabase exists (converted from CSV)
             if (typeof citizenDatabase !== 'undefined' && Array.isArray(citizenDatabase)) {
-                document.getElementById('totalRecords').textContent = citizenDatabase.length;
-                document.getElementById('footerRecords').textContent = citizenDatabase.length;
+                const count = citizenDatabase.length;
+                document.getElementById('totalRecords').textContent = count.toLocaleString();
+                document.getElementById('footerRecords').textContent = count.toLocaleString();
                 document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
-                console.log('✅ Database loaded:', citizenDatabase.length, 'records');
-            } else {
-                console.warn('⚠️ Database not loaded yet');
-                setTimeout(updateStats, 500);
+                console.log(`✅ Database loaded: ${count.toLocaleString()} records`);
+                return true;
             }
+            return false;
         }
 
         // ============================================================
-        //  SEARCH FUNCTION
+        //  SEARCH FUNCTION - Directly from main.js CSV Data
         // ============================================================
-        document.getElementById('search-form').addEventListener('submit', async (e) => {
+        document.getElementById('search-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const input = document.getElementById('search-input');
@@ -222,7 +211,7 @@
             container.innerHTML = `
                 <div class="flex flex-col items-center p-10 glass-panel rounded-2xl">
                     <div class="w-10 h-10 border-4 border-chaudhary-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-                    <p class="text-chaudhary-400 text-xs">SEARCHING DATABASE...</p>
+                    <p class="text-chaudhary-400 text-xs">SEARCHING ${(typeof citizenDatabase !== 'undefined' ? citizenDatabase.length : 0).toLocaleString()} RECORDS...</p>
                 </div>
             `;
             
@@ -237,7 +226,6 @@
                             <i class="bi bi-database-exclamation text-4xl text-red-500 mb-2 block"></i>
                             <h3 class="font-bold text-red-500 text-sm">DATABASE NOT LOADED</h3>
                             <p class="text-gray-500 text-xs mt-1">Please check if main.js is properly linked</p>
-                            <p class="text-gray-400 text-xs mt-2">Expected: citizenDatabase array with records</p>
                         </div>
                     `;
                     showToast('Database not loaded', 'error');
@@ -256,11 +244,24 @@
                     return;
                 }
 
-                // Search for the CNIC
-                const result = citizenDatabase.find(record => {
+                // ===== SEARCH IN CSV DATA =====
+                // citizenDatabase already has data from main.js
+                // Format: [{cnic, name, address, full_address}]
+                
+                let result = null;
+                let searchStart = performance.now();
+
+                // Simple loop search (works for any size)
+                for (let i = 0; i < citizenDatabase.length; i++) {
+                    const record = citizenDatabase[i];
                     const cnic = String(record.cnic || '').replace(/[^0-9]/g, '');
-                    return cnic === query;
-                });
+                    if (cnic === query) {
+                        result = record;
+                        break;
+                    }
+                }
+
+                let searchTime = (performance.now() - searchStart).toFixed(2);
 
                 if (result) {
                     // Build result card
@@ -269,6 +270,7 @@
                                 <span class="header-text text-lg font-bold">✅ CITIZEN FOUND</span>
                                 <button onclick="copyResult()" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-lg text-sm font-bold">📋 COPY</button>
                             </div>`;
+                    html += `<div class="text-xs text-gray-400 mb-2">Found in ${searchTime}ms</div>`;
                     
                     const allFields = Object.keys(result);
                     allFields.forEach(key => {
@@ -285,9 +287,7 @@
                     html += `</div>`;
                     
                     container.innerHTML = html;
-                    showToast('Citizen found!', 'success');
-                    
-                    // Store for copy
+                    showToast(`Found in ${searchTime}ms`, 'success');
                     window.lastResult = JSON.stringify(result, null, 2);
                     
                 } else {
@@ -296,7 +296,7 @@
                             <i class="bi bi-person-x text-6xl text-orange-400 mb-3 block"></i>
                             <h3 class="font-bold text-orange-500 text-lg">NOT FOUND</h3>
                             <p class="text-gray-500 text-sm mt-1">No citizen found with CNIC: <span class="font-mono font-bold">${query}</span></p>
-                            <p class="text-gray-400 text-xs mt-2">Please check the number and try again</p>
+                            <p class="text-gray-400 text-xs mt-2">Searched ${citizenDatabase.length.toLocaleString()} records in ${searchTime}ms</p>
                         </div>
                     `;
                     showToast('No citizen found', 'notfound');
@@ -309,7 +309,6 @@
                         <i class="bi bi-exclamation-triangle-fill text-4xl text-red-500 mb-2 block"></i>
                         <h3 class="font-bold text-red-500 text-sm">ERROR</h3>
                         <p class="text-gray-500 text-xs mt-1">${err.message}</p>
-                        <p class="text-gray-400 text-xs mt-2">Check console for details</p>
                     </div>
                 `;
                 showToast('Search error', 'error');
@@ -348,14 +347,13 @@
         // ============================================================
         //  INIT
         // ============================================================
-        // Wait for main.js to load
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if database is loaded
             setTimeout(() => {
                 if (typeof citizenDatabase !== 'undefined' && Array.isArray(citizenDatabase)) {
                     updateStats();
-                    console.log('✅ Database loaded successfully!');
-                    console.log('📊 Sample records:', citizenDatabase.slice(0, 3));
+                    console.log('✅ KHARAL MODS Citizen Search ready!');
+                    console.log(`📊 Total records: ${citizenDatabase.length.toLocaleString()}`);
+                    console.log('📝 Sample:', citizenDatabase[0]);
                 } else {
                     console.warn('⚠️ Database not loaded. Check main.js');
                     document.getElementById('lastUpdated').textContent = 'Failed to load';
@@ -364,13 +362,11 @@
             }, 1000);
         });
 
-        // Global functions
         window.copyResult = copyResult;
         window.showToast = showToast;
 
         console.log('🔍 KHARAL MODS Citizen Search loaded!');
-        console.log('📱 Search CNIC to find citizens');
-        console.log('📊 Database will load from main.js (CSV format)');
+        console.log('📱 Reading data directly from main.js');
     </script>
 </body>
 </html>
