@@ -34,9 +34,7 @@
             padding: 20px;
             transition: 0.3s;
         }
-        .admin-card:hover {
-            border-color: #FFD96640;
-        }
+        .admin-card:hover { border-color: #FFD96640; }
         .admin-card h4 {
             color: #FFD966;
             font-size: 14px;
@@ -61,31 +59,27 @@
             border-color: #FFD966;
             outline: none;
         }
-        .admin-card input::placeholder {
-            color: #64748b;
-        }
+        .admin-card input::placeholder { color: #64748b; }
         
-        .btn-gold { background: #FFD966; color: #000; }
-        .btn-gold:hover { background: #FFE066; transform: scale(1.02); }
-        .btn-red { background: #dc2626; color: #fff; }
-        .btn-red:hover { background: #b91c1c; transform: scale(1.02); }
-        .btn-green { background: #22c55e; color: #fff; }
-        .btn-green:hover { background: #16a34a; transform: scale(1.02); }
-        .btn-blue { background: #3b82f6; color: #fff; }
-        .btn-blue:hover { background: #2563eb; transform: scale(1.02); }
-        .btn-gray { background: #475569; color: #fff; }
-        .btn-gray:hover { background: #334155; transform: scale(1.02); }
-        
-        .admin-card button {
+        .btn-yellow {
+            background: #FFD966 !important;
+            color: #000 !important;
+            font-weight: 700;
+            border: none;
             padding: 10px 20px;
             border-radius: 10px;
-            border: none;
             font-size: 14px;
-            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
         }
+        .btn-yellow:hover { background: #FFE066 !important; transform: scale(1.02); }
+        .btn-red { background: #dc2626; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
+        .btn-red:hover { background: #b91c1c; transform: scale(1.02); }
+        .btn-green { background: #22c55e; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
+        .btn-green:hover { background: #16a34a; transform: scale(1.02); }
+        .btn-blue { background: #3b82f6; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
+        .btn-blue:hover { background: #2563eb; transform: scale(1.02); }
         
         .stats-grid {
             display: grid;
@@ -100,16 +94,8 @@
             padding: 16px;
             text-align: center;
         }
-        .stat-box .number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #FFD966;
-        }
-        .stat-box .label {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
+        .stat-box .number { font-size: 28px; font-weight: 700; color: #FFD966; }
+        .stat-box .label { font-size: 12px; color: #94a3b8; margin-top: 4px; }
         
         .user-list-item {
             display: flex;
@@ -122,37 +108,23 @@
             margin-bottom: 6px;
             transition: 0.3s;
         }
-        .user-list-item:hover {
-            border-color: #FFD96640;
-        }
+        .user-list-item:hover { border-color: #FFD96640; }
         .user-list-item .user-info {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-        .user-list-item .user-info .name {
-            font-weight: 700;
-            color: #FFD966;
-        }
-        .user-list-item .user-info .coins {
-            color: #FFD700;
-            font-weight: 600;
-        }
+        .user-list-item .user-info .name { font-weight: 700; color: #FFD966; }
+        .user-list-item .user-info .coins { color: #FFD700; font-weight: 600; }
         .user-list-item .user-info .badge {
             font-size: 10px;
             padding: 2px 10px;
             border-radius: 12px;
             font-weight: 600;
         }
-        .user-list-item .user-info .badge.admin {
-            background: #FFD966;
-            color: #000;
-        }
-        .user-list-item .user-info .badge.blocked {
-            background: #dc2626;
-            color: #fff;
-        }
+        .user-list-item .user-info .badge.admin { background: #FFD966; color: #000; }
+        .user-list-item .user-info .badge.blocked { background: #dc2626; color: #fff; }
         .user-list-item .actions {
             display: flex;
             gap: 6px;
@@ -167,20 +139,11 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .user-list-item .actions .btn-block {
-            background: #dc2626;
-            color: #fff;
-        }
+        .user-list-item .actions .btn-block { background: #dc2626; color: #fff; }
         .user-list-item .actions .btn-block:hover { background: #b91c1c; }
-        .user-list-item .actions .btn-unblock {
-            background: #22c55e;
-            color: #fff;
-        }
+        .user-list-item .actions .btn-unblock { background: #22c55e; color: #fff; }
         .user-list-item .actions .btn-unblock:hover { background: #16a34a; }
-        .user-list-item .actions .btn-delete {
-            background: #ef4444;
-            color: #fff;
-        }
+        .user-list-item .actions .btn-delete { background: #ef4444; color: #fff; }
         .user-list-item .actions .btn-delete:hover { background: #dc2626; }
         
         .toast-container {
@@ -202,21 +165,9 @@
             pointer-events: auto;
             animation: slideUp 0.3s ease-out;
         }
-        .toast.success {
-            background: rgba(34, 197, 94, 0.9);
-            color: #fff;
-            border-left: 4px solid #22c55e;
-        }
-        .toast.error {
-            background: rgba(220, 38, 38, 0.9);
-            color: #fff;
-            border-left: 4px solid #dc2626;
-        }
-        .toast.info {
-            background: rgba(59, 130, 246, 0.9);
-            color: #fff;
-            border-left: 4px solid #3b82f6;
-        }
+        .toast.success { background: rgba(34, 197, 94, 0.9); color: #fff; }
+        .toast.error { background: rgba(220, 38, 38, 0.9); color: #fff; }
+        .toast.info { background: rgba(59, 130, 246, 0.9); color: #fff; }
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -254,19 +205,109 @@
         }
         .log-item .time { color: #64748b; font-size: 11px; }
         
+        /* Login Modal for Admin */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #1a1a1a;
+            border: 1px solid #FFD96640;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal-box h2 {
+            color: #FFD966;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .modal-box .sub {
+            color: #94a3b8;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .modal-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid #334155;
+            background: #0a0a0a;
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .modal-box input:focus { border-color: #FFD966; }
+        .modal-box .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #FFD966;
+            color: #000;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-box .btn-primary:hover { transform: scale(1.02); background: #FFE066; }
+        .modal-box .text-muted {
+            color: #94a3b8;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .modal-box .text-muted span { color: #FFD966; cursor: pointer; }
+        .modal-box .text-muted span:hover { text-decoration: underline; }
+        
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .user-list-item { flex-direction: column; align-items: stretch; gap: 8px; }
             .user-list-item .actions { justify-content: flex-end; }
             .admin-card { padding: 16px; }
+            .modal-box { padding: 24px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ========== ADMIN LOGIN MODAL ========== -->
+    <div id="adminLoginModal" class="modal-overlay active">
+        <div class="modal-box">
+            <div class="text-center mb-4">
+                <div class="w-16 h-16 rounded-full bg-chaudhary-600/20 flex items-center justify-center border border-chaudhary-500 shadow-[0_0_30px_rgba(255,217,102,0.3)] mx-auto">
+                    <i class="bi bi-shield-lock-fill text-chaudhary-500 text-3xl"></i>
+                </div>
+                <h2>KHARAL MODS</h2>
+                <p class="sub">Admin Access Required</p>
+            </div>
+            <form id="adminLoginForm">
+                <input type="text" id="adminLoginUsername" placeholder="Username" required>
+                <input type="password" id="adminLoginPassword" placeholder="Password" required>
+                <button type="submit" class="btn-primary">🔓 LOGIN</button>
+            </form>
+            <div class="text-muted">
+                Demo: <span onclick="fillAdminDemo()">hacker / 1234</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TOAST ========== -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <div class="max-w-6xl mx-auto px-4 py-6">
+    <!-- ========== MAIN ADMIN PANEL ========== -->
+    <div id="adminPanel" class="max-w-6xl mx-auto px-4 py-6" style="display:none;">
         
         <!-- HEADER -->
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 border-b border-chaudhary-500/30 pb-4">
@@ -280,9 +321,9 @@
                 </div>
             </div>
             <div class="flex items-center gap-3">
-                <span id="adminUser" class="text-amber-400 font-bold">hacker</span>
-                <button onclick="logout()" class="text-red-400 hover:text-red-300 text-sm font-bold"><i class="bi bi-box-arrow-right"></i> LOGOUT</button>
-                <a href="index.html" class="text-chaudhary-500 hover:text-chaudhary-400 text-sm font-bold"><i class="bi bi-arrow-left"></i> BACK</a>
+                <span id="adminUserDisplay" class="text-amber-400 font-bold">hacker</span>
+                <button onclick="adminLogout()" class="btn-yellow text-sm font-bold px-3 py-1 rounded-lg" style="width:auto;">LOGOUT</button>
+                <a href="index.html" class="btn-yellow text-sm font-bold px-3 py-1 rounded-lg flex items-center gap-1" style="width:auto;"><i class="bi bi-arrow-left"></i> BACK</a>
             </div>
         </div>
 
@@ -308,19 +349,17 @@
             <div class="glass-panel rounded-2xl p-6 premium-border">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
                     <h3 class="text-chaudhary-500 font-bold text-lg"><i class="bi bi-people-fill"></i> User Management</h3>
-                    <button onclick="showAddUser()" class="btn-green px-4 py-2 rounded-lg text-sm font-bold border-none cursor-pointer"><i class="bi bi-plus-circle"></i> Add User</button>
+                    <button onclick="showAddUser()" class="btn-green px-4 py-2 rounded-lg text-sm font-bold" style="width:auto;"><i class="bi bi-plus-circle"></i> Add User</button>
                 </div>
                 
-                <!-- Add User Form (hidden by default) -->
                 <div id="addUserForm" class="hidden bg-[#0a0a0a] p-4 rounded-xl border border-chaudhary-500/20 mb-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <input type="text" id="newUsername" placeholder="Username" class="bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl px-4 py-3">
                         <input type="text" id="newPassword" placeholder="Password" class="bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl px-4 py-3">
-                        <button onclick="addUser()" class="btn-gold px-4 py-3 rounded-xl font-bold"><i class="bi bi-check-circle"></i> Create User</button>
+                        <button onclick="addUser()" class="btn-yellow px-4 py-3 rounded-xl font-bold"><i class="bi bi-check-circle"></i> Create User</button>
                     </div>
                 </div>
                 
-                <!-- User List -->
                 <div id="userList" class="space-y-2 max-h-[500px] overflow-y-auto"></div>
             </div>
         </div>
@@ -374,7 +413,7 @@
             <div class="admin-card">
                 <div class="flex justify-between items-center mb-4">
                     <h4><i class="bi bi-clock-history"></i> Search Logs</h4>
-                    <button class="btn-red px-4 py-2 rounded-lg text-sm font-bold" onclick="clearLogs()"><i class="bi bi-trash"></i> Clear All</button>
+                    <button class="btn-red px-4 py-2 rounded-lg text-sm font-bold" onclick="clearLogs()" style="width:auto;"><i class="bi bi-trash"></i> Clear All</button>
                 </div>
                 <div id="logsList" class="max-h-[400px] overflow-y-auto space-y-1"></div>
             </div>
@@ -435,7 +474,7 @@
         };
 
         // ============================================================
-        //  INIT
+        //  INIT - Default Users
         // ============================================================
         function initDB() {
             let users = DB.getUsers();
@@ -450,19 +489,7 @@
         initDB();
 
         // ============================================================
-        //  TOAST
-        // ============================================================
-        function showToast(msg, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // ============================================================
-        //  CHECK ADMIN
+        //  ADMIN AUTH
         // ============================================================
         function getCurrentUser() {
             return JSON.parse(sessionStorage.getItem('kharal_current') || 'null');
@@ -475,11 +502,67 @@
 
         function checkAdmin() {
             if (!isAdmin()) {
-                alert('Admin access required!');
-                window.location.href = 'index.html';
+                document.getElementById('adminLoginModal').classList.add('active');
+                document.getElementById('adminPanel').style.display = 'none';
                 return false;
             }
+            document.getElementById('adminLoginModal').classList.remove('active');
+            document.getElementById('adminPanel').style.display = 'block';
             return true;
+        }
+
+        // ============================================================
+        //  ADMIN LOGIN
+        // ============================================================
+        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminLoginUsername').value.trim();
+            const password = document.getElementById('adminLoginPassword').value.trim();
+            
+            const users = DB.getUsers();
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (!user) {
+                showToast('Invalid credentials', 'error');
+                return;
+            }
+            if (!user.isAdmin) {
+                showToast('Admin access required', 'error');
+                return;
+            }
+            if (user.blocked) {
+                showToast('Account blocked', 'error');
+                return;
+            }
+            
+            sessionStorage.setItem('kharal_current', JSON.stringify(user));
+            showToast('Welcome Admin!', 'success');
+            checkAdmin();
+            renderAll();
+        });
+
+        function fillAdminDemo() {
+            document.getElementById('adminLoginUsername').value = 'hacker';
+            document.getElementById('adminLoginPassword').value = '1234';
+        }
+
+        function adminLogout() {
+            sessionStorage.removeItem('kharal_current');
+            document.getElementById('adminLoginModal').classList.add('active');
+            document.getElementById('adminPanel').style.display = 'none';
+            showToast('Logged out', 'info');
+        }
+
+        // ============================================================
+        //  TOAST
+        // ============================================================
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
 
         // ============================================================
@@ -488,7 +571,6 @@
         function renderStats() {
             const users = DB.getUsers();
             const history = DB.getHistory();
-            const blocked = DB.getBlockedDevices();
             
             document.getElementById('totalUsers').textContent = users.length;
             document.getElementById('totalCoins').textContent = users.reduce((sum, u) => sum + (u.coins || 0), 0);
@@ -537,7 +619,7 @@
             container.innerHTML = blocked.map(d => `
                 <div class="flex justify-between items-center bg-[#0a0a0a] p-3 rounded-lg border border-red-500/20">
                     <span class="text-sm font-mono text-red-400">${d}</span>
-                    <button class="btn-green px-3 py-1 rounded-lg text-xs font-bold" onclick="unblockDeviceById('${d}')">UNBLOCK</button>
+                    <button class="btn-green px-3 py-1 rounded-lg text-xs font-bold" onclick="unblockDeviceById('${d}')" style="width:auto;">UNBLOCK</button>
                 </div>
             `).join('');
         }
@@ -586,8 +668,7 @@
         //  USER MANAGEMENT
         // ============================================================
         function showAddUser() {
-            const form = document.getElementById('addUserForm');
-            form.classList.toggle('hidden');
+            document.getElementById('addUserForm').classList.toggle('hidden');
         }
 
         function addUser() {
@@ -748,19 +829,10 @@
             localStorage.removeItem('kharal_history');
             localStorage.removeItem('kharal_blocked');
             localStorage.removeItem('kharal_settings');
-            localStorage.removeItem('kharal_current');
             
             initDB();
             showToast('All data reset', 'info');
             renderAll();
-        }
-
-        // ============================================================
-        //  LOGOUT
-        // ============================================================
-        function logout() {
-            sessionStorage.removeItem('kharal_current');
-            window.location.href = 'index.html';
         }
 
         // ============================================================
@@ -780,21 +852,16 @@
         window.clearLogs = clearLogs;
         window.setSearchCost = setSearchCost;
         window.resetAll = resetAll;
-        window.logout = logout;
+        window.adminLogout = adminLogout;
+        window.fillAdminDemo = fillAdminDemo;
 
         // ============================================================
         //  INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
-            if (!checkAdmin()) return;
-            renderAll();
-            
-            // Auto-refresh every 30 seconds
-            setInterval(renderAll, 30000);
+            checkAdmin();
+            if (isAdmin()) renderAll();
         });
-
-        console.log('👑 KHARAL MODS Admin Panel loaded!');
-        console.log('📊 Manage users, coins, devices, and logs');
     </script>
 </body>
-</html>
+    </html>
