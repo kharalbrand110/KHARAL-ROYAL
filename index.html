@@ -1,867 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHARAL MODS | Admin Panel</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-            background: #0a0a0a;
-            min-height: 100vh;
-            color: #e2e8f0;
-        }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #FFD96640; border-radius: 8px; }
-        
-        .glass-panel {
-            background: rgba(30, 26, 13, 0.7);
-            border: 1px solid rgba(255, 217, 102, 0.25);
-            backdrop-filter: blur(16px);
-        }
-        .premium-border {
-            box-shadow: 0 0 0 1px rgba(255, 217, 102, 0.2), 0 8px 30px rgba(0,0,0,0.3);
-        }
-        
-        .admin-card {
-            background: #1a1a1a;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 20px;
-            transition: 0.3s;
-        }
-        .admin-card:hover { border-color: #FFD96640; }
-        .admin-card h4 {
-            color: #FFD966;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .admin-card input, .admin-card select {
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 2px solid #334155;
-            background: #0a0a0a;
-            color: #ffffff;
-            font-size: 14px;
-            margin-bottom: 8px;
-            transition: 0.3s;
-        }
-        .admin-card input:focus, .admin-card select:focus {
-            border-color: #FFD966;
-            outline: none;
-        }
-        .admin-card input::placeholder { color: #64748b; }
-        
-        .btn-yellow {
-            background: #FFD966 !important;
-            color: #000 !important;
-            font-weight: 700;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-        }
-        .btn-yellow:hover { background: #FFE066 !important; transform: scale(1.02); }
-        .btn-red { background: #dc2626; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
-        .btn-red:hover { background: #b91c1c; transform: scale(1.02); }
-        .btn-green { background: #22c55e; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
-        .btn-green:hover { background: #16a34a; transform: scale(1.02); }
-        .btn-blue { background: #3b82f6; color: #fff; border: none; padding: 10px 20px; border-radius: 10px; font-size: 14px; cursor: pointer; transition: 0.3s; width: 100%; }
-        .btn-blue:hover { background: #2563eb; transform: scale(1.02); }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .stat-box {
-            background: #1a1a1a;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-        }
-        .stat-box .number { font-size: 28px; font-weight: 700; color: #FFD966; }
-        .stat-box .label { font-size: 12px; color: #94a3b8; margin-top: 4px; }
-        
-        .user-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: #0a0a0a;
-            border-radius: 10px;
-            border: 1px solid #1e293b;
-            margin-bottom: 6px;
-            transition: 0.3s;
-        }
-        .user-list-item:hover { border-color: #FFD96640; }
-        .user-list-item .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .user-list-item .user-info .name { font-weight: 700; color: #FFD966; }
-        .user-list-item .user-info .coins { color: #FFD700; font-weight: 600; }
-        .user-list-item .user-info .badge {
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-weight: 600;
-        }
-        .user-list-item .user-info .badge.admin { background: #FFD966; color: #000; }
-        .user-list-item .user-info .badge.blocked { background: #dc2626; color: #fff; }
-        .user-list-item .actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .user-list-item .actions button {
-            padding: 4px 12px;
-            border-radius: 6px;
-            border: none;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .user-list-item .actions .btn-block { background: #dc2626; color: #fff; }
-        .user-list-item .actions .btn-block:hover { background: #b91c1c; }
-        .user-list-item .actions .btn-unblock { background: #22c55e; color: #fff; }
-        .user-list-item .actions .btn-unblock:hover { background: #16a34a; }
-        .user-list-item .actions .btn-delete { background: #ef4444; color: #fff; }
-        .user-list-item .actions .btn-delete:hover { background: #dc2626; }
-        
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            pointer-events: none;
-        }
-        .toast {
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            backdrop-filter: blur(12px);
-            pointer-events: auto;
-            animation: slideUp 0.3s ease-out;
-        }
-        .toast.success { background: rgba(34, 197, 94, 0.9); color: #fff; }
-        .toast.error { background: rgba(220, 38, 38, 0.9); color: #fff; }
-        .toast.info { background: rgba(59, 130, 246, 0.9); color: #fff; }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tab-btn {
-            padding: 10px 24px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            background: transparent;
-            color: #94a3b8;
-        }
-        .tab-btn:hover { color: #FFD966; }
-        .tab-btn.active {
-            background: #FFD966;
-            color: #000;
-            box-shadow: 0 0 20px rgba(255,217,102,0.3);
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        
-        .log-item {
-            padding: 8px 14px;
-            background: #0a0a0a;
-            border-radius: 8px;
-            border: 1px solid #1e293b;
-            margin-bottom: 4px;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .log-item .time { color: #64748b; font-size: 11px; }
-        
-        /* Login Modal for Admin */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-box {
-            background: #1a1a1a;
-            border: 1px solid #FFD96640;
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 400px;
-            width: 90%;
-        }
-        .modal-box h2 {
-            color: #FFD966;
-            font-size: 24px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .modal-box .sub {
-            color: #94a3b8;
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .modal-box input {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 12px;
-            border: 2px solid #334155;
-            background: #0a0a0a;
-            color: #ffffff;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-        .modal-box input:focus { border-color: #FFD966; }
-        .modal-box .btn-primary {
-            width: 100%;
-            padding: 14px;
-            background: #FFD966;
-            color: #000;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .modal-box .btn-primary:hover { transform: scale(1.02); background: #FFE066; }
-        .modal-box .text-muted {
-            color: #94a3b8;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 12px;
-        }
-        .modal-box .text-muted span { color: #FFD966; cursor: pointer; }
-        .modal-box .text-muted span:hover { text-decoration: underline; }
-        
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .user-list-item { flex-direction: column; align-items: stretch; gap: 8px; }
-            .user-list-item .actions { justify-content: flex-end; }
-            .admin-card { padding: 16px; }
-            .modal-box { padding: 24px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kharal Toolkit</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#fff;color:#111;min-height:100vh}
+button,input{font:inherit}
+.hidden{display:none!important}
+
+/* Login */
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+background:radial-gradient(circle at 50% 20%,#ffe8e8 0,#fff 45%,#f5f5f5 100%);position:relative;overflow:hidden}
+#loginPage:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(220,0,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(220,0,0,.06) 1px,transparent 1px);background-size:32px 32px}
+.login-box{position:relative;width:min(430px,100%);background:rgba(255,255,255,.94);border:1px solid #ddd;border-radius:24px;padding:34px;box-shadow:0 20px 60px #0001}
+.logo{font-size:28px;font-weight:900;letter-spacing:2px}.logo span{color:#d40000}
+.cyber{color:#777;font-size:12px;letter-spacing:3px;margin:8px 0 25px}
+.field{margin:14px 0}.field label{font-size:13px;font-weight:700}.field input{width:100%;margin-top:7px;padding:14px;border:1px solid #ddd;border-radius:12px;outline:none}.field input:focus{border-color:#d40000;box-shadow:0 0 0 3px #d4000012}
+.login-btn,.wa-btn{width:100%;border:0;border-radius:12px;padding:14px;font-weight:800;cursor:pointer}
+.login-btn{background:#111;color:#fff}.login-btn:hover{background:#d40000}
+.wa-btn{display:block;text-align:center;text-decoration:none;background:#16a34a;color:#fff;margin-top:12px}
+.error{margin-top:12px;color:#d40000;font-size:13px;text-align:center;min-height:18px}
+
+/* App */
+.topbar{height:70px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:15px;padding:0 20px;position:sticky;top:0;background:#fff;z-index:20}
+.menu{border:0;background:#111;color:#fff;width:42px;height:42px;border-radius:11px;cursor:pointer;font-size:20px}
+.brand{font-weight:900;letter-spacing:1px}.brand span{color:#d40000}
+.search{margin-left:auto;width:min(330px,45%);padding:11px 14px;border:1px solid #ddd;border-radius:12px;outline:0}
+.sidebar{position:fixed;top:0;left:-290px;width:270px;height:100vh;background:#111;color:#fff;z-index:50;padding:22px;transition:.25s;box-shadow:15px 0 40px #0002}
+.sidebar.open{left:0}.side-title{font-size:20px;font-weight:900;margin-bottom:25px}.side-title span{color:#ff3030}
+.side-link{display:block;color:#fff;text-decoration:none;padding:13px;border-radius:10px;margin:6px 0;background:#ffffff0b}.side-link:hover{background:#d40000}
+.close{float:right;border:0;background:none;color:#fff;font-size:24px;cursor:pointer}
+main{padding:30px 20px 90px;max-width:1200px;margin:auto}
+.hero{padding:28px;border-radius:22px;background:linear-gradient(135deg,#111,#2b2b2b);color:#fff;box-shadow:0 18px 45px #0002;margin-bottom:25px}
+.hero h1{font-size:clamp(25px,5vw,42px)}.hero p{color:#ddd;margin-top:8px}
+.category{margin:28px 0 12px;font-size:20px}.category:before{content:"";display:inline-block;width:5px;height:20px;background:#d40000;margin-right:9px;vertical-align:-3px;border-radius:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.card{border:1px solid #e8e8e8;border-radius:18px;padding:18px;background:#fff;box-shadow:0 8px 25px #0000000b;transition:.2s;display:flex;flex-direction:column;min-height:145px}
+.card:hover{transform:translateY(-4px);border-color:#d40000;box-shadow:0 15px 35px #d4000015}
+.icon{width:45px;height:45px;border-radius:13px;background:#fff0f0;color:#d40000;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+.card h3{font-size:16px}.card p{font-size:12px;color:#777;margin:6px 0 14px;flex:1}
+.open{display:block;text-align:center;text-decoration:none;background:#111;color:#fff;padding:10px;border-radius:10px;font-size:12px;font-weight:800}.open:hover{background:#d40000}
+footer{text-align:center;color:#777;font-size:12px;padding:20px}
+@media(max-width:600px){.topbar{padding:0 12px}.search{width:42%;font-size:12px}main{padding:18px 12px}.login-box{padding:26px}.grid{grid-template-columns:1fr 1fr}.card{min-height:150px;padding:14px}}
+</style>
 </head>
 <body>
 
-    <!-- ========== ADMIN LOGIN MODAL ========== -->
-    <div id="adminLoginModal" class="modal-overlay active">
-        <div class="modal-box">
-            <div class="text-center mb-4">
-                <div class="w-16 h-16 rounded-full bg-chaudhary-600/20 flex items-center justify-center border border-chaudhary-500 shadow-[0_0_30px_rgba(255,217,102,0.3)] mx-auto">
-                    <i class="bi bi-shield-lock-fill text-chaudhary-500 text-3xl"></i>
-                </div>
-                <h2>KHARAL MODS</h2>
-                <p class="sub">Admin Access Required</p>
-            </div>
-            <form id="adminLoginForm">
-                <input type="text" id="adminLoginUsername" placeholder="Username" required>
-                <input type="password" id="adminLoginPassword" placeholder="Password" required>
-                <button type="submit" class="btn-primary">🔓 LOGIN</button>
-            </form>
-            <div class="text-muted">
-                Demo: <span onclick="fillAdminDemo()">hacker / 1234</span>
-            </div>
-        </div>
+<section id="loginPage">
+  <div class="login-box">
+    <div class="logo">KHARAL <span>TOOLKIT</span></div>
+    <div class="cyber">SECURE ACCESS • TOOL DIRECTORY</div>
+    <div class="field"><label>ACCESS KEY</label><input id="password" type="password" placeholder="Enter access password" autocomplete="off"></div>
+    <button class="login-btn" onclick="login()">ENTER TOOLKIT</button>
+    <div id="error" class="error"></div>
+    <a class="wa-btn" href="https://wa.me/923296237450" target="_blank" rel="noopener">📲 Admin WhatsApp</a>
+  </div>
+</section>
+
+<section id="app" class="hidden">
+  <aside id="sidebar" class="sidebar">
+    <button class="close" onclick="toggleSide()">×</button>
+    <div class="side-title">KHARAL <span>TOOLKIT</span></div>
+    <a class="side-link" href="#apps" onclick="toggleSide()">📦 Apps & Utilities</a>
+    <a class="side-link" href="#web" onclick="toggleSide()">🌐 Web Tools</a>
+    <a class="side-link" href="#resources" onclick="toggleSide()">📚 Resources</a>
+    <a class="side-link" href="https://wa.me/923296237450" target="_blank" rel="noopener">👤 Owner Contact</a>
+    <a class="side-link" href="https://wa.me/" target="_blank" rel="noopener">💬 WhatsApp Group</a>
+    <a class="side-link" href="https://youtube.com/" target="_blank" rel="noopener">▶️ YouTube Channel</a>
+  </aside>
+
+  <header class="topbar">
+    <button class="menu" onclick="toggleSide()">☰</button>
+    <div class="brand">KHARAL <span>TOOLKIT</span></div>
+    <input id="search" class="search" placeholder="Search tools..." oninput="filterCards()">
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Premium Toolkit</h1>
+      <p>Organized utilities, apps and resources — fast access from one clean dashboard.</p>
+    </section>
+
+    <h2 id="apps" class="category">🎬 Creative & Utility Apps</h2>
+    <div class="grid">
+      <div class="card"><div class="icon">🎬</div><h3>CapCut Golden 2026</h3><p>Video editing app resource</p><a class="open" href="https://www.mediafire.com/file/ql7gquddwnjfomo/CapCut_Golden_16.0.0.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🎨</div><h3>Alight Motion Pro</h3><p>Motion graphics resource</p><a class="open" href="https://www.mediafire.com/file/805h1uzar69ob8f/ALIGHT_MOTION_PRO_BY_DARK_LEGEND.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🖼️</div><h3>Wink Premium</h3><p>Photo and video editing resource</p><a class="open" href="https://www.mediafire.com/file/m4jyh9lk4fbgndu/Wink_2.13.0.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">✨</div><h3>Remini Premium</h3><p>Photo enhancement resource</p><a class="open" href="https://www.mediafire.com/file/5fjb5pcggkltydy/Remini_3.7.1260.202519018.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🖌️</div><h3>Picsart Premium</h3><p>Creative editing resource</p><a class="open" href="https://www.mediafire.com/file/2iz4slqmk41jioo/Picsart_29.0.8.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">✂️</div><h3>InShot Premium</h3><p>Video editing resource</p><a class="open" href="https://www.mediafire.com/file/bwzau53rscbyruq/InShot_2.155.1507.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🎙️</div><h3>Voice Changer</h3><p>Voice utility resource</p><a class="open" href="https://www.mediafire.com/file/e344g9zheemn02m/VOICE_CHANGER_MOD_BY_DARK_LEGEND.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📐</div><h3>Export Logo Maker</h3><p>Logo creation utility</p><a class="open" href="https://www.mediafire.com/file/ew66a0zbj6up6ef/Esport+Logo_1.4.6.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🤖</div><h3>DeepSeek</h3><p>AI assistant resource</p><a class="open" href="https://www.mediafire.com/file/24q1k0x9b3mfkkk/DeepSeek_1.6.0.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📱</div><h3>App Cloner Pro</h3><p>App utility resource</p><a class="open" href="https://www.mediafire.com/file/1tvkq5f763nacxc/App_Cloner_Pro.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🗂️</div><h3>MT Manager</h3><p>Android file utility</p><a class="open" href="https://www.mediafire.com/file/l8rdctw4yj8l8ks/MT_MANAGER_APK_BY_DARK_LEGEND.apk/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🎭</div><h3>3D Animated Emoji Pack</h3><p>Creative resource pack</p><a class="open" href="https://www.mediafire.com/file/wt99s8sxmqeqswa/3D_ANIMATED_EMOJI_PACK.txt/file" target="_blank" rel="noopener">OPEN</a></div>
     </div>
 
-    <!-- ========== TOAST ========== -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- ========== MAIN ADMIN PANEL ========== -->
-    <div id="adminPanel" class="max-w-6xl mx-auto px-4 py-6" style="display:none;">
-        
-        <!-- HEADER -->
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 border-b border-chaudhary-500/30 pb-4">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-chaudhary-600/20 flex items-center justify-center border border-chaudhary-500 shadow-[0_0_15px_rgba(255,217,102,0.3)]">
-                    <i class="bi bi-shield-lock-fill text-chaudhary-500 text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-black bg-gradient-to-r from-chaudhary-500 to-amber-400 bg-clip-text text-transparent">KHARAL MODS</h1>
-                    <p class="text-xs text-amber-400/60">ADMIN PANEL</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3">
-                <span id="adminUserDisplay" class="text-amber-400 font-bold">hacker</span>
-                <button onclick="adminLogout()" class="btn-yellow text-sm font-bold px-3 py-1 rounded-lg" style="width:auto;">LOGOUT</button>
-                <a href="index.html" class="btn-yellow text-sm font-bold px-3 py-1 rounded-lg flex items-center gap-1" style="width:auto;"><i class="bi bi-arrow-left"></i> BACK</a>
-            </div>
-        </div>
-
-        <!-- STATS -->
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-box"><div class="number" id="totalUsers">0</div><div class="label">Total Users</div></div>
-            <div class="stat-box"><div class="number" id="totalCoins">0</div><div class="label">Total Coins</div></div>
-            <div class="stat-box"><div class="number" id="blockedUsers">0</div><div class="label">Blocked Users</div></div>
-            <div class="stat-box"><div class="number" id="totalSearches">0</div><div class="label">Total Searches</div></div>
-        </div>
-
-        <!-- TABS -->
-        <div class="flex flex-wrap gap-2 mb-6 bg-[#1f1b12] rounded-xl p-2 border border-chaudhary-500/20">
-            <button class="tab-btn active" data-tab="users" onclick="switchTab('users')"><i class="bi bi-people"></i> Users</button>
-            <button class="tab-btn" data-tab="coins" onclick="switchTab('coins')"><i class="bi bi-coin"></i> Coins</button>
-            <button class="tab-btn" data-tab="device" onclick="switchTab('device')"><i class="bi bi-device-ssd"></i> Device</button>
-            <button class="tab-btn" data-tab="logs" onclick="switchTab('logs')"><i class="bi bi-clock-history"></i> Logs</button>
-            <button class="tab-btn" data-tab="settings" onclick="switchTab('settings')"><i class="bi bi-gear"></i> Settings</button>
-        </div>
-
-        <!-- ===== TAB: USERS ===== -->
-        <div class="tab-content active" id="tab-users">
-            <div class="glass-panel rounded-2xl p-6 premium-border">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
-                    <h3 class="text-chaudhary-500 font-bold text-lg"><i class="bi bi-people-fill"></i> User Management</h3>
-                    <button onclick="showAddUser()" class="btn-green px-4 py-2 rounded-lg text-sm font-bold" style="width:auto;"><i class="bi bi-plus-circle"></i> Add User</button>
-                </div>
-                
-                <div id="addUserForm" class="hidden bg-[#0a0a0a] p-4 rounded-xl border border-chaudhary-500/20 mb-4">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <input type="text" id="newUsername" placeholder="Username" class="bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl px-4 py-3">
-                        <input type="text" id="newPassword" placeholder="Password" class="bg-black/50 border border-chaudhary-500/40 text-amber-200 rounded-xl px-4 py-3">
-                        <button onclick="addUser()" class="btn-yellow px-4 py-3 rounded-xl font-bold"><i class="bi bi-check-circle"></i> Create User</button>
-                    </div>
-                </div>
-                
-                <div id="userList" class="space-y-2 max-h-[500px] overflow-y-auto"></div>
-            </div>
-        </div>
-
-        <!-- ===== TAB: COINS ===== -->
-        <div class="tab-content" id="tab-coins">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="admin-card">
-                    <h4><i class="bi bi-plus-circle-fill text-green-500"></i> Add Coins</h4>
-                    <input type="text" id="coinUserAdd" placeholder="Username">
-                    <input type="number" id="coinAmountAdd" placeholder="Amount" min="1">
-                    <button class="btn-green" onclick="addCoins()"><i class="bi bi-plus-lg"></i> ADD COINS</button>
-                </div>
-                <div class="admin-card">
-                    <h4><i class="bi bi-dash-circle-fill text-red-500"></i> Remove Coins</h4>
-                    <input type="text" id="coinUserRemove" placeholder="Username">
-                    <input type="number" id="coinAmountRemove" placeholder="Amount" min="1">
-                    <button class="btn-red" onclick="removeCoins()"><i class="bi bi-dash-lg"></i> REMOVE COINS</button>
-                </div>
-                <div class="admin-card md:col-span-2">
-                    <h4><i class="bi bi-coin"></i> Set Coins (Replace All)</h4>
-                    <input type="text" id="coinUserSet" placeholder="Username">
-                    <input type="number" id="coinAmountSet" placeholder="New Amount" min="0">
-                    <button class="btn-blue" onclick="setCoins()"><i class="bi bi-arrow-repeat"></i> SET COINS</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== TAB: DEVICE ===== -->
-        <div class="tab-content" id="tab-device">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="admin-card">
-                    <h4><i class="bi bi-shield-slash text-red-500"></i> Block Device</h4>
-                    <input type="text" id="deviceId" placeholder="Device ID / Fingerprint">
-                    <button class="btn-red" onclick="blockDevice()"><i class="bi bi-lock-fill"></i> BLOCK</button>
-                </div>
-                <div class="admin-card">
-                    <h4><i class="bi bi-shield-check text-green-500"></i> Unblock Device</h4>
-                    <input type="text" id="deviceIdUnblock" placeholder="Device ID / Fingerprint">
-                    <button class="btn-green" onclick="unblockDevice()"><i class="bi bi-unlock-fill"></i> UNBLOCK</button>
-                </div>
-                <div class="admin-card md:col-span-2">
-                    <h4><i class="bi bi-list-ul"></i> Blocked Devices</h4>
-                    <div id="blockedDevicesList" class="space-y-2 max-h-[200px] overflow-y-auto"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== TAB: LOGS ===== -->
-        <div class="tab-content" id="tab-logs">
-            <div class="admin-card">
-                <div class="flex justify-between items-center mb-4">
-                    <h4><i class="bi bi-clock-history"></i> Search Logs</h4>
-                    <button class="btn-red px-4 py-2 rounded-lg text-sm font-bold" onclick="clearLogs()" style="width:auto;"><i class="bi bi-trash"></i> Clear All</button>
-                </div>
-                <div id="logsList" class="max-h-[400px] overflow-y-auto space-y-1"></div>
-            </div>
-        </div>
-
-        <!-- ===== TAB: SETTINGS ===== -->
-        <div class="tab-content" id="tab-settings">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="admin-card">
-                    <h4><i class="bi bi-currency-dollar"></i> Search Cost</h4>
-                    <input type="number" id="searchCost" placeholder="Cost per search" min="0">
-                    <button class="btn-blue" onclick="setSearchCost()"><i class="bi bi-save"></i> UPDATE</button>
-                    <p class="text-xs text-gray-500 mt-2">Current: <span id="currentCost" class="text-chaudhary-500 font-bold">2</span> coins</p>
-                </div>
-                <div class="admin-card">
-                    <h4><i class="bi bi-person-lock"></i> Security</h4>
-                    <button class="btn-red" onclick="resetAll()"><i class="bi bi-exclamation-triangle"></i> RESET ALL DATA</button>
-                    <p class="text-xs text-red-400/60 mt-2">⚠️ This will delete all users, logs, and settings</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER -->
-        <div class="text-center text-[10px] text-amber-800/50 mt-8 border-t border-chaudhary-500/10 pt-4">
-            KHARAL MODS • ADMIN PANEL v2.0
-        </div>
+    <h2 id="web" class="category">🌐 Web Tools</h2>
+    <div class="grid">
+      <div class="card"><div class="icon">📧</div><h3>Temp Mail</h3><p>Temporary email service</p><a class="open" href="https://temp-mail.org/en/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🔎</div><h3>Have I Been Pwned?</h3><p>Check whether an email appears in known breaches</p><a class="open" href="https://haveibeenpwned.com/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📖</div><h3>Quran Kareem Online</h3><p>Read Quran online</p><a class="open" href="https://tasleemalquran.com/read-quran-online-para-1-to-30/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📍</div><h3>IP Information</h3><p>General IP information lookup</p><a class="open" href="https://www.ip-tracker.org/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🔤</div><h3>Text Repeater</h3><p>Repeat text quickly</p><a class="open" href="https://dark-legend-text-repeater-333.vercel.app/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">⬇️</div><h3>Social Video Downloader</h3><p>Video utility resource</p><a class="open" href="https://dark-legend-333-download-site.vercel.app/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🔐</div><h3>HTML Encryptor</h3><p>HTML utility</p><a class="open" href="https://dark-legend-html-encripter-roii.vercel.app/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📱</div><h3>TikTok Free Likes</h3><p>Third-party social service</p><a class="open" href="https://tpi.li/TikTokfreeLikes" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">▶️</div><h3>TikTok Views</h3><p>Third-party social service</p><a class="open" href="https://zefoy.com/" target="_blank" rel="noopener">OPEN</a></div>
     </div>
 
-    <script>
-        // ============================================================
-        //  DATABASE
-        // ============================================================
-        const DB = {
-            getUsers() {
-                return JSON.parse(localStorage.getItem('kharal_users') || '[]');
-            },
-            saveUsers(users) {
-                localStorage.setItem('kharal_users', JSON.stringify(users));
-            },
-            getHistory() {
-                return JSON.parse(localStorage.getItem('kharal_history') || '[]');
-            },
-            saveHistory(history) {
-                localStorage.setItem('kharal_history', JSON.stringify(history));
-            },
-            getBlockedDevices() {
-                return JSON.parse(localStorage.getItem('kharal_blocked') || '[]');
-            },
-            saveBlockedDevices(blocked) {
-                localStorage.setItem('kharal_blocked', JSON.stringify(blocked));
-            },
-            getSettings() {
-                return JSON.parse(localStorage.getItem('kharal_settings') || '{"searchCost":2}');
-            },
-            saveSettings(settings) {
-                localStorage.setItem('kharal_settings', JSON.stringify(settings));
-            }
-        };
+    <h2 id="resources" class="category">📚 Learning & Resources</h2>
+    <div class="grid">
+      <div class="card"><div class="icon">💬</div><h3>WhatsApp Official Channel</h3><p>Channel resource</p><a class="open" href="https://whatsapp.com/channel/0029VbCIDRyLSmbVwRsohX2X" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">✈️</div><h3>Telegram Channel</h3><p>Channel resource</p><a class="open" href="https://t.me/burhannoir" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📺</div><h3>YouTube Watch Time</h3><p>Web resource</p><a class="open" href="https://youtube-watch-time-increase-by-dark.vercel.app/" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🧰</div><h3>Android Common Codes</h3><p>Reference resource</p><a class="open" href="https://www.mediafire.com/file/w67zdkgj18h27ug/ANDROID_COMMON_CODES.txt/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">🤖</div><h3>Useful Telegram Bots</h3><p>Reference list</p><a class="open" href="https://www.mediafire.com/file/eicxqmdnqnyzrqw/USEFUL_TELEGRAM_BOTS.txt/file" target="_blank" rel="noopener">OPEN</a></div>
+      <div class="card"><div class="icon">📝</div><h3>Methods Pack</h3><p>Document resource</p><a class="open" href="https://docs.google.com/document/d/1w0TRFHGQiIqUMk1UQjtKlEvcnZ6pSlHJs966t_pmtnA/edit?usp=drivesdk" target="_blank" rel="noopener">OPEN</a></div>
+    </div>
+  </main>
+  <footer>© 2026 Kharal Toolkit • External links open in a new tab</footer>
+</section>
 
-        // ============================================================
-        //  INIT - Default Users
-        // ============================================================
-        function initDB() {
-            let users = DB.getUsers();
-            if (users.length === 0) {
-                users = [
-                    { username: 'hacker', password: '1234', coins: 100, isAdmin: true, blocked: false },
-                    { username: 'demo', password: 'demo123', coins: 20, isAdmin: false, blocked: false }
-                ];
-                DB.saveUsers(users);
-            }
-        }
-        initDB();
-
-        // ============================================================
-        //  ADMIN AUTH
-        // ============================================================
-        function getCurrentUser() {
-            return JSON.parse(sessionStorage.getItem('kharal_current') || 'null');
-        }
-
-        function isAdmin() {
-            const user = getCurrentUser();
-            return user && user.isAdmin === true;
-        }
-
-        function checkAdmin() {
-            if (!isAdmin()) {
-                document.getElementById('adminLoginModal').classList.add('active');
-                document.getElementById('adminPanel').style.display = 'none';
-                return false;
-            }
-            document.getElementById('adminLoginModal').classList.remove('active');
-            document.getElementById('adminPanel').style.display = 'block';
-            return true;
-        }
-
-        // ============================================================
-        //  ADMIN LOGIN
-        // ============================================================
-        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('adminLoginUsername').value.trim();
-            const password = document.getElementById('adminLoginPassword').value.trim();
-            
-            const users = DB.getUsers();
-            const user = users.find(u => u.username === username && u.password === password);
-            
-            if (!user) {
-                showToast('Invalid credentials', 'error');
-                return;
-            }
-            if (!user.isAdmin) {
-                showToast('Admin access required', 'error');
-                return;
-            }
-            if (user.blocked) {
-                showToast('Account blocked', 'error');
-                return;
-            }
-            
-            sessionStorage.setItem('kharal_current', JSON.stringify(user));
-            showToast('Welcome Admin!', 'success');
-            checkAdmin();
-            renderAll();
-        });
-
-        function fillAdminDemo() {
-            document.getElementById('adminLoginUsername').value = 'hacker';
-            document.getElementById('adminLoginPassword').value = '1234';
-        }
-
-        function adminLogout() {
-            sessionStorage.removeItem('kharal_current');
-            document.getElementById('adminLoginModal').classList.add('active');
-            document.getElementById('adminPanel').style.display = 'none';
-            showToast('Logged out', 'info');
-        }
-
-        // ============================================================
-        //  TOAST
-        // ============================================================
-        function showToast(msg, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // ============================================================
-        //  RENDER FUNCTIONS
-        // ============================================================
-        function renderStats() {
-            const users = DB.getUsers();
-            const history = DB.getHistory();
-            
-            document.getElementById('totalUsers').textContent = users.length;
-            document.getElementById('totalCoins').textContent = users.reduce((sum, u) => sum + (u.coins || 0), 0);
-            document.getElementById('blockedUsers').textContent = users.filter(u => u.blocked).length;
-            document.getElementById('totalSearches').textContent = history.length;
-        }
-
-        function renderUsers() {
-            const container = document.getElementById('userList');
-            const users = DB.getUsers();
-            
-            if (!users.length) {
-                container.innerHTML = '<div class="text-center text-gray-500 py-8">No users found</div>';
-                return;
-            }
-            
-            container.innerHTML = users.map(u => `
-                <div class="user-list-item">
-                    <div class="user-info">
-                        <span class="name">${u.username}</span>
-                        ${u.isAdmin ? '<span class="badge admin">👑 ADMIN</span>' : ''}
-                        ${u.blocked ? '<span class="badge blocked">🚫 BLOCKED</span>' : ''}
-                        <span class="coins">💰 ${u.coins || 0}</span>
-                    </div>
-                    <div class="actions">
-                        ${!u.isAdmin ? `
-                            <button class="${u.blocked ? 'btn-unblock' : 'btn-block'}" onclick="toggleBlock('${u.username}')">
-                                ${u.blocked ? 'UNBLOCK' : 'BLOCK'}
-                            </button>
-                            <button class="btn-delete" onclick="deleteUser('${u.username}')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        ` : '<span class="text-xs text-gray-500">Protected</span>'}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderBlockedDevices() {
-            const container = document.getElementById('blockedDevicesList');
-            const blocked = DB.getBlockedDevices();
-            if (!blocked.length) {
-                container.innerHTML = '<div class="text-gray-500 text-sm py-4">No blocked devices</div>';
-                return;
-            }
-            container.innerHTML = blocked.map(d => `
-                <div class="flex justify-between items-center bg-[#0a0a0a] p-3 rounded-lg border border-red-500/20">
-                    <span class="text-sm font-mono text-red-400">${d}</span>
-                    <button class="btn-green px-3 py-1 rounded-lg text-xs font-bold" onclick="unblockDeviceById('${d}')" style="width:auto;">UNBLOCK</button>
-                </div>
-            `).join('');
-        }
-
-        function renderLogs() {
-            const container = document.getElementById('logsList');
-            const history = DB.getHistory();
-            if (!history.length) {
-                container.innerHTML = '<div class="text-gray-500 text-sm py-4 text-center">No logs found</div>';
-                return;
-            }
-            container.innerHTML = history.map(h => `
-                <div class="log-item">
-                    <span><span class="text-chaudhary-500 font-bold">${h.query}</span> by ${h.user}</span>
-                    <span class="time">${h.time}</span>
-                </div>
-            `).join('');
-        }
-
-        function renderSettings() {
-            const settings = DB.getSettings();
-            document.getElementById('searchCost').value = settings.searchCost || 2;
-            document.getElementById('currentCost').textContent = settings.searchCost || 2;
-        }
-
-        function renderAll() {
-            if (!checkAdmin()) return;
-            renderStats();
-            renderUsers();
-            renderBlockedDevices();
-            renderLogs();
-            renderSettings();
-        }
-
-        // ============================================================
-        //  TAB SWITCH
-        // ============================================================
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(`tab-${tab}`).classList.add('active');
-            document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
-        }
-
-        // ============================================================
-        //  USER MANAGEMENT
-        // ============================================================
-        function showAddUser() {
-            document.getElementById('addUserForm').classList.toggle('hidden');
-        }
-
-        function addUser() {
-            const username = document.getElementById('newUsername').value.trim();
-            const password = document.getElementById('newPassword').value.trim();
-            if (!username || !password) { showToast('Enter username and password', 'error'); return; }
-            
-            let users = DB.getUsers();
-            if (users.find(u => u.username === username)) {
-                showToast('User already exists', 'error');
-                return;
-            }
-            
-            users.push({ username, password, coins: 10, isAdmin: false, blocked: false });
-            DB.saveUsers(users);
-            showToast(`User ${username} created!`, 'success');
-            document.getElementById('newUsername').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('addUserForm').classList.add('hidden');
-            renderAll();
-        }
-
-        function deleteUser(username) {
-            if (!confirm(`Delete user "${username}"?`)) return;
-            if (username === 'hacker') { showToast('Cannot delete main admin', 'error'); return; }
-            
-            let users = DB.getUsers();
-            users = users.filter(u => u.username !== username);
-            DB.saveUsers(users);
-            showToast(`User ${username} deleted`, 'info');
-            renderAll();
-        }
-
-        function toggleBlock(username) {
-            let users = DB.getUsers();
-            const idx = users.findIndex(u => u.username === username);
-            if (idx === -1) return;
-            if (users[idx].isAdmin) { showToast('Cannot block admin', 'error'); return; }
-            users[idx].blocked = !users[idx].blocked;
-            DB.saveUsers(users);
-            showToast(`${username} ${users[idx].blocked ? 'blocked' : 'unblocked'}`, 'info');
-            renderAll();
-        }
-
-        // ============================================================
-        //  COIN MANAGEMENT
-        // ============================================================
-        function addCoins() {
-            const username = document.getElementById('coinUserAdd').value.trim();
-            const amount = parseInt(document.getElementById('coinAmountAdd').value);
-            if (!username || !amount || amount < 1) { showToast('Invalid input', 'error'); return; }
-            
-            let users = DB.getUsers();
-            const idx = users.findIndex(u => u.username === username);
-            if (idx === -1) { showToast('User not found', 'error'); return; }
-            users[idx].coins = (users[idx].coins || 0) + amount;
-            DB.saveUsers(users);
-            showToast(`Added ${amount} coins to ${username}`, 'success');
-            document.getElementById('coinUserAdd').value = '';
-            document.getElementById('coinAmountAdd').value = '';
-            renderAll();
-        }
-
-        function removeCoins() {
-            const username = document.getElementById('coinUserRemove').value.trim();
-            const amount = parseInt(document.getElementById('coinAmountRemove').value);
-            if (!username || !amount || amount < 1) { showToast('Invalid input', 'error'); return; }
-            
-            let users = DB.getUsers();
-            const idx = users.findIndex(u => u.username === username);
-            if (idx === -1) { showToast('User not found', 'error'); return; }
-            if ((users[idx].coins || 0) < amount) { showToast('Insufficient coins', 'error'); return; }
-            users[idx].coins = (users[idx].coins || 0) - amount;
-            DB.saveUsers(users);
-            showToast(`Removed ${amount} coins from ${username}`, 'info');
-            document.getElementById('coinUserRemove').value = '';
-            document.getElementById('coinAmountRemove').value = '';
-            renderAll();
-        }
-
-        function setCoins() {
-            const username = document.getElementById('coinUserSet').value.trim();
-            const amount = parseInt(document.getElementById('coinAmountSet').value);
-            if (!username || amount < 0) { showToast('Invalid input', 'error'); return; }
-            
-            let users = DB.getUsers();
-            const idx = users.findIndex(u => u.username === username);
-            if (idx === -1) { showToast('User not found', 'error'); return; }
-            users[idx].coins = amount;
-            DB.saveUsers(users);
-            showToast(`Set ${username} coins to ${amount}`, 'success');
-            document.getElementById('coinUserSet').value = '';
-            document.getElementById('coinAmountSet').value = '';
-            renderAll();
-        }
-
-        // ============================================================
-        //  DEVICE MANAGEMENT
-        // ============================================================
-        function blockDevice() {
-            const device = document.getElementById('deviceId').value.trim();
-            if (!device) { showToast('Enter device ID', 'error'); return; }
-            let blocked = DB.getBlockedDevices();
-            if (blocked.includes(device)) { showToast('Already blocked', 'info'); return; }
-            blocked.push(device);
-            DB.saveBlockedDevices(blocked);
-            showToast('Device blocked', 'success');
-            document.getElementById('deviceId').value = '';
-            renderAll();
-        }
-
-        function unblockDevice() {
-            const device = document.getElementById('deviceIdUnblock').value.trim();
-            if (!device) { showToast('Enter device ID', 'error'); return; }
-            unblockDeviceById(device);
-            document.getElementById('deviceIdUnblock').value = '';
-        }
-
-        function unblockDeviceById(device) {
-            let blocked = DB.getBlockedDevices();
-            blocked = blocked.filter(d => d !== device);
-            DB.saveBlockedDevices(blocked);
-            showToast('Device unblocked', 'success');
-            renderAll();
-        }
-
-        // ============================================================
-        //  LOGS
-        // ============================================================
-        function clearLogs() {
-            if (!confirm('Clear all search logs?')) return;
-            DB.saveHistory([]);
-            showToast('Logs cleared', 'info');
-            renderAll();
-        }
-
-        // ============================================================
-        //  SETTINGS
-        // ============================================================
-        function setSearchCost() {
-            const cost = parseInt(document.getElementById('searchCost').value);
-            if (cost < 0) { showToast('Invalid amount', 'error'); return; }
-            const settings = DB.getSettings();
-            settings.searchCost = cost;
-            DB.saveSettings(settings);
-            showToast(`Search cost set to ${cost} coins`, 'success');
-            renderAll();
-        }
-
-        // ============================================================
-        //  RESET
-        // ============================================================
-        function resetAll() {
-            if (!confirm('⚠️ RESET ALL DATA? This cannot be undone!')) return;
-            if (!confirm('Are you sure?')) return;
-            
-            localStorage.removeItem('kharal_users');
-            localStorage.removeItem('kharal_history');
-            localStorage.removeItem('kharal_blocked');
-            localStorage.removeItem('kharal_settings');
-            
-            initDB();
-            showToast('All data reset', 'info');
-            renderAll();
-        }
-
-        // ============================================================
-        //  GLOBALS
-        // ============================================================
-        window.switchTab = switchTab;
-        window.showAddUser = showAddUser;
-        window.addUser = addUser;
-        window.deleteUser = deleteUser;
-        window.toggleBlock = toggleBlock;
-        window.addCoins = addCoins;
-        window.removeCoins = removeCoins;
-        window.setCoins = setCoins;
-        window.blockDevice = blockDevice;
-        window.unblockDevice = unblockDevice;
-        window.unblockDeviceById = unblockDeviceById;
-        window.clearLogs = clearLogs;
-        window.setSearchCost = setSearchCost;
-        window.resetAll = resetAll;
-        window.adminLogout = adminLogout;
-        window.fillAdminDemo = fillAdminDemo;
-
-        // ============================================================
-        //  INIT
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            checkAdmin();
-            if (isAdmin()) renderAll();
-        });
-    </script>
+<script>
+/* Demo-only gate. For a real paid-access system, replace this with server-side authentication. */
+const DEMO_PASSWORD="CHANGE_ME";
+function login(){
+  const value=document.getElementById("password").value;
+  const error=document.getElementById("error");
+  if(value===DEMO_PASSWORD){
+    document.getElementById("loginPage").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+  }else{
+    error.textContent="❌ Incorrect password. Please try again.";
+  }
+}
+document.getElementById("password").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+function toggleSide(){document.getElementById("sidebar").classList.toggle("open")}
+function filterCards(){
+  const q=document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(c=>c.style.display=c.innerText.toLowerCase().includes(q)?"flex":"none");
+}
+</script>
 </body>
     </html>
